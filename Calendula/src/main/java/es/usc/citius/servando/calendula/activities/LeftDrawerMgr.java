@@ -63,7 +63,7 @@ public class LeftDrawerMgr implements Drawer.OnDrawerItemClickListener, AccountH
     public static final int MEDICINES = 2;
     public static final int SCHEDULES = 3;
 
-    public static final int PATIENTS = 4;
+    public static final int USERS = 4;
     public static final int HELP = 5;
     public static final int SETTINGS = 6;
     public static final int TRAVELPLAN = 8;
@@ -124,24 +124,24 @@ public class LeftDrawerMgr implements Drawer.OnDrawerItemClickListener, AccountH
                 new PrimaryDrawerItem()
                         .withName(R.string.title_activity_patients)
                         .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_account_multiple, R.color.black).alpha(110))
-                        .withIdentifier(PATIENTS),
+                        .withIdentifier(USERS),
                 new DividerDrawerItem(),
                 new PrimaryDrawerItem()
                         .withName(R.string.title_activity_medicines)
-                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_pill, R.color.black).alpha(110))
+                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_shape_plus, R.color.black).alpha(110))
                         .withIdentifier(MEDICINES),
                 new PrimaryDrawerItem()
                         .withName(R.string.title_activity_routines)
-                        .withIcon(IconUtils.icon(homeActivity, GoogleMaterial.Icon.gmd_alarm, R.color.black).alpha(110))
+                        .withIcon(IconUtils.icon(homeActivity, GoogleMaterial.Icon.gmd_local_pizza, R.color.black).alpha(110))
                         .withIdentifier(ROUTINES),
                 new PrimaryDrawerItem()
                         .withName(R.string.title_activity_schedules)
-                        .withIcon(IconUtils.icon(homeActivity, GoogleMaterial.Icon.gmd_calendar, R.color.black).alpha(110))
+                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_food_apple, R.color.black).alpha(110))
                         .withIdentifier(SCHEDULES));
         if (ModuleManager.isEnabled(AllergiesModule.ID)) {
             b.addDrawerItems(new PrimaryDrawerItem()
                     .withName(R.string.home_menu_allergies)
-                    .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_alert, R.color.black).alpha(110))
+                    .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_run, R.color.black).alpha(110))
                     .withIdentifier(ALLERGIES));
         }
 
@@ -150,16 +150,16 @@ public class LeftDrawerMgr implements Drawer.OnDrawerItemClickListener, AccountH
                 new PrimaryDrawerItem()
                         .withName(R.string.drawer_help_option)
                         .withIcon(IconUtils.icon(homeActivity, GoogleMaterial.Icon.gmd_pin_assistant, R.color.black).alpha(130))
-                        .withIdentifier(HELP),
-                new PrimaryDrawerItem()
-                        .withName(R.string.drawer_settings_option)
-                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_settings, R.color.black).alpha(110))
-                        .withIdentifier(SETTINGS),
-                new DividerDrawerItem(),
-                new PrimaryDrawerItem()
-                        .withName(R.string.drawer_about_option)
-                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_information, R.color.black).alpha(110))
-                        .withIdentifier(ABOUT)
+                        .withIdentifier(HELP)
+//                new PrimaryDrawerItem()
+//                        .withName(R.string.drawer_settings_option)
+//                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_settings, R.color.black).alpha(110))
+//                        .withIdentifier(SETTINGS),
+//                new DividerDrawerItem(),
+//                new PrimaryDrawerItem()
+//                        .withName(R.string.drawer_about_option)
+//                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_information, R.color.black).alpha(110))
+//                        .withIdentifier(ABOUT)
         );
 
         drawer = b.build();
@@ -196,7 +196,7 @@ public class LeftDrawerMgr implements Drawer.OnDrawerItemClickListener, AccountH
                 launchActivity(new Intent(homeActivity, MaterialIntroActivity.class));
                 drawer.setSelection(HOME, false);
                 break;
-            case PATIENTS:
+            case USERS:
                 launchActivity(new Intent(homeActivity, PatientsActivity.class));
                 drawer.setSelection(HOME, false);
                 break;

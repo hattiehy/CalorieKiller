@@ -31,9 +31,9 @@ import es.usc.citius.servando.calendula.fragments.ScheduleListFragment;
 public enum HomePages {
     // attention: order is important!!!
     HOME(DailyAgendaFragment.class.getName(), R.string.app_name, GoogleMaterial.Icon.gmd_home),
-    MEDICINES(MedicinesListFragment.class.getName(), R.string.title_activity_medicines, CommunityMaterial.Icon.cmd_pill),
-    ROUTINES(RoutinesListFragment.class.getName(), R.string.title_activity_routines, GoogleMaterial.Icon.gmd_alarm),
-    SCHEDULES(ScheduleListFragment.class.getName(), R.string.title_activity_schedules, GoogleMaterial.Icon.gmd_calendar);
+    MEDICINES(MedicinesListFragment.class.getName(), R.string.title_activity_medicines, CommunityMaterial.Icon.cmd_shape_plus),
+    ROUTINES(RoutinesListFragment.class.getName(), R.string.title_activity_routines, GoogleMaterial.Icon.gmd_local_pizza),
+    SCHEDULES(ScheduleListFragment.class.getName(), R.string.title_activity_schedules, CommunityMaterial.Icon.cmd_food_apple);
 
     public String className;
     public int title;
