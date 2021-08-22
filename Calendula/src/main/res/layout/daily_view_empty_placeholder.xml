@@ -57,7 +57,7 @@
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
         android:paddingTop="15dp"
-        android:text="@string/home_no_pending_meds_message"
+        android:text="There is no user's health data. Add your number and know health now."
         android:textAllCaps="false"
         android:textColor="@color/agenda_item_title"
         android:textIsSelectable="false"

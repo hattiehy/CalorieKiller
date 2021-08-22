@@ -36,11 +36,11 @@ public class Patient {
     public static final String COLUMN_DEFAULT = "Default";
     public static final String COLUMN_AVATAR = "Avatar";
     public static final String COLUMN_COLOR = "Color";
-//    public static final String COLUMN_AGE = "Age";
-//    public static final String COLUMN_HEIGHT = "Height";
-//    public static final String COLUMN_WEIGHT = "Weight";
-//    public static final String COLUMN_BMI = "BMI";
-//    public static final String COLUMN_CONDITION = "Condition";
+    public static final String COLUMN_AGE = "Age";
+    public static final String COLUMN_HEIGHT = "Height";
+    public static final String COLUMN_WEIGHT = "Weight";
+    public static final String COLUMN_BMI = "BMI";
+    public static final String COLUMN_CONDITION = "Condition";
 
 
     @DatabaseField(columnName = COLUMN_ID, generatedId = true)
@@ -59,20 +59,20 @@ public class Patient {
     @DatabaseField(columnName = COLUMN_COLOR)
     private int color = Color.parseColor("#3498db"); // material blue 700 1976d2
 
-//    @DatabaseField(columnName = COLUMN_AGE)
-//    private int age;
-//
-//    @DatabaseField(columnName = COLUMN_HEIGHT)
-//    private double height;
-//
-//    @DatabaseField(columnName = COLUMN_WEIGHT)
-//    private double weight;
-//
-//    @DatabaseField(columnName = COLUMN_BMI)
-//    private String bmi;
-//
-//    @DatabaseField(columnName = COLUMN_CONDITION)
-//    private String condition;
+    @DatabaseField(columnName = COLUMN_AGE)
+    private int age;
+
+    @DatabaseField(columnName = COLUMN_HEIGHT)
+    private double height;
+
+    @DatabaseField(columnName = COLUMN_WEIGHT)
+    private double weight;
+
+    @DatabaseField(columnName = COLUMN_BMI)
+    private String bmi;
+
+    @DatabaseField(columnName = COLUMN_CONDITION)
+    private String condition;
 
     public Long getId() {
         return id;
@@ -115,57 +115,45 @@ public class Patient {
         return color;
     }
 
-//    public int getAge() {
-//        return age;
-//    }
-//
-//    public void setAge(int age) {
-//        this.age = age;
-//    }
-//
-//    public double getHeight() {
-//        return height;
-//    }
-//
-//    public void setHeight(double height) {
-//        this.height = height;
-//    }
-//
-//    public double getWeight() {
-//        return weight;
-//    }
-//
-//    public void setWeight(double weight) {
-//        this.weight = weight;
-//    }
-//
-//    public String getBmi() {
-//        return bmi;
-//    }
-//
-//    public void setBmi(String bmi) {
-//        this.bmi = bmi;
-//    }
-//
-//    public String getCondition() {
-//        return condition;
-//    }
-//
-//    public void setCondition(String condition) {
-//        this.condition = condition;
-//    }
-
-    @Override
-    public String toString() {
-        return "Patient{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", isDefault=" + isDefault +
-                ", avatar='" + avatar + '\'' +
-                ", color=" + color +
-                '}';
+    public int getAge() {
+        return age;
     }
 
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public String getBmi() {
+        return bmi;
+    }
+
+    public void setBmi(String bmi) {
+        this.bmi = bmi;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
 
 //    @Override
 //    public String toString() {
@@ -175,13 +163,25 @@ public class Patient {
 //                ", isDefault=" + isDefault +
 //                ", avatar='" + avatar + '\'' +
 //                ", color=" + color +
-//                ", age=" + age +
-//                ", height=" + height +
-//                ", weight=" + weight +
-//                ", bmi='" + bmi + '\'' +
-//                ", condition='" + condition + '\'' +
 //                '}';
 //    }
+
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", isDefault=" + isDefault +
+                ", avatar='" + avatar + '\'' +
+                ", color=" + color +
+                ", age=" + age +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", bmi='" + bmi + '\'' +
+                ", condition='" + condition + '\'' +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {

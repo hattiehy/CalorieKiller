@@ -83,7 +83,7 @@ public class FabMenuMgr implements View.OnClickListener {
 
         switch (page) {
             case HOME:
-                fabMenu.hide();
+                fabMenu.show();
                 break;
             case ROUTINES:
             case MEDICINES:
@@ -164,6 +164,7 @@ public class FabMenuMgr implements View.OnClickListener {
         HomePages page = HomePages.values()[currentPage];
         switch (page) {
             case HOME:
+                launchActivity(MedicinesActivity.class);
                 return;
             case ROUTINES:
                 launchActivity(RoutinesActivity.class);

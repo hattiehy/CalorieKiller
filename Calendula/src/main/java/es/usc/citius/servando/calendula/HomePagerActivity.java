@@ -77,6 +77,7 @@ import es.usc.citius.servando.calendula.events.PersistenceEvents;
 import es.usc.citius.servando.calendula.events.StockRunningOutEvent;
 import es.usc.citius.servando.calendula.fragments.DailyAgendaFragment;
 import es.usc.citius.servando.calendula.fragments.HomeProfileMgr;
+import es.usc.citius.servando.calendula.fragments.MedicineCreateOrEditFragment;
 import es.usc.citius.servando.calendula.fragments.MedicinesListFragment;
 import es.usc.citius.servando.calendula.fragments.RoutinesListFragment;
 import es.usc.citius.servando.calendula.fragments.ScheduleListFragment;
@@ -188,14 +189,14 @@ public class HomePagerActivity extends CalendulaActivity implements
         switch (page) {
             case HOME:
                 final boolean expanded = ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).isExpanded();
-                menuItems.get(R.id.action_expand).setVisible(true);
+                menuItems.get(R.id.action_expand).setVisible(false);
                 menuItems.get(R.id.action_expand).setIcon(!expanded ? icAgendaMore : icAgendaLess);
                 break;
             case MEDICINES:
-                menuItems.get(R.id.action_sort).setVisible(true);
+                menuItems.get(R.id.action_sort).setVisible(false);
                 break;
             case SCHEDULES:
-                menuItems.get(R.id.action_schedules_help).setVisible(true);
+                menuItems.get(R.id.action_schedules_help).setVisible(false);
                 break;
         }
         return super.onPrepareOptionsMenu(menu);
@@ -394,6 +395,7 @@ public class HomePagerActivity extends CalendulaActivity implements
         return getSupportFragmentManager().findFragmentByTag(tag);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -410,6 +412,7 @@ public class HomePagerActivity extends CalendulaActivity implements
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new HomePageAdapter(getSupportFragmentManager(), this, this);
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
