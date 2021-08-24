@@ -34,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.IIcon;
@@ -59,6 +60,7 @@ import es.usc.citius.servando.calendula.activities.ConfirmActivity;
 import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.persistence.DailyScheduleItem;
 import es.usc.citius.servando.calendula.persistence.Medicine;
+import es.usc.citius.servando.calendula.persistence.Patient;
 import es.usc.citius.servando.calendula.persistence.Routine;
 import es.usc.citius.servando.calendula.persistence.Schedule;
 import es.usc.citius.servando.calendula.persistence.ScheduleItem;
@@ -102,6 +104,9 @@ public class DailyAgendaFragment extends Fragment {
         emptyView = rootView.findViewById(R.id.empty_view_placeholder);
         CalendulaApp.eventBus().register(this);
         setupRecyclerView();
+
+        Patient p = DB.patients().getActive(getContext());
+
         setupEmptyView();
 
         boolean expanded = PreferenceUtils.getBoolean(PreferenceKeys.HOME_DAILYAGENDA_EXPANDED, false);
@@ -380,6 +385,7 @@ public class DailyAgendaFragment extends Fragment {
 
         rvAdapter.setListener(rvListener);
     }
+
 
     private void setupEmptyView() {
         int color = HomeProfileMgr.colorForCurrent(getActivity());

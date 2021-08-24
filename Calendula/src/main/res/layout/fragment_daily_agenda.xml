@@ -40,6 +40,110 @@
     </FrameLayout>
 
     <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/userHealthData"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+<!--            <ImageView-->
+<!--                android:id="@+id/bg"-->
+<!--                android:layout_width="130dp"-->
+<!--                android:layout_height="130dp"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:alpha="0.07"-->
+<!--                android:src="@drawable/circle_white"/>-->
+
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView_ok"-->
+<!--                android:layout_width="70dp"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="80dp"-->
+<!--                android:alpha="0.8"-->
+<!--                android:src="@drawable/alldone"/>-->
+
+            <TextView
+                android:id="@+id/tvWeight"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/imageView_ok"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:paddingBottom="15dp"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:paddingTop="15dp"
+                android:text="Weight"
+                android:textAllCaps="false"
+                android:textColor="@color/agenda_item_title"
+                android:textIsSelectable="false"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/tvBMI"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/tvWeight"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:paddingBottom="15dp"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:paddingTop="15dp"
+                android:text="BMI"
+                android:textAllCaps="false"
+                android:textColor="@color/agenda_item_title"
+                android:textIsSelectable="false"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/tvCondition"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/tvBMI"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:paddingBottom="15dp"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:paddingTop="15dp"
+                android:text="Body Condition"
+                android:textAllCaps="false"
+                android:textColor="@color/agenda_item_title"
+                android:textIsSelectable="false"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/empty_view_placeholder"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

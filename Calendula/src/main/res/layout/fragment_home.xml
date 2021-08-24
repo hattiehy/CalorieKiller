@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~    Calendula - An assistant for personal medication management.
+  ~    Copyright (C) 2014-2018 CiTIUS - University of Santiago de Compostela
+  ~
+  ~    Calendula is free software; you can redistribute it and/or modify
+  ~    it under the terms of the GNU General Public License as published by
+  ~    the Free Software Foundation; either version 3 of the License, or
+  ~    (at your option) any later version.
+  ~
+  ~    This program is distributed in the hope that it will be useful,
+  ~    but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~    GNU General Public License for more details.
+  ~
+  ~    You should have received a copy of the GNU General Public License
+  ~    along with this software.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".fragments.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:paddingBottom="60dp">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="40dp"
+            android:gravity="center_vertical"
+            android:text="Age"
+            android:textColor="@color/dark_grey_text"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/user_edit_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="32dp"
+            android:hint="Please enter your age"
+            android:inputType="number"
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp"
+            android:textColor="#222"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/search_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/user_edit_age"
+            android:layout_alignRight="@+id/user_edit_age"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_search_black_48dp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_below="@+id/user_edit_age"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:text="Height"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/dark_grey_text"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/user_edit_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="32dp"
+            android:hint="160 cm"
+            android:inputType="number"
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp"
+            android:textColor="#222"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_below="@+id/user_edit_height"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:text="Weight"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/dark_grey_text"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/user_edit_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="32dp"
+            android:hint="50 Kg"
+            android:inputType="numberDecimal"
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp"
+            android:textColor="#222"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_below="@+id/user_edit_weight"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:text="Gender"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/dark_grey_text"
+            android:textSize="20sp" />
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView4"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="32dp"
+            android:id="@+id/user_gender"
+            android:orientation="horizontal">
+            <RadioButton android:id="@+id/radio_female"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                android:textSize="18sp" />
+            <RadioButton android:id="@+id/radio_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:textSize="18sp" />
+        </RadioGroup>
+
+
+
+        <ImageView
+            android:id="@+id/ic_user_age"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/textView"
+            android:layout_marginLeft="16dp"
+            android:alpha="0.8"
+            android:src="@drawable/ic_edit_black_48dp" />
+
+        <ImageView
+            android:id="@+id/ic_user_height"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_marginLeft="16dp"
+            android:alpha="0.8"
+            android:src="@drawable/ic_edit_black_48dp"/>
+
+        <ImageView
+            android:id="@+id/ic_user_weight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/textView3"
+            android:layout_marginLeft="16dp"
+            android:alpha="0.8"
+            android:src="@drawable/ic_edit_black_48dp"/>
+
+        <ImageView
+            android:id="@+id/ic_user_gender"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/textView4"
+            android:layout_marginLeft="16dp"
+            android:alpha="0.8"
+            android:src="@drawable/ic_edit_black_48dp"/>
+<!--            android:src="@drawable/ic_visibility_black_48dp" -->
+
+
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/stock_layout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/med_presentation"-->
+<!--            android:visibility="gone"-->
+<!--            tools:visibility="visible">-->
+
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/stock_info_line"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/medicine_stock_title"/>-->
+
+<!--        </RelativeLayout>-->
+
+
+    </RelativeLayout>
+</ScrollView>

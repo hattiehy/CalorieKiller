@@ -217,12 +217,8 @@ Please carefully read the leaflet or ask your pharmacist before you get behind t
 <string name="schedule_type_routines_help">"This kind of schedule lets you bind intakes to your routines, such as: \"Every day at breakfast and dinner, excluding sundays\", or \"Every 3 days, with lunch.\""</string>
 <string name="schedule_type_hourly_help">"Hourly schedules are intended to those intakes that repeat by a certain period, such as: \"Every 8 hours\". Set the time of the first intake and go on."</string>
 <string name="schedule_type_intervalrest_help">"Birth control pills and other meds are taken for a while, and then there's a rest. This kind of schedule allows you to specify both periods and simplify those intakes."</string>
-<string name="routines_list_empty_text">"There are no routines yet.
-
-Routines are times when you need to take meds, like breakfast or dinner. You can reuse it for creating schedules faster."</string>
-<string name="medicines_list_empty_text">"There are no meds yet.
-
-Add your meds to the kit, and you will have easy access to leaflets and warnings."</string>
+<string name="routines_list_empty_text">"There are no info yet."</string>
+<string name="medicines_list_empty_text">"There are no info yet."</string>
 <string name="schedules_list_empty_text">"There are no schedules yet.
 
 Add your schedules here and let us just notify you!"</string>
