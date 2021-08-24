@@ -36,6 +36,7 @@ import es.usc.citius.servando.calendula.activities.RoutinesActivity;
 import es.usc.citius.servando.calendula.activities.ScanActivity;
 import es.usc.citius.servando.calendula.activities.ScheduleCreationActivity;
 import es.usc.citius.servando.calendula.activities.SchedulesHelpActivity;
+import es.usc.citius.servando.calendula.activities.UserInfoActivity;
 import es.usc.citius.servando.calendula.adapters.HomePages;
 import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.fragments.ScheduleTypeFragment;
@@ -164,7 +165,7 @@ public class FabMenuMgr implements View.OnClickListener {
         HomePages page = HomePages.values()[currentPage];
         switch (page) {
             case HOME:
-                launchActivity(MedicinesActivity.class);
+                launchActivity(UserInfoActivity.class);
                 return;
             case ROUTINES:
                 launchActivity(RoutinesActivity.class);

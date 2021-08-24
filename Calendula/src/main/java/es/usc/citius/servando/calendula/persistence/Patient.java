@@ -39,6 +39,7 @@ public class Patient {
     public static final String COLUMN_AGE = "Age";
     public static final String COLUMN_HEIGHT = "Height";
     public static final String COLUMN_WEIGHT = "Weight";
+    public static final String COLUMN_GENDER = "Gender";
     public static final String COLUMN_BMI = "BMI";
     public static final String COLUMN_CONDITION = "Condition";
 
@@ -67,6 +68,9 @@ public class Patient {
 
     @DatabaseField(columnName = COLUMN_WEIGHT)
     private double weight;
+
+    @DatabaseField(columnName = COLUMN_GENDER)
+    private String gender;
 
     @DatabaseField(columnName = COLUMN_BMI)
     private String bmi;
@@ -139,6 +143,14 @@ public class Patient {
         this.weight = weight;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getBmi() {
         return bmi;
     }
@@ -178,6 +190,7 @@ public class Patient {
                 ", age=" + age +
                 ", height=" + height +
                 ", weight=" + weight +
+                ", gender='" + gender + '\'' +
                 ", bmi='" + bmi + '\'' +
                 ", condition='" + condition + '\'' +
                 '}';

@@ -105,6 +105,7 @@ public class PatientsActivity extends CalendulaActivity implements GridView.OnIt
         subscribeToEvents();
 
         //patients = DB.patients().findAll();
+        // Users can add new user in the patient page
         fab = (FloatingActionButton) findViewById(R.id.add_button);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +171,7 @@ public class PatientsActivity extends CalendulaActivity implements GridView.OnIt
     private void showRemovePatientDialog(final Patient p) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Deseas eliminar el paciente " + p.getName() + "?")
+        builder.setMessage("Do you want to remove user " + p.getName() + "?")
                 .setCancelable(true)
                 .setPositiveButton(getString(R.string.dialog_yes_option), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

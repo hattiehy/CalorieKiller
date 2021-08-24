@@ -187,10 +187,10 @@ public class PatientDetailActivity extends CalendulaActivity implements GridView
 
                 if (!TextUtils.isEmpty(patient.getName())) {
                     DB.patients().saveAndFireEvent(patient);
-                    if (addRoutinesCheckBox.isChecked() && addRoutinesCheckBox.getVisibility() == View.VISIBLE) {
-                        // if the checkbox is not visible, we're editing, not adding a patient
-                        DefaultDataGenerator.generateDefaultRoutines(patient, this);
-                    }
+//                    if (addRoutinesCheckBox.isChecked() && addRoutinesCheckBox.getVisibility() == View.VISIBLE) {
+//                        // if the checkbox is not visible, we're editing, not adding a patient
+//                        DefaultDataGenerator.generateDefaultRoutines(patient, this);
+//                    }
                     supportFinishAfterTransition();
                 } else {
                     Snack.showIfUnobstructed(R.string.message_patients_name_required, this);
@@ -223,7 +223,7 @@ public class PatientDetailActivity extends CalendulaActivity implements GridView
         String qrData = i.getStringExtra("qr_data");
         if (qrData != null) {
             PatientLinkWrapper p = new Gson().fromJson(qrData, PatientLinkWrapper.class);
-            Snack.show("Usuario vinculado correctamente!", this, Snackbar.LENGTH_LONG);
+            Snack.show("User successfully linked!", this, Snackbar.LENGTH_LONG);
             SharedPreferences prefs = PreferenceUtils.instance().preferences();
             prefs.edit().putString("remote_token" + patientId, p.token).apply();
             LogUtil.d(TAG, p.toString());
@@ -274,7 +274,7 @@ public class PatientDetailActivity extends CalendulaActivity implements GridView
             token = prefs.getString("remote_token" + patientId, null);
             if (token != null) {
                 linkButton.setVisibility(View.VISIBLE);
-                linkButton.setText("Desvincular");
+                linkButton.setText("Unlink");
 
                 linkButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -289,7 +289,10 @@ public class PatientDetailActivity extends CalendulaActivity implements GridView
 
 
         } else {
+            // hide the check box
+            addRoutinesCheckBox.setVisibility(View.GONE);
             linkButton.setVisibility(View.GONE);
+            // New User
             patient = new Patient();
         }
 
@@ -324,15 +327,15 @@ public class PatientDetailActivity extends CalendulaActivity implements GridView
 
     private void showUnlinkPatientDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Si desvinculas este usuario se interrumpirá el seguimiento. Estás seguro de que deseas continuar?")
+        builder.setMessage("If you unlink this user the tracking will be interrupted. Are you sure you want to continue?")
                 .setCancelable(true)
-                .setTitle("Ten cuidado")
-                .setPositiveButton("Si, desvincular", new DialogInterface.OnClickListener() {
+                .setTitle("Be careful")
+                .setPositiveButton("Yes, unlink", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         token = null;
                         SharedPreferences prefs = PreferenceUtils.instance().preferences();
                         prefs.edit().remove("remote_token" + patientId).apply();
-                        linkButton.setText("Vincular");
+                        linkButton.setText("Link");
                     }
                 })
                 .setNegativeButton(getString(R.string.dialog_no_option), new DialogInterface.OnClickListener() {
