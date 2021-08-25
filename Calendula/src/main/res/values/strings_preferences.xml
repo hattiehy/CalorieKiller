@@ -42,6 +42,7 @@
     <string name="prefkey_home_last_mood" translatable="false">last_mood</string>
     <string name="prefkey_home_profile_background_index" translatable="false">profile_background_idx</string>
     <string name="prefkey_home_dailyagenda_expanded" translatable="false">DailyAgendaFragment.expanded</string>
+    <string name="prefkey_home_healthdata_expanded" translatable="false">HealthDataFragment.expanded</string>
 
     <!-- Medicines -->
     <string name="prefkey_medicines_use_prescription_shown" translatable="false">show_use_prescriptions_advice</string>

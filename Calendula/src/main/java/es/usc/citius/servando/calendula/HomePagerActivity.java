@@ -75,7 +75,7 @@ import es.usc.citius.servando.calendula.adapters.HomePages;
 import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.events.PersistenceEvents;
 import es.usc.citius.servando.calendula.events.StockRunningOutEvent;
-import es.usc.citius.servando.calendula.fragments.DailyAgendaFragment;
+import es.usc.citius.servando.calendula.fragments.HealthDataFragment;
 import es.usc.citius.servando.calendula.fragments.HomeProfileMgr;
 import es.usc.citius.servando.calendula.fragments.MedicineCreateOrEditFragment;
 import es.usc.citius.servando.calendula.fragments.MedicinesListFragment;
@@ -188,7 +188,7 @@ public class HomePagerActivity extends CalendulaActivity implements
         // show items relevant to the current page
         switch (page) {
             case HOME:
-                final boolean expanded = ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).isExpanded();
+                final boolean expanded = ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).isExpanded();
                 menuItems.get(R.id.action_expand).setVisible(false);
                 menuItems.get(R.id.action_expand).setIcon(!expanded ? icAgendaMore : icAgendaLess);
                 break;
@@ -209,23 +209,23 @@ public class HomePagerActivity extends CalendulaActivity implements
             case R.id.action_calendar:
                 startActivity(new Intent(this, CalendarActivity.class));
                 return true;
-            case R.id.action_expand:
-
-                final boolean expanded = ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).isExpanded();
-                appBarLayout.setExpanded(expanded);
-
-
-                boolean delay = appBarLayoutExpanded && !expanded || !appBarLayoutExpanded && expanded;
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).toggleViewMode();
-                    }
-                }, delay ? 500 : 0);
-
-                item.setIcon(expanded ? icAgendaMore : icAgendaLess);
-                return true;
+//            case R.id.action_expand:
+//
+//                final boolean expanded = ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).isExpanded();
+//                appBarLayout.setExpanded(expanded);
+//
+//
+//                boolean delay = appBarLayoutExpanded && !expanded || !appBarLayoutExpanded && expanded;
+//
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).toggleViewMode();
+//                    }
+//                }, delay ? 500 : 0);
+//
+//                item.setIcon(expanded ? icAgendaMore : icAgendaLess);
+//                return true;
             case R.id.action_schedules_help:
                 launchActivity(new Intent(this, SchedulesHelpActivity.class));
                 return true;
@@ -296,13 +296,13 @@ public class HomePagerActivity extends CalendulaActivity implements
                     if (event instanceof PersistenceEvents.ModelCreateOrUpdateEvent) {
                         PersistenceEvents.ModelCreateOrUpdateEvent modelCreateOrUpdateEvent = (PersistenceEvents.ModelCreateOrUpdateEvent) event;
                         LogUtil.d(TAG, "handleEvent: " + modelCreateOrUpdateEvent.clazz.getName());
-                        ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
+//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
                         ((RoutinesListFragment) getViewPagerFragment(HomePages.ROUTINES)).notifyDataChange();
                         ((MedicinesListFragment) getViewPagerFragment(HomePages.MEDICINES)).notifyDataChange();
                         ((ScheduleListFragment) getViewPagerFragment(HomePages.SCHEDULES)).notifyDataChange();
                     } else if (event instanceof PersistenceEvents.IntakeConfirmedEvent) {
                         // dismiss "take all" button, update checkboxes
-                        ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
+//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
                         // stock info may need to be updated
                         ((MedicinesListFragment) getViewPagerFragment(HomePages.MEDICINES)).notifyDataChange();
                     } else if (event instanceof PersistenceEvents.ActiveUserChangeEvent) {
@@ -312,7 +312,7 @@ public class HomePagerActivity extends CalendulaActivity implements
                         fabMgr.onPatientUpdate(activePatient);
                     } else if (event instanceof PersistenceEvents.UserUpdateEvent) {
                         Patient p = ((PersistenceEvents.UserUpdateEvent) event).patient;
-                        ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate();
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate();
                         drawerMgr.onPatientUpdated(p);
                         if (DB.patients().isActive(p, HomePagerActivity.this)) {
                             activePatient = p;
@@ -324,13 +324,13 @@ public class HomePagerActivity extends CalendulaActivity implements
                         Patient created = ((PersistenceEvents.UserCreateEvent) event).patient;
                         drawerMgr.onPatientCreated(created);
                     } else if (event instanceof HomeProfileMgr.BackgroundUpdatedEvent) {
-                        ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).refresh();
+//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).refresh();
                     } else if (event instanceof ConfirmActivity.ConfirmStateChangeEvent) {
                         pendingRefresh = ((ConfirmActivity.ConfirmStateChangeEvent) event).position;
-                        ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).refreshPosition(pendingRefresh);
+//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).refreshPosition(pendingRefresh);
                     } else if (event instanceof DailyAgenda.AgendaUpdatedEvent) {
-                        ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
-                        homeProfileMgr.updateDate();
+//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
+//                        homeProfileMgr.updateDate();
                     } else if (event instanceof StockRunningOutEvent) {
                         final StockRunningOutEvent sro = (StockRunningOutEvent) event;
                         handler.postDelayed(new Runnable() {
@@ -524,7 +524,7 @@ public class HomePagerActivity extends CalendulaActivity implements
 
     private void showInvalidNotificationError() {
 
-        final boolean expanded = ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).isExpanded();
+        final boolean expanded = ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).isExpanded();
 
         new AlertDialog.Builder(this)
                 .setTitle(R.string.notification_error_title)
@@ -541,13 +541,13 @@ public class HomePagerActivity extends CalendulaActivity implements
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).toggleViewMode();
+//                                    ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).toggleViewMode();
                                 }
                             }, 200);
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).scrollTo(DateTime.now());
+//                                    ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).scrollTo(DateTime.now());
                                 }
                             }, 600);
                         }
@@ -584,7 +584,7 @@ public class HomePagerActivity extends CalendulaActivity implements
                 updateTitle(position);
                 updateScrim(position);
                 fabMgr.onViewPagerItemChange(position);
-                if (position == HomePages.HOME.ordinal() && !((DailyAgendaFragment) getViewPagerFragment(HomePages.HOME)).isExpanded()) {
+                if (position == HomePages.HOME.ordinal() && !((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).isExpanded()) {
                     appBarLayout.setExpanded(true);
                     CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
                     ((DisableableAppBarLayoutBehavior) layoutParams.getBehavior()).setEnabled(true);

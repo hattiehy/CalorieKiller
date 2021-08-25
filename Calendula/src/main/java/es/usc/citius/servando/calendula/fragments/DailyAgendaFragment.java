@@ -18,6 +18,8 @@
 
 package es.usc.citius.servando.calendula.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -105,13 +107,11 @@ public class DailyAgendaFragment extends Fragment {
         CalendulaApp.eventBus().register(this);
         setupRecyclerView();
 
-        Patient p = DB.patients().getActive(getContext());
-
         setupEmptyView();
 
         boolean expanded = PreferenceUtils.getBoolean(PreferenceKeys.HOME_DAILYAGENDA_EXPANDED, false);
         if (expanded != isExpanded()) {
-            toggleViewMode();
+            //toggleViewMode();
             ((HomePagerActivity) getActivity()).appBarLayout.setExpanded(!expanded);
         }
 
@@ -297,19 +297,19 @@ public class DailyAgendaFragment extends Fragment {
             //emptyView.animate().alpha(1);
         } else {
             emptyView.setVisibility(View.GONE);
-//            emptyView.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
-//                @Override
-//                public void onAnimationEnd(Animator animation) {
-//
-//                }
-//            });
+            emptyView.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                }
+            });
 
         }
     }
 
-    public void toggleViewMode() {
-        rvAdapter.toggleCollapseMode();
-    }
+//    public void toggleViewMode() {
+//        rvAdapter.toggleCollapseMode();
+//    }
 
     public void refresh() {
         rvAdapter.notifyDataSetChanged();

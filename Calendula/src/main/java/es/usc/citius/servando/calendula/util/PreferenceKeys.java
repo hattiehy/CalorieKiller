@@ -48,6 +48,7 @@ public enum PreferenceKeys {
     // Home
     HOME_INTRO_SHOWN(R.string.prefkey_home_intro_shown),
     HOME_DAILYAGENDA_EXPANDED(R.string.prefkey_home_dailyagenda_expanded),
+    HOME_HEALTHDATA_EXPANDED(R.string.prefkey_home_healthdata_expanded),
     HOME_DISPLAY_NAME(R.string.prefkey_home_display_name),
     HOME_PROFILE_BACKGROUND_INDEX(R.string.prefkey_home_profile_background_index),
     HOME_LAST_MOOD(R.string.prefkey_home_last_mood),

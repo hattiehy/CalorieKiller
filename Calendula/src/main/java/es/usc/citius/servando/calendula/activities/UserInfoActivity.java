@@ -84,14 +84,6 @@ public class UserInfoActivity extends CalendulaActivity implements HomeFragment.
     private boolean startedSearch = false;
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.medicines, menu);
-//        removeItem = menu.findItem(R.id.action_remove);
-//        removeItem.setVisible(false);
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -105,62 +97,6 @@ public class UserInfoActivity extends CalendulaActivity implements HomeFragment.
         }
         return true;
     }
-
-//    @Override
-//    public void onMedicineEdited(final Medicine m) {
-//        // check for allergies
-//        if (m.isBoundToPrescription()) {
-//            final List<AllergenVO> vos = AllergenFacade.checkAllergies(this, DB.drugDB().prescriptions().findByCn(m.getCn()));
-//            if (!vos.isEmpty()) {
-//                showAllergyDialog(new MaterialDialog.SingleButtonCallback() {
-//                    @Override
-//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        updateMedicine(m, vos);
-//                    }
-//                });
-//            } else {
-//                updateMedicine(m, null);
-//            }
-//        } else {
-//            updateMedicine(m, null);
-//        }
-//    }
-//
-//    @Override
-//    public void onUserCreated(final Patient p) {
-//
-//        // check for allergies
-//        if (m.isBoundToPrescription()) {
-//            final List<AllergenVO> vos = AllergenFacade.checkAllergies(this, DB.drugDB().prescriptions().findByCn(m.getCn()));
-//            if (!vos.isEmpty()) {
-//                showAllergyDialog(new MaterialDialog.SingleButtonCallback() {
-//                    @Override
-//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        createMedicine(m, vos);
-//                    }
-//                });
-//            } else {
-//                createMedicine(m, null);
-//            }
-//        } else {
-//            createMedicine(m, null);
-//        }
-//    }
-//
-//    @Override
-//    public void onMedicineDeleted(Medicine m) {
-//        Toast.makeText(this, getString(R.string.medicine_deleted_message), Toast.LENGTH_SHORT).show();
-//        DB.medicines().deleteCascade(m, true);
-//        finish();
-//    }
-//
-//    public void showSearchView(@Nullable final String searchText) {
-//        LogUtil.d(TAG, "showSearchView() called with: searchText = [" + searchText + "]");
-//        Intent i = new Intent(this, MedicinesSearchActivity.class);
-//        i.putExtra(MedicinesSearchActivity.EXTRA_SEARCH_TERM, searchText);
-//        startActivityForResult(i, REQUEST_CODE_GET_MED);
-//        startedSearch = true;
-//    }
 
 
     Fragment getViewPagerFragment(int position) {

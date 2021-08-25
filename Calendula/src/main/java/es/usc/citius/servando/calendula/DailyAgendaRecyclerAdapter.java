@@ -278,24 +278,24 @@ public class DailyAgendaRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         return result;
     }
 
-    public void toggleCollapseMode() {
-        LogUtil.d(TAG, "toggleCollapseMode");
-        expanded = !expanded;
-
-        boolean willSHowSomething = isShowingSomething();
-
-        if (listener != null) {
-            listener.onBeforeToggleCollapse(expanded, willSHowSomething);
-        }
-
-        for (int i = 0; i < items.size(); i++) {
-            notifyItemChanged(i);
-        }
-
-        if (listener != null) {
-            listener.onAfterToggleCollapse(expanded, willSHowSomething);
-        }
-    }
+//    public void toggleCollapseMode() {
+//        LogUtil.d(TAG, "toggleCollapseMode");
+//        expanded = !expanded;
+//
+//        boolean willSHowSomething = isShowingSomething();
+//
+//        if (listener != null) {
+//            listener.onBeforeToggleCollapse(expanded, willSHowSomething);
+//        }
+//
+//        for (int i = 0; i < items.size(); i++) {
+//            notifyItemChanged(i);
+//        }
+//
+//        if (listener != null) {
+//            listener.onAfterToggleCollapse(expanded, willSHowSomething);
+//        }
+//    }
 
     public void updatePosition(int position) {
         updateItem(position);
