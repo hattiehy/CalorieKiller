@@ -41,7 +41,7 @@
         android:gravity="top"
         android:paddingLeft="72dp"
         android:paddingTop="10dp"
-        android:text="Enter child's number"
+        android:text="Enter your number"
         android:textColor="#fff"
         android:textSize="24sp"/>
 
@@ -68,7 +68,7 @@
         android:layout_marginTop="45dp"
         android:gravity="bottom"
         android:paddingLeft="72dp"
-        android:text="Home"
+        android:text="Health Data"
         android:textColor="#fff"
         android:textSize="14sp"/>
 

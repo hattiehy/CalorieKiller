@@ -16,7 +16,8 @@
  *    along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package es.usc.citius.servando.calendula;
+package
+        es.usc.citius.servando.calendula;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

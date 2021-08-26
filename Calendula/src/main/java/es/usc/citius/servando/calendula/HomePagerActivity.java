@@ -296,17 +296,18 @@ public class HomePagerActivity extends CalendulaActivity implements
                     if (event instanceof PersistenceEvents.ModelCreateOrUpdateEvent) {
                         PersistenceEvents.ModelCreateOrUpdateEvent modelCreateOrUpdateEvent = (PersistenceEvents.ModelCreateOrUpdateEvent) event;
                         LogUtil.d(TAG, "handleEvent: " + modelCreateOrUpdateEvent.clazz.getName());
-//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
                         ((RoutinesListFragment) getViewPagerFragment(HomePages.ROUTINES)).notifyDataChange();
                         ((MedicinesListFragment) getViewPagerFragment(HomePages.MEDICINES)).notifyDataChange();
                         ((ScheduleListFragment) getViewPagerFragment(HomePages.SCHEDULES)).notifyDataChange();
                     } else if (event instanceof PersistenceEvents.IntakeConfirmedEvent) {
                         // dismiss "take all" button, update checkboxes
-//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
                         // stock info may need to be updated
                         ((MedicinesListFragment) getViewPagerFragment(HomePages.MEDICINES)).notifyDataChange();
                     } else if (event instanceof PersistenceEvents.ActiveUserChangeEvent) {
                         activePatient = ((PersistenceEvents.ActiveUserChangeEvent) event).patient;
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate();
                         updateTitle(mViewPager.getCurrentItem());
                         toolbarLayout.setContentScrimColor(activePatient.getColor());
                         fabMgr.onPatientUpdate(activePatient);
@@ -323,14 +324,15 @@ public class HomePagerActivity extends CalendulaActivity implements
                     } else if (event instanceof PersistenceEvents.UserCreateEvent) {
                         Patient created = ((PersistenceEvents.UserCreateEvent) event).patient;
                         drawerMgr.onPatientCreated(created);
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
                     } else if (event instanceof HomeProfileMgr.BackgroundUpdatedEvent) {
-//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).refresh();
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
                     } else if (event instanceof ConfirmActivity.ConfirmStateChangeEvent) {
                         pendingRefresh = ((ConfirmActivity.ConfirmStateChangeEvent) event).position;
 //                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).refreshPosition(pendingRefresh);
                     } else if (event instanceof DailyAgenda.AgendaUpdatedEvent) {
-//                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
-//                        homeProfileMgr.updateDate();
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
+                        homeProfileMgr.updateDate();
                     } else if (event instanceof StockRunningOutEvent) {
                         final StockRunningOutEvent sro = (StockRunningOutEvent) event;
                         handler.postDelayed(new Runnable() {
@@ -481,7 +483,7 @@ public class HomePagerActivity extends CalendulaActivity implements
         }
 
         if (getIntent() != null && getIntent().getBooleanExtra("invalid_notification_error", false)) {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
