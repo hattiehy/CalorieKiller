@@ -64,6 +64,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.usc.citius.servando.calendula.activities.CalendarActivity;
 import es.usc.citius.servando.calendula.activities.ConfirmActivity;
+import es.usc.citius.servando.calendula.activities.DietActivity;
 import es.usc.citius.servando.calendula.activities.LeftDrawerMgr;
 import es.usc.citius.servando.calendula.activities.MaterialIntroActivity;
 import es.usc.citius.servando.calendula.activities.MedicineInfoActivity;
@@ -250,8 +251,8 @@ public class HomePagerActivity extends CalendulaActivity implements
 
     @Override
     public void onRoutineSelected(Routine r) {
-        Intent i = new Intent(this, RoutinesActivity.class);
-        i.putExtra(CalendulaApp.INTENT_EXTRA_ROUTINE_ID, r.getId());
+        Intent i = new Intent(this, DietActivity.class);
+        //i.putExtra(CalendulaApp.INTENT_EXTRA_ROUTINE_ID, r.getId());
         launchActivity(i);
     }
 

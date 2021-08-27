@@ -321,6 +321,8 @@ dependencies {
     // Secured preferences
     implementation 'online.devliving:securedpreferencestore:0.7.3'
 
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
+
 
 }
 

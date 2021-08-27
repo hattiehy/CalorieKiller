@@ -496,7 +496,7 @@ Do you want to install the new database now?
 <string name="manage_stock">"Manage stock"</string>
 <string name="message_generic_error">"Oops! There was an error."</string>
 <string name="ringtone_none">"None"</string>
-<string name="patient_add">"Add patient"</string>
+<string name="patient_add">"Add User"</string>
 <string name="db_download_and_setup">"Download and setup"</string>
 <string name="schedule_continue_indefinitely">"Do you want this schedule to continue indefinitely?"</string>
 <string name="powder">"Powder"</string>

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.usc.citius.servando.calendula.activities.ConfirmSchedulesActivity;
+import es.usc.citius.servando.calendula.activities.DietActivity;
 import es.usc.citius.servando.calendula.activities.LeftDrawerMgr;
 import es.usc.citius.servando.calendula.activities.MedicinesActivity;
 import es.usc.citius.servando.calendula.activities.RoutinesActivity;
@@ -168,7 +169,7 @@ public class FabMenuMgr implements View.OnClickListener {
                 launchActivity(UserInfoActivity.class);
                 return;
             case ROUTINES:
-                launchActivity(RoutinesActivity.class);
+//                launchActivity(DietActivity.class);
                 break;
             case MEDICINES:
                 launchActivity(MedicinesActivity.class);

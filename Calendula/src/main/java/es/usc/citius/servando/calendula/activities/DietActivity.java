@@ -57,14 +57,14 @@ public class DietActivity extends CalendulaActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_routines);
+        setContentView(R.layout.activity_diet);
         ButterKnife.bind(this);
 
         int color = DB.patients().getActive(this).getColor();
         setupToolbar(null, color);
         setupStatusBar(color);
 
-        foodGroupFragment = (FoodGroupFragment) getSupportFragmentManager().findFragmentById(R.id.routine_fragment);
+        foodGroupFragment = (FoodGroupFragment) getSupportFragmentManager().findFragmentById(R.id.rv);
 
         TextView title = ((TextView) findViewById(R.id.textView2));
         title.setBackgroundColor(color);
