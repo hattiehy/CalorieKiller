@@ -76,6 +76,7 @@ import es.usc.citius.servando.calendula.adapters.HomePages;
 import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.events.PersistenceEvents;
 import es.usc.citius.servando.calendula.events.StockRunningOutEvent;
+import es.usc.citius.servando.calendula.fragments.FoodGroupFragment;
 import es.usc.citius.servando.calendula.fragments.HealthDataFragment;
 import es.usc.citius.servando.calendula.fragments.HomeProfileMgr;
 import es.usc.citius.servando.calendula.fragments.MedicineCreateOrEditFragment;
@@ -298,7 +299,7 @@ public class HomePagerActivity extends CalendulaActivity implements
                         PersistenceEvents.ModelCreateOrUpdateEvent modelCreateOrUpdateEvent = (PersistenceEvents.ModelCreateOrUpdateEvent) event;
                         LogUtil.d(TAG, "handleEvent: " + modelCreateOrUpdateEvent.clazz.getName());
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
-                        ((RoutinesListFragment) getViewPagerFragment(HomePages.ROUTINES)).notifyDataChange();
+                        ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).notifyDataChange();
                         ((MedicinesListFragment) getViewPagerFragment(HomePages.MEDICINES)).notifyDataChange();
                         ((ScheduleListFragment) getViewPagerFragment(HomePages.SCHEDULES)).notifyDataChange();
                     } else if (event instanceof PersistenceEvents.IntakeConfirmedEvent) {
@@ -308,13 +309,14 @@ public class HomePagerActivity extends CalendulaActivity implements
                         ((MedicinesListFragment) getViewPagerFragment(HomePages.MEDICINES)).notifyDataChange();
                     } else if (event instanceof PersistenceEvents.ActiveUserChangeEvent) {
                         activePatient = ((PersistenceEvents.ActiveUserChangeEvent) event).patient;
-                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate();
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(activePatient);
+                        ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).notifyDataChange();
                         updateTitle(mViewPager.getCurrentItem());
                         toolbarLayout.setContentScrimColor(activePatient.getColor());
                         fabMgr.onPatientUpdate(activePatient);
                     } else if (event instanceof PersistenceEvents.UserUpdateEvent) {
                         Patient p = ((PersistenceEvents.UserUpdateEvent) event).patient;
-                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate();
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(p);
                         drawerMgr.onPatientUpdated(p);
                         if (DB.patients().isActive(p, HomePagerActivity.this)) {
                             activePatient = p;
@@ -325,7 +327,7 @@ public class HomePagerActivity extends CalendulaActivity implements
                     } else if (event instanceof PersistenceEvents.UserCreateEvent) {
                         Patient created = ((PersistenceEvents.UserCreateEvent) event).patient;
                         drawerMgr.onPatientCreated(created);
-                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(created);
                     } else if (event instanceof HomeProfileMgr.BackgroundUpdatedEvent) {
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
                     } else if (event instanceof ConfirmActivity.ConfirmStateChangeEvent) {

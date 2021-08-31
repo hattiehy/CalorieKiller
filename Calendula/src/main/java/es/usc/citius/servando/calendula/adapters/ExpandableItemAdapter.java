@@ -44,7 +44,7 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
             case TYPE_LEVEL_0:
                 switch (holder.getLayoutPosition() % 3) {
                     case 0:
-                        holder.setImageResource(R.id.iv_head, R.mipmap.head_img);
+                        holder.setImageResource(R.id.iv_head, R.mipmap.head_image);
                         break;
 //                    case 1:
 //                        holder.setImageResource(R.id.iv_head, R.mipmap.head_img_1);

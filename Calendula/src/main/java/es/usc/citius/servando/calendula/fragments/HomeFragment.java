@@ -91,6 +91,18 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private boolean isValid(String strAge, String strWeight, String strHeight) {
+        if (strWeight == null || strHeight == null || gender == null) {
+            Toast.makeText(getContext(), "Please enter all numbers" , Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (Double.parseDouble(strAge) <= 0 || Double.parseDouble(strHeight) <= 0 || Double.parseDouble(strWeight) <= 0) {
+            Toast.makeText(getContext(), "Please enter valid numbers" , Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public String getFileName() {
         return String.format(BMI_FILE, gender);
     }
@@ -129,7 +141,7 @@ public class HomeFragment extends Fragment {
         if (BMI < percentiles.get(1)) {
             return "Underweight";
         } else if (percentiles.get(1) <= BMI && BMI <= percentiles.get(2)) {
-            return "Correct Weight";
+            return "Healthy Weight";
         } else if (percentiles.get(2) <= BMI && BMI <= percentiles.get(3)) {
             return "Overweight";
         } else {
@@ -149,9 +161,19 @@ public class HomeFragment extends Fragment {
     }
 
     public void onEdit() {
-        int age = Integer.parseInt(etAge.getText().toString().trim());
-        double height = Double.parseDouble(etHeight.getText().toString().trim());
-        double weight = Double.parseDouble(etWeight.getText().toString().trim());
+        String strAge = etAge.getText().toString().trim();
+        String strHeight = etHeight.getText().toString().trim();
+        String strWeight = etWeight.getText().toString().trim();
+        if (gender == null) {
+            Toast.makeText(getContext(), "Please enter all numbers" , Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!isValid(strAge, strHeight, strWeight)) {
+            return;
+        }
+        int age = Integer.parseInt(strAge);
+        double height = Double.parseDouble(strHeight);
+        double weight = Double.parseDouble(strWeight);
         double BMI = calculateBMI(height, weight);
 
         String filename = getFileName();

@@ -139,7 +139,7 @@ public class HealthDataFragment extends Fragment {
     public void showOrHideEmptyView(boolean show) {
         if (show) {
             emptyView.setVisibility(View.VISIBLE);
-            //emptyView.animate().alpha(1);
+            emptyView.animate().alpha(1);
         } else {
             emptyView.setVisibility(View.GONE);
             emptyView.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
@@ -161,7 +161,6 @@ public class HealthDataFragment extends Fragment {
         try {
             LogUtil.d(TAG, "HealthDataView NotifyDataChange");
 //            rvAdapter.notifyDataSetChanged();
-            user = DB.patients().getActive(getContext());
             setupNormalView(getView());
             // show empty list view if there are no items
             healthDataView.postDelayed(new Runnable() {
@@ -176,13 +175,14 @@ public class HealthDataFragment extends Fragment {
     }
 
     public boolean isEmpty() {
-        if (Double.isNaN(user.getWeight()) || user.getBmi() == null || user.getCondition() == null) {
+        if (user.getWeight() == 0.0 || user.getBmi() == null || user.getCondition() == null) {
             return true;
         }
         return false;
     }
 
-    public void onUserUpdate() {
+    public void onUserUpdate(Patient patient) {
+        user = patient;
         notifyDataChange();
     }
 

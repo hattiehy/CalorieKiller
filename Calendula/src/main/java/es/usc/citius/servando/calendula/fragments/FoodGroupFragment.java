@@ -1,5 +1,9 @@
 package es.usc.citius.servando.calendula.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,21 +11,32 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.typeface.IIcon;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import es.usc.citius.servando.calendula.R;
 import es.usc.citius.servando.calendula.adapters.ExpandableItemAdapter;
 
+import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.entity.Level0Item;
 import es.usc.citius.servando.calendula.entity.Level1Item;
-
+import es.usc.citius.servando.calendula.persistence.Patient;
+import es.usc.citius.servando.calendula.util.IconUtils;
+import es.usc.citius.servando.calendula.util.LogUtil;
 
 
 public class FoodGroupFragment extends Fragment {
@@ -29,6 +44,19 @@ public class FoodGroupFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ExpandableItemAdapter adapter;
     private ArrayList<MultiItemEntity> list;
+    AssetManager assetManager;
+    Patient user;
+    String gender;
+    View emptyView;
+    IIcon emptyViewIcon = IconUtils.randomNiceIcon();
+
+    private static final String TAG = "FoodGroupFragment";
+
+    public static final String DAIRY_FILE = "Dairy_Nutri_Info_%s.csv";
+    public static final String FRUITS_FILE = "Fruits_Nutri_Info_%s.csv";
+    public static final String GRAINS_FILE = "Grains_Nutri_Info_%s.csv";
+    public static final String MEAT_FILE = "Lean_Meat_Nutri_Info_%s.csv";
+    public static final String VEGE_FILE = "Vegetables_Legumes_Nutri_Info_%s.csv";
 
     public FoodGroupFragment() {
         // Required empty public constructor
@@ -45,7 +73,16 @@ public class FoodGroupFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_food_group, container, false);
         mRecyclerView = view.findViewById(R.id.rv);
+        emptyView = view.findViewById(R.id.empty_view_placeholder);
+        setupEmptyView();
+        user = DB.patients().getActive(getContext());
+        gender = user.getGender();
+        assetManager = getResources().getAssets();
+        notifyDataChange();
+        return view;
+    }
 
+    private void setupRecyclerView() {
         list = generateData();
         adapter = new ExpandableItemAdapter(list);
 
@@ -60,9 +97,56 @@ public class FoodGroupFragment extends Fragment {
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(adapter);
         adapter.expandAll();
-
-        return view;
     }
+
+    private List<List<String>> readCSV(String fileName) {
+        List<List<String>> nutriList=new ArrayList<>();
+        InputStream inputStream;
+        BufferedReader bufferedReader;
+        String line = null;
+        try {
+            inputStream = assetManager.open(fileName);
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            while ((line = bufferedReader.readLine()) != null) {
+                if ((line.equals("Age Range,Daily Portions,Energy per Portion,Total Daily Energy")))
+                    continue;
+                String[] content = line.split(",");
+                nutriList.add(Arrays.asList(content));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return nutriList;
+    }
+
+    public List<String> getFileName() {
+//        String gender = user.getGender();
+        List<String> fileNameList = new ArrayList<>();
+        fileNameList.add(String.format(DAIRY_FILE, gender));
+        fileNameList.add(String.format(FRUITS_FILE, gender));
+        fileNameList.add(String.format(GRAINS_FILE, gender));
+        fileNameList.add(String.format(MEAT_FILE, gender));
+        fileNameList.add(String.format(VEGE_FILE, gender));
+
+        return fileNameList;
+    }
+
+    private List<String> searchNutriByAge(List<List<String>> nutriList){
+        int age = user.getAge();
+        List<String> nutriInfo = new ArrayList<>();
+        for (List<String> list : nutriList) {
+            List<String> ageRage = Arrays.asList(list.get(0).split(" - "));
+            int minAge = Integer.parseInt(ageRage.get(0));
+            int maxAge = Integer.parseInt(ageRage.get(1));
+            if ( minAge<= age && age < maxAge) {
+                for (int i = 1; i < 4; i++) {
+                    nutriInfo.add(list.get(i));
+                }
+            }
+        }
+        return nutriInfo;
+    }
+
 
     private ArrayList<MultiItemEntity> generateData() {
 //        int lv0Count = 9;
@@ -77,35 +161,117 @@ public class FoodGroupFragment extends Fragment {
 //            }
 //            res.add(lv0);
 //        }
+
+        List<String> diary = new ArrayList<>();
+        List<String> fruit = new ArrayList<>();
+        List<String> grains = new ArrayList<>();
+        List<String> meat = new ArrayList<>();
+        List<String> vege = new ArrayList<>();
+
+        List<String> nameList = getFileName();
+        List<List<String>> diaryList = readCSV(nameList.get(0));
+        diary = searchNutriByAge(diaryList);
+        List<List<String>> fruitList = readCSV(nameList.get(1));
+        fruit = searchNutriByAge(fruitList);
+        List<List<String>> grainsList = readCSV(nameList.get(2));
+        grains = searchNutriByAge(grainsList);
+        List<List<String>> meatList = readCSV(nameList.get(3));
+        meat = searchNutriByAge(meatList);
+        List<List<String>> vegeList = readCSV(nameList.get(4));
+        vege = searchNutriByAge(vegeList);
+
         Level0Item lv1 = new Level0Item("Diary Nutri Info", "subtitle of ");
-        lv1.addSubItem(new Level1Item("Daily Portions: 500-600", "(no animation)"));
-        lv1.addSubItem(new Level1Item("Energy per Portion 500-600", "(no animation)"));
-        lv1.addSubItem(new Level1Item("Total Daily Energy 500-900", "(no animation)"));
+        lv1.addSubItem(new Level1Item("Dailt Portions: " + diary.get(0), "(no animation)"));
+        lv1.addSubItem(new Level1Item("Energy per Portion:  " + diary.get(1), "(no animation)"));
+        lv1.addSubItem(new Level1Item("Total Daily Energy: " + diary.get(2), "(no animation)"));
         res.add(lv1);
 
         Level0Item lv2 = new Level0Item("Fruits Nutri Info", "subtitle of ");
-        lv2.addSubItem(new Level1Item("Daily Portions: 0.5-1", "(no animation)"));
-        lv2.addSubItem(new Level1Item("Energy per Portion 350", "(no animation)"));
-        lv2.addSubItem(new Level1Item("Total Daily Energy 175-350", "(no animation)"));
+        lv2.addSubItem(new Level1Item("Dailt Portions: " + fruit.get(0), "(no animation)"));
+        lv2.addSubItem(new Level1Item("Energy per Portion:  " + fruit.get(1), "(no animation)"));
+        lv2.addSubItem(new Level1Item("Total Daily Energy: " + fruit.get(2), "(no animation)"));
         res.add(lv2);
 
         Level0Item lv3 = new Level0Item("Grains Nutri Info", "subtitle of ");
-        lv3.addSubItem(new Level1Item("Daily Portions: 4-5", "(no animation)"));
-        lv3.addSubItem(new Level1Item("Energy per Portion 500", "(no animation)"));
-        lv3.addSubItem(new Level1Item("Total Daily Energy 2000", "(no animation)"));
+        lv3.addSubItem(new Level1Item("Dailt Portions: " + grains.get(0), "(no animation)"));
+        lv3.addSubItem(new Level1Item("Energy per Portion:  " + grains.get(1), "(no animation)"));
+        lv3.addSubItem(new Level1Item("Total Daily Energy: " + grains.get(2), "(no animation)"));
         res.add(lv3);
 
         Level0Item lv4 = new Level0Item("Lean Meat Nutri Info", "subtitle of ");
-        lv4.addSubItem(new Level1Item("Daily Portions: 1-1.5", "(no animation)"));
-        lv4.addSubItem(new Level1Item("Energy per Portion 600", "(no animation)"));
-        lv4.addSubItem(new Level1Item("Total Daily Energy 600-900", "(no animation)"));
+        lv4.addSubItem(new Level1Item("Dailt Portions: " + meat.get(0), "(no animation)"));
+        lv4.addSubItem(new Level1Item("Energy per Portion:  " + meat.get(1), "(no animation)"));
+        lv4.addSubItem(new Level1Item("Total Daily Energy: " + meat.get(2), "(no animation)"));
         res.add(lv4);
 
         Level0Item lv5 = new Level0Item("Vegetables Legumes Nutri Info", "subtitle of ");
-        lv5.addSubItem(new Level1Item("Daily Portions: 2-2.5", "(no animation)"));
-        lv5.addSubItem(new Level1Item("Energy per Portion 350", "(no animation)"));
-        lv5.addSubItem(new Level1Item("Total Daily Energy 700-900", "(no animation)"));
+        lv5.addSubItem(new Level1Item("Dailt Portions: " + vege.get(0), "(no animation)"));
+        lv5.addSubItem(new Level1Item("Energy per Portion:  " + vege.get(1), "(no animation)"));
+        lv5.addSubItem(new Level1Item("Total Daily Energy: " + vege.get(2), "(no animation)"));
         res.add(lv5);
         return res;
+    }
+
+    public void notifyDataChange() {
+        try {
+//            rvAdapter.notifyDataSetChanged();
+            // show empty list view if there are no items
+            mRecyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showOrHideEmptyView(isEmpty());
+                }
+            }, 100);
+        } catch (Exception e) {
+            LogUtil.e(TAG, "Error onPostExecute", e);
+        }
+    }
+
+    public boolean isEmpty() {
+        if (user.getGender() == null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void onUserUpdate(Patient patient) {
+        user = patient;
+        notifyDataChange();
+    }
+
+    private void setupEmptyView() {
+        int color = HomeProfileMgr.colorForCurrent(getActivity());
+        Drawable icon = new IconicsDrawable(getContext())
+                .icon(emptyViewIcon)
+                .color(color)
+                .sizeDp(90)
+                .paddingDp(0);
+        ((ImageView) emptyView.findViewById(R.id.imageView_ok)).setImageDrawable(icon);
+    }
+
+    private void onBackgroundChange(int color) {
+        Drawable icon = new IconicsDrawable(getContext())
+                .icon(emptyViewIcon)
+                .color(color)
+                .sizeDp(90)
+                .paddingDp(0);
+        ((ImageView) emptyView.findViewById(R.id.imageView_ok)).setImageDrawable(icon);
+    }
+
+    public void showOrHideEmptyView(boolean show) {
+        if (show) {
+            emptyView.setVisibility(View.VISIBLE);
+            emptyView.animate().alpha(1);
+        } else {
+            emptyView.setVisibility(View.GONE);
+            setupRecyclerView();
+            emptyView.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+
+                }
+            });
+
+        }
     }
 }
