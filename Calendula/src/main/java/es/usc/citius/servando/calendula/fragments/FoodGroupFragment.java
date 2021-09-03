@@ -46,7 +46,6 @@ public class FoodGroupFragment extends Fragment {
     private ArrayList<MultiItemEntity> list;
     AssetManager assetManager;
     Patient user;
-    String gender;
     View emptyView;
     IIcon emptyViewIcon = IconUtils.randomNiceIcon();
 
@@ -76,7 +75,6 @@ public class FoodGroupFragment extends Fragment {
         emptyView = view.findViewById(R.id.empty_view_placeholder);
         setupEmptyView();
         user = DB.patients().getActive(getContext());
-        gender = user.getGender();
         assetManager = getResources().getAssets();
         notifyDataChange();
         return view;
@@ -120,7 +118,7 @@ public class FoodGroupFragment extends Fragment {
     }
 
     public List<String> getFileName() {
-//        String gender = user.getGender();
+        String gender = user.getGender();
         List<String> fileNameList = new ArrayList<>();
         fileNameList.add(String.format(DAIRY_FILE, gender));
         fileNameList.add(String.format(FRUITS_FILE, gender));

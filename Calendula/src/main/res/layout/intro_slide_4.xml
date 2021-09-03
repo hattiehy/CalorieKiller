@@ -25,7 +25,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/ic_intro_schedules"/>
+        android:src="@drawable/caculator_info"/>
 
     <TextView
         android:layout_width="wrap_content"

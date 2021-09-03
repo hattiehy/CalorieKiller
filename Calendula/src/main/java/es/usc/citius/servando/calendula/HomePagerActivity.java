@@ -310,13 +310,14 @@ public class HomePagerActivity extends CalendulaActivity implements
                     } else if (event instanceof PersistenceEvents.ActiveUserChangeEvent) {
                         activePatient = ((PersistenceEvents.ActiveUserChangeEvent) event).patient;
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(activePatient);
-                        ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).notifyDataChange();
+                        ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).onUserUpdate(activePatient);
                         updateTitle(mViewPager.getCurrentItem());
                         toolbarLayout.setContentScrimColor(activePatient.getColor());
                         fabMgr.onPatientUpdate(activePatient);
                     } else if (event instanceof PersistenceEvents.UserUpdateEvent) {
                         Patient p = ((PersistenceEvents.UserUpdateEvent) event).patient;
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(p);
+                        ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).onUserUpdate(p);
                         drawerMgr.onPatientUpdated(p);
                         if (DB.patients().isActive(p, HomePagerActivity.this)) {
                             activePatient = p;
@@ -328,6 +329,7 @@ public class HomePagerActivity extends CalendulaActivity implements
                         Patient created = ((PersistenceEvents.UserCreateEvent) event).patient;
                         drawerMgr.onPatientCreated(created);
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(created);
+                        ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).onUserUpdate(created);
                     } else if (event instanceof HomeProfileMgr.BackgroundUpdatedEvent) {
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
                     } else if (event instanceof ConfirmActivity.ConfirmStateChangeEvent) {

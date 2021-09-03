@@ -343,26 +343,20 @@ For this development, we use several open source libraries that are shown below:
 <string name="install_db_notification_content">"Setup in progress"</string>
 <string name="install_db_notification_onfailure">"Database setup failed"</string>
 <string name="install_db_notification_onfailure_content">"Something went wrong while setting up the drug database"</string>
-<string name="intro_title">"Welcome to Calendula!"</string>
-<string name="intro_description">"Taking your medication properly is not easy, but now at least it won't be so difficult!
+<string name="intro_title">"Welcome to Calorie Killer!"</string>
+<string name="intro_description">"Keep a balanced diet is not easy, but now at least it won't be so difficult!
    
 Please, take a look at what we have for you!"</string>
-<string name="intro_routines_title">"Routines"</string>
-<string name="intro_routines_text">"A routine is a time of the day at which you usually need to take some meds.
-
-Do you take multiple medications at breakfast or lunch? Create a routine for that time, and Calendula will group all your intakes in a single notification."</string>
-<string name="intro_meds_title">"Medication kit"</string>
-<string name="intro_meds_text">"Keep all your drugs under control using the medication kit, and get easy access to package leaflets from official medicine databases."</string>
-<string name="intro_schedules_title">"Schedules"</string>
-<string name="intro_schedules_text">"Create your medication agenda by using the schedules editor. You can link your intakes to your routines, define hourly or daily repetitions and much more!"</string>
-<string name="intro_reminders_title">"Reminders"</string>
-<string name="intro_reminders_text">"Calendula will remind you about all your intakes. Remember to confirm, or we will notify you again!
-
-Customize alarms in the settings menu."</string>
-<string name="intro_multipat_title">"Multiple patients!"</string>
-<string name="intro_multipat_text">"Calendula allows you to manage the medication of several patients, with their own medication kit, routines and schedules.
-
-You will see all their intakes in the home screen."</string>
+<string name="intro_routines_title">"Health data"</string>
+<string name="intro_routines_text">"Enter your health data in the home page. We'll help you determine your health status"</string>
+<string name="intro_meds_title">"Food group info"</string>
+<string name="intro_meds_text">"Depending on your health status, we will recommend a suitable daily diet composition for you."</string>
+<string name="intro_schedules_title">"Calorie Calculator"</string>
+<string name="intro_schedules_text">"Upload your diet photos. We'll help you keep track of your dietary calories"</string>
+<string name="intro_reminders_title">"Daily Report"</string>
+<string name="intro_reminders_text">"In the report, you can track your body data and diet records to see your progress more visually"</string>
+<string name="intro_multipat_title">"Multiple users!"</string>
+<string name="intro_multipat_text">"Calendula allows you to manage the health data of several users."</string>
 <string name="title_activity_settings">"Settings"</string>
 <string name="pref_header_general">"General"</string>
 <string name="pref_title_display_name">"Display name"</string>
