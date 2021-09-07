@@ -173,14 +173,14 @@ dependencies {
     // Chrome debug bridge
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'
 
-    // Memory leak debugging
-    //  1.5.2 held back because of a bug with gradle 3.0
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$libVersions.leakcanary"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
-    alphaImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
-    betaImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
-    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
-    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
+//    // Memory leak debugging
+//    //  1.5.2 held back because of a bug with gradle 3.0
+//    debugImplementation "com.squareup.leakcanary:leakcanary-android:$libVersions.leakcanary"
+//    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
+//    alphaImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
+//    betaImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
+//    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
+//    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$libVersions.leakcanary"
 
     /********** SUPPORT **********/
     // Multidex support
@@ -323,6 +323,7 @@ dependencies {
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
 
-
+    // MPAndroid
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
 

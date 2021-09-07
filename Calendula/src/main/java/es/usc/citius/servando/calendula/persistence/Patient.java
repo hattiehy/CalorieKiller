@@ -42,7 +42,7 @@ public class Patient {
     public static final String COLUMN_GENDER = "Gender";
     public static final String COLUMN_BMI = "BMI";
     public static final String COLUMN_CONDITION = "Condition";
-
+    public static final String COLUMN_RECOMINTAKE = "RecomIntake";
 
     @DatabaseField(columnName = COLUMN_ID, generatedId = true)
     private Long id;
@@ -77,6 +77,9 @@ public class Patient {
 
     @DatabaseField(columnName = COLUMN_CONDITION)
     private String condition;
+
+    @DatabaseField(columnName = COLUMN_RECOMINTAKE)
+    private int recomIntake;
 
     public Long getId() {
         return id;
@@ -167,7 +170,15 @@ public class Patient {
         this.condition = condition;
     }
 
-//    @Override
+    public int getRecomIntake() {
+        return recomIntake;
+    }
+
+    public void setRecomIntake(int recomIntake) {
+        this.recomIntake = recomIntake;
+    }
+
+    //    @Override
 //    public String toString() {
 //        return "Patient{" +
 //                "id=" + id +
@@ -193,6 +204,7 @@ public class Patient {
                 ", gender='" + gender + '\'' +
                 ", bmi='" + bmi + '\'' +
                 ", condition='" + condition + '\'' +
+                ", recomIntake='" + recomIntake + '\'' +
                 '}';
     }
 
