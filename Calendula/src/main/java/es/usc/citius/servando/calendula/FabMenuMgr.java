@@ -29,6 +29,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.usc.citius.servando.calendula.activities.CalorieCalculActivity;
 import es.usc.citius.servando.calendula.activities.ConfirmSchedulesActivity;
 import es.usc.citius.servando.calendula.activities.DietActivity;
 import es.usc.citius.servando.calendula.activities.LeftDrawerMgr;
@@ -172,7 +173,7 @@ public class FabMenuMgr implements View.OnClickListener {
 //                launchActivity(DietActivity.class);
                 break;
             case MEDICINES:
-                launchActivity(MedicinesActivity.class);
+                launchActivity(CalorieCalculActivity.class);
                 break;
             case SCHEDULES:
                 if (!PreferenceUtils.getBoolean(PreferenceKeys.SCHEDULES_HELP_SHOWN, false)) {
