@@ -8,12 +8,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.IIcon;
@@ -94,7 +97,6 @@ public class FoodGroupFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(adapter);
-        adapter.expandAll();
     }
 
     private List<List<String>> readCSV(String fileName) {

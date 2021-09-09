@@ -10,6 +10,8 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,16 +21,21 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import es.usc.citius.servando.calendula.R;
+import es.usc.citius.servando.calendula.adapters.ItemClickAdapter;
+import es.usc.citius.servando.calendula.entity.ClickEntity;
 import es.usc.citius.servando.calendula.food.FoodRecognitionException;
 import es.usc.citius.servando.calendula.food.FoodRecognitionTask;
 import es.usc.citius.servando.calendula.food.FoodServiceCallback;
@@ -40,9 +47,9 @@ public class SelectPicActivity extends AppCompatActivity {
 
     Button btSelectPic;
     ImageView ivPic;
-    ListView foodListView;
-    List<Map<String,String>> mFoodData;
-    SimpleAdapter simpleAdapter;
+    List<Map<String,Object>> mFoodData;
+    private RecyclerView mRecyclerView;
+    private ItemClickAdapter adapter;
 
     private static final int PHOTO_PHOTOALBUM = 0;
     private static String MY_TOKEN = null;
@@ -53,7 +60,7 @@ public class SelectPicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_pic);
         btSelectPic = findViewById(R.id.bt_select_pic);
         ivPic = findViewById(R.id.pic);
-        foodListView = findViewById(R.id.foodListView);
+        mRecyclerView = findViewById(R.id.list);
         MY_TOKEN = getString(R.string.caloriemama_token);
 
         btSelectPic.setOnClickListener(new View.OnClickListener() {
@@ -71,11 +78,28 @@ public class SelectPicActivity extends AppCompatActivity {
 
         mFoodData = JSONUtil.getInitalListData();
 
-        // create the grid item mapping
-        String[] from = new String[] {"col_1", "col_2" };
-        int[] to = new int[] { android.R.id.text1, android.R.id.text2};
-        simpleAdapter = new SimpleAdapter(this,mFoodData,android.R.layout.simple_list_item_1,from,to);
-        foodListView.setAdapter(simpleAdapter);
+
+    }
+
+    public void setmRecyclerView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        initAdapter();
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Toast.makeText(SelectPicActivity.this, "onItemClick" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void initAdapter() {
+        List<ClickEntity> data = new ArrayList<>();
+        for (Map<String,Object> foodList : mFoodData) {
+            data.add(new ClickEntity(ClickEntity.CLICK_ITEM_VIEW, (String) foodList.get("food_name"), "Calorie per kilogram: " + (String)foodList.get("calorie")));
+        }
+        adapter = new ItemClickAdapter(data);
+        adapter.openLoadAnimation();
+        mRecyclerView.setAdapter(adapter);
     }
 
 
@@ -100,13 +124,18 @@ public class SelectPicActivity extends AppCompatActivity {
                             public void finishRecognition(JSONObject response, FoodRecognitionException exception) {
 
                                 progressDialog.dismiss();
+                                boolean isFood = response.optBoolean("is_food");
+                                if (!isFood){
+                                    Toast.makeText(getApplicationContext(), "Please select a food picture", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
 
                                 if (exception != null) {
                                     // handle exception gracefully
                                     Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
                                 } else {
                                     JSONUtil.foodJsonToList(response, mFoodData);
-                                    simpleAdapter.notifyDataSetChanged();
+                                    setmRecyclerView();
                                 }
 
                             }

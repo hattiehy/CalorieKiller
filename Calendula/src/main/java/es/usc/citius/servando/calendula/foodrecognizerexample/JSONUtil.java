@@ -1,6 +1,7 @@
 package es.usc.citius.servando.calendula.foodrecognizerexample;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -15,13 +16,12 @@ import java.util.Map;
 public class JSONUtil {
 
 
-    public static List<Map<String,String>> getInitalListData() {
-        List<Map<String, String>> list = new ArrayList<>();
-        list.add(createItem("Food Name", "Calories"));
+    public static List<Map<String, Object>> getInitalListData() {
+        List<Map<String, Object>> list = new ArrayList<>();
         return list;
     }
 
-    public static void foodJsonToList(JSONObject response, List<Map<String, String>> list) {
+    public static void foodJsonToList(JSONObject response, List<Map<String, Object>> list) {
 
         list.clear();
 
@@ -30,18 +30,28 @@ public class JSONUtil {
             for (int i=0; i<results.length(); i++) {
                 JSONObject result = results.optJSONObject(i);
                 JSONArray items = result.optJSONArray("items");
-                for (int j=0; j<items.length(); j++) {
-                    JSONObject item = items.optJSONObject(j);
-                    list.add(createItem(item.optString("name"), ""));
+                if (items.length() > 0){
+                    try {
+                        String name = result.getString("group");
+                        Object item = items.get(0);
+                        list.add(createItem(name, item));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
     }
 
-    private static Map<String,String> createItem(String foodName, String calories) {
-        Map<String,String>  item =  new HashMap<>();
-        item.put("col_1", foodName);
-        item.put("col_2", calories);
+    private static Map<String, Object> createItem(String groupName, Object calories) throws JSONException {
+        JSONObject cal = (JSONObject) calories;
+        JSONObject nutrition = cal.optJSONObject("nutrition");
+        JSONArray servingSizes = cal.optJSONArray("servingSizes");
+        Map<String, Object>  item =  new HashMap<>();
+        item.put("group_name", groupName);
+        item.put("calorie", nutrition.getString("calories"));
+        item.put("food_name", cal.getString("name"));
+        item.put("servingSizes", servingSizes);
         return item;
     }
 
