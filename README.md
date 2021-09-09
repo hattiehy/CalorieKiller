@@ -21,6 +21,23 @@ activity habits. Our application intends to assist these parents in selecting he
 for their children, creating a foundation of a healthy lifestyle for their children going
 forward.
 
+## **Demo**
+The specific code is implemented in the Calendula folder under SRC main. The home screen displays the users health record including daily recommended in take, ACE、HEIGHT、TARGET WEIGHT、BMI、and BODY CONDITION. The home screen will allow the user to enter their health data. Primarly their ACE, HEIGHT and WEIGHT. The calorie counting page allows parents to upload images of the food they or their children are about to eat and receive a calculation of the caloric content of the food. This calculation is displayed on the screen for the user, and afterwards the user can store this number in a calorie counting diary. In accordance with our focus on encouraging a healthy lifestyle for both parents and their children, the calorie counting page provides the user with the ability to track their and their children's energy intake for the day. In conjunction with our nutritional information page, the calorie counting page enables the user to determine whether or not they are consuming a healthy amount of energy on a given day. The imaging functionality makes it simple for a parent to record the food that they or their children are eating without having to scroll or type through a user interface. In addition parents can make a photographic record of their and their
+children's food consumption and upload the images later. This allows parents flexibility and eliminates the need to remember minute details.
+
+The page offers two major areas of functionality: 
+###### **Photographic recognition of different foods:**
+A deep learning algorithm is used to detect different types of food that are present within the images provided by the user.
+###### **Calorie counting of imaged foods:**
+Once the foods are identified, a calorie counting model is applied; the caloric content of the food by unit weight determined, and returned to the user.
+###### **Calorie count storage:**
+Once the calories of a specific food or meal are determined, they can be stored in a calorie counting diary located on the
+same page.
+###### **Here are links to the project's UI design and demo:**
+UI design: https://www.figma.com/proto/upxMnkofqwoeCi6DFpsp7H/Calorie-Killer?node-id=10%3A113&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=1%3A21&show-proto-sidebar=1
+
+Demo: https://bit.ly/TA15-caloriekiller-2
+
 ## **Maintainers**
 
 @Hanying Li @Ziyang Shi @Huiran Li @Lachlan Bolton @Dixita Dutta
