@@ -47,11 +47,13 @@ public class JSONUtil {
         JSONObject cal = (JSONObject) calories;
         JSONObject nutrition = cal.optJSONObject("nutrition");
         JSONArray servingSizes = cal.optJSONArray("servingSizes");
+        JSONObject serving = servingSizes.getJSONObject(0);
         Map<String, Object>  item =  new HashMap<>();
         item.put("group_name", groupName);
         item.put("calorie", nutrition.getString("calories"));
         item.put("food_name", cal.getString("name"));
         item.put("servingSizes", servingSizes);
+        item.put("hasServingWeight", serving.has("servingWeight"));
         return item;
     }
 

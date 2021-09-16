@@ -169,14 +169,18 @@ public class SelectPicActivity extends AppCompatActivity {
 
     public void setmRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        initAdapter();
+        try {
+            initAdapter();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 //                Toast.makeText(SelectPicActivity.this, "onItemClick" + position, Toast.LENGTH_SHORT).show();
                 itemPosition = position;
                 String s = (String) mFoodData.get(position).get("calorie");
-                kjPerkg = Integer.parseInt(s) * 4.184;
+                kjPerkg = Double.valueOf(Double.valueOf(s) * 4.184).intValue();
                 try {
                     List<String> servingList = setServingList(position);
                     selectServing(servingList);
@@ -193,19 +197,30 @@ public class SelectPicActivity extends AppCompatActivity {
         List<String> servingList = new ArrayList<>();
         for (int i = 0 ; i < servingArr.length(); i++) {
             JSONObject serving =servingArr.getJSONObject(i);
-            String serDetail = serving.getString("unit") + ", " + serving.getString("servingWeight") + " kg";
+            String servingWeight = serving.has("servingWeight") ? ", " + serving.getString("servingWeight") + " kg" : "";
+            String serDetail = serving.getString("unit") + servingWeight;
             servingList.add(serDetail);
         }
         return servingList;
     }
 
-    private void initAdapter() {
+    private void initAdapter() throws JSONException{
+        if (mFoodData.size() == 0) {
+            return;
+        }
         List<ClickEntity> data = new ArrayList<>();
         for (Map<String,Object> foodList : mFoodData) {
-            int cal = Double.valueOf((String)foodList.get("calorie")).intValue();
-            int kj = Double.valueOf(cal * 4.184 / 10).intValue();
-            String kjPer100g = String.valueOf(kj);
-            data.add(new ClickEntity(ClickEntity.CLICK_ITEM_VIEW, (String) foodList.get("food_name"), kjPer100g + " kj per 100g"));
+            if ((boolean) foodList.get("hasServingWeight")) {
+                int cal = Double.valueOf((String) foodList.get("calorie")).intValue();
+                int kj = Double.valueOf(cal * 4.184 / 10).intValue();
+                String kjPer100g = String.valueOf(kj);
+                data.add(new ClickEntity(ClickEntity.CLICK_ITEM_VIEW, (String) foodList.get("food_name"), kjPer100g + " kj per 100g"));
+            } else {
+                int cal = Double.valueOf((String) foodList.get("calorie")).intValue();
+                int kj = Double.valueOf(cal * 4.184).intValue();
+                String kjPer100g = String.valueOf(kj);
+                data.add(new ClickEntity(ClickEntity.CLICK_ITEM_VIEW, (String) foodList.get("food_name"), kjPer100g + " kj per serving"));
+            }
         }
         adapter = new ItemClickAdapter(data);
         adapter.openLoadAnimation();
@@ -223,7 +238,12 @@ public class SelectPicActivity extends AppCompatActivity {
                     Bitmap bitmap = null;
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                        Bitmap cropped = ImageUtil.cropCenterImage(bitmap, 544, 544);
+                        int smallSide = bitmap.getHeight() > bitmap.getWidth() ? bitmap.getWidth() : bitmap.getHeight();
+                        float scaleRatio = (float) 544/smallSide;
+                        Bitmap scaled = ImageUtil.scaleBitmap(bitmap, scaleRatio);
+                        int w = scaled.getWidth();
+                        int h = scaled.getHeight();
+                        Bitmap cropped = ImageUtil.cropCenterImage(scaled, 544, 544);
                         ivPic.setImageBitmap(cropped);
                         FoodTask foodTask = new FoodTask(MY_TOKEN, cropped);
                         final ProgressDialog progressDialog = ProgressDialog.show(this,"Please wait...", "Recognizing food");
