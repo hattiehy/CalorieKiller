@@ -127,6 +127,34 @@ public class CalorieCalculActivity extends CalendulaActivity implements Calculat
         super.onSaveInstanceState(outState);
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        LogUtil.d(TAG, "onActivityResult() called with: requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
+//        if (requestCode == REQUEST_CODE_GET_MED) {
+//            if (resultCode == RESULT_OK) {
+//                final String prescriptionName = data.getStringExtra(MedicinesSearchActivity.RETURN_EXTRA_PRESCRIPTION_NAME);
+//                mViewPager.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (prescriptionName != null) {
+//                            ((MedicineCreateOrEditFragment) getViewPagerFragment(0)).setMedicineName(prescriptionName);
+//                        } else {
+//                            final Prescription p = data.getParcelableExtra(MedicinesSearchActivity.RETURN_EXTRA_PRESCRIPTION);
+//                            if (p != null) {
+//                                ((MedicineCreateOrEditFragment) getViewPagerFragment(0)).setPrescription(p);
+//                            } else {
+//                                LogUtil.e(TAG, "onActivityResult: result was OK but no prescription extras received ");
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//        } else {
+//            LogUtil.w(TAG, "onActivityResult: invalid request code " + requestCode + ", ignoring");
+//        }
+//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -162,7 +190,6 @@ public class CalorieCalculActivity extends CalendulaActivity implements Calculat
     }
 
     private void processIntent() {
-//        mMedicineId = getIntent().getLongExtra(CalendulaApp.INTENT_EXTRA_MEDICINE_ID, -1);
         intentAction = getIntent().getStringExtra(CalendulaApp.INTENT_EXTRA_ACTION);
         intentSearchText = getIntent().getStringExtra(EXTRA_SEARCH_TEXT);
         qrData = getIntent().getStringExtra("qr_data");
@@ -179,7 +206,6 @@ public class CalorieCalculActivity extends CalendulaActivity implements Calculat
     public void showSearchView(@Nullable final String searchText) {
 //        LogUtil.d(TAG, "showSearchView() called with: searchText = [" + searchText + "]");
         Intent i = new Intent(this, SelectPicActivity.class);
-        i.putExtra(MedicinesSearchActivity.EXTRA_SEARCH_TERM, searchText);
         startActivityForResult(i, REQUEST_CODE_GET_MED);
 //        startedSearch = true;
     }

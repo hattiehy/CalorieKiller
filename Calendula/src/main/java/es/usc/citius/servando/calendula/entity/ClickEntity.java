@@ -7,6 +7,7 @@ public class ClickEntity implements MultiItemEntity {
     public int Type;
     private String title;
     private String subTitle;
+    private String total;
 
     public ClickEntity(int type, String title, String subTitle) {
         Type = type;
@@ -40,6 +41,14 @@ public class ClickEntity implements MultiItemEntity {
 
     public void setSubTitle(String subTitle) {
         this.subTitle = subTitle;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 
     @Override

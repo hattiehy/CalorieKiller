@@ -1,5 +1,6 @@
 package es.usc.citius.servando.calendula.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,36 +33,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import es.usc.citius.servando.calendula.CalendulaApp;
 import es.usc.citius.servando.calendula.R;
 import es.usc.citius.servando.calendula.adapters.ItemClickAdapter;
 import es.usc.citius.servando.calendula.entity.ClickEntity;
+import es.usc.citius.servando.calendula.events.PersistenceEvents;
 import es.usc.citius.servando.calendula.food.FoodRecognitionException;
 import es.usc.citius.servando.calendula.food.FoodRecognitionTask;
 import es.usc.citius.servando.calendula.food.FoodServiceCallback;
 import es.usc.citius.servando.calendula.food.FoodTask;
 import es.usc.citius.servando.calendula.foodrecognizerexample.ImageUtil;
 import es.usc.citius.servando.calendula.foodrecognizerexample.JSONUtil;
+import es.usc.citius.servando.calendula.fragments.DailyIntakeFragment;
 
 public class SelectPicActivity extends AppCompatActivity {
 
-    Button btSelectPic;
+    Button btSelectPic, btDone;
     ImageView ivPic;
     List<Map<String,Object>> mFoodData;
     private RecyclerView mRecyclerView;
     private ItemClickAdapter adapter;
     private double quantityNum = 0;
     private double servingQuantity = 0;
-    private int caloriePerkg = 0;
-    private int calorie = 0;
+    private double kjPerkg = 0;
+    private int itemPosition = 0;
+    public static int kjofAllFoods=0;
 
     private static final int PHOTO_PHOTOALBUM = 0;
     private static String MY_TOKEN = null;
+    private static final String OUTPUT_INTAKE = "intake";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_pic);
         btSelectPic = findViewById(R.id.bt_select_pic);
+        btDone = findViewById(R.id.bt_confirm);
         ivPic = findViewById(R.id.pic);
         mRecyclerView = findViewById(R.id.list);
         MY_TOKEN = getString(R.string.caloriemama_token);
@@ -80,6 +87,14 @@ public class SelectPicActivity extends AppCompatActivity {
         });
 
         mFoodData = JSONUtil.getInitalListData();
+        btDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CalendulaApp.eventBus().post(new PersistenceEvents.IntakeAddedEvent(kjofAllFoods));
+                Toast.makeText(SelectPicActivity.this, "Intake has been saved", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 
     public void selectServing(final List<String> list) {
@@ -98,13 +113,19 @@ public class SelectPicActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String raw = list.get(i);
-                String strQuantity = raw.split(", ")[1];
+                String[] regs = raw.split(", ");
+                String strQuantity = regs[regs.length-1];
                 servingQuantity = Double.parseDouble(strQuantity.split(" ")[0]);
                 popupLayout.dismiss();
                 enterQuantity();
             }
         });
 
+    }
+
+    public void returnIntake() {
+
+        finish();
     }
 
 
@@ -123,16 +144,26 @@ public class SelectPicActivity extends AppCompatActivity {
                 }
                 quantityNum = Double.parseDouble(etQuantity.getText().toString());
                 popupLayout.dismiss();
-                calorie = calculateCalorie();
+                int totalKj = calculateCalorie();
+                updateItemInfo(totalKj);
+                kjofAllFoods += totalKj;
             }
         });
         popupLayout.setUseRadius(true);
         popupLayout.show(PopupLayout.POSITION_BOTTOM);
     }
 
+
+    public void updateItemInfo(int totalKj) {
+        ClickEntity item = adapter.getData().get(itemPosition);
+        String total = totalKj + " kj";
+        item.setTotal(total);
+        adapter.notifyItemChanged(itemPosition);
+    }
+
     public int calculateCalorie() {
         double qua = servingQuantity * quantityNum;
-        int calorie = (int) (qua * caloriePerkg);
+        int calorie = (int) (qua * kjPerkg);
         return calorie;
     }
 
@@ -143,12 +174,12 @@ public class SelectPicActivity extends AppCompatActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 //                Toast.makeText(SelectPicActivity.this, "onItemClick" + position, Toast.LENGTH_SHORT).show();
+                itemPosition = position;
                 String s = (String) mFoodData.get(position).get("calorie");
-                caloriePerkg = Integer.parseInt(s);
+                kjPerkg = Integer.parseInt(s) * 4.184;
                 try {
                     List<String> servingList = setServingList(position);
                     selectServing(servingList);
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -171,7 +202,10 @@ public class SelectPicActivity extends AppCompatActivity {
     private void initAdapter() {
         List<ClickEntity> data = new ArrayList<>();
         for (Map<String,Object> foodList : mFoodData) {
-            data.add(new ClickEntity(ClickEntity.CLICK_ITEM_VIEW, (String) foodList.get("food_name"), "Calorie per kilogram: " + (String)foodList.get("calorie")));
+            int cal = Double.valueOf((String)foodList.get("calorie")).intValue();
+            int kj = Double.valueOf(cal * 4.184 / 10).intValue();
+            String kjPer100g = String.valueOf(kj);
+            data.add(new ClickEntity(ClickEntity.CLICK_ITEM_VIEW, (String) foodList.get("food_name"), kjPer100g + " kj per 100g"));
         }
         adapter = new ItemClickAdapter(data);
         adapter.openLoadAnimation();

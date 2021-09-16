@@ -68,6 +68,15 @@ public class PersistenceEvents {
         }
     }
 
+    public static class IntakeAddedEvent {
+
+        public int intake;
+
+        public IntakeAddedEvent(int intake) {
+            this.intake = intake;
+        }
+    }
+
     public static class UserCreateEvent {
         public Patient patient;
 

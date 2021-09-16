@@ -76,6 +76,7 @@ import es.usc.citius.servando.calendula.adapters.HomePages;
 import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.events.PersistenceEvents;
 import es.usc.citius.servando.calendula.events.StockRunningOutEvent;
+import es.usc.citius.servando.calendula.fragments.DailyIntakeFragment;
 import es.usc.citius.servando.calendula.fragments.FoodGroupFragment;
 import es.usc.citius.servando.calendula.fragments.HealthDataFragment;
 import es.usc.citius.servando.calendula.fragments.HomeProfileMgr;
@@ -332,6 +333,8 @@ public class HomePagerActivity extends CalendulaActivity implements
                         ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).onUserUpdate(created);
                     } else if (event instanceof HomeProfileMgr.BackgroundUpdatedEvent) {
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
+                    } else if (event instanceof PersistenceEvents.IntakeAddedEvent) {
+                        ((DailyIntakeFragment) getViewPagerFragment(HomePages.MEDICINES)).updateIntake();
                     } else if (event instanceof ConfirmActivity.ConfirmStateChangeEvent) {
                         pendingRefresh = ((ConfirmActivity.ConfirmStateChangeEvent) event).position;
 //                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).refreshPosition(pendingRefresh);

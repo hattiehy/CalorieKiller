@@ -24,6 +24,7 @@ import com.github.mikephil.charting.utils.MPPointF;
 import java.util.ArrayList;
 
 import es.usc.citius.servando.calendula.R;
+import es.usc.citius.servando.calendula.activities.SelectPicActivity;
 import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.persistence.Patient;
 
@@ -32,6 +33,7 @@ public class DailyIntakeFragment extends Fragment {
 
     private PieChart pcDailyIntake;
     Patient mPatient;
+    int currentIntake = 0;
 
     public DailyIntakeFragment() {
         // Required empty public constructor
@@ -49,10 +51,14 @@ public class DailyIntakeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_daily_intake, container, false);
         pcDailyIntake = view.findViewById(R.id.pc_daily_intake);
         mPatient = DB.patients().getActive(getContext());
-
-        int current = 2471;
-        setUpPieChart(current);
+        currentIntake = SelectPicActivity.kjofAllFoods;
+        setUpPieChart(currentIntake);
         return view;
+    }
+
+    public void updateIntake() {
+        currentIntake += SelectPicActivity.kjofAllFoods;
+        setUpPieChart(currentIntake);
     }
 
     private SpannableString generateCenterSpannableText(int remaining) {
@@ -68,12 +74,6 @@ public class DailyIntakeFragment extends Fragment {
         s.setSpan(new StyleSpan(Typeface.NORMAL), startIndex+1, s.length(), 0);
         return s;
     }
-
-//    public void onUserUpdate(Patient patient) {
-//        user = patient;
-//        notifyDataChange();
-//    }
-
 
 
     private void setUpPieChart(int currentIntake){
