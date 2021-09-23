@@ -303,6 +303,16 @@ public class HomePagerActivity extends CalendulaActivity implements
                         ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).notifyDataChange();
                         ((MedicinesListFragment) getViewPagerFragment(HomePages.MEDICINES)).notifyDataChange();
                         ((ScheduleListFragment) getViewPagerFragment(HomePages.SCHEDULES)).notifyDataChange();
+                    } else if (event instanceof PersistenceEvents.HModelCreateOrUpdateEvent) {
+                        PersistenceEvents.HModelCreateOrUpdateEvent hModelCreateOrUpdateEvent = (PersistenceEvents.HModelCreateOrUpdateEvent) event;
+                        LogUtil.d(TAG, "handleEvent: " + hModelCreateOrUpdateEvent.clazz.getName());
+                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
+                        ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).notifyDataChange();
+                        ((DailyIntakeFragment) getViewPagerFragment(HomePages.MEDICINES)).notifyDataChange();
+                    } else if (event instanceof PersistenceEvents.DModelCreateOrUpdateEvent) {
+                        PersistenceEvents.DModelCreateOrUpdateEvent dModelCreateOrUpdateEvent = (PersistenceEvents.DModelCreateOrUpdateEvent) event;
+                        LogUtil.d(TAG, "handleEvent: " + dModelCreateOrUpdateEvent.clazz.getName());
+                        ((DailyIntakeFragment) getViewPagerFragment(HomePages.MEDICINES)).notifyDataChange();
                     } else if (event instanceof PersistenceEvents.IntakeConfirmedEvent) {
                         // dismiss "take all" button, update checkboxes
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
@@ -311,6 +321,7 @@ public class HomePagerActivity extends CalendulaActivity implements
                     } else if (event instanceof PersistenceEvents.ActiveUserChangeEvent) {
                         activePatient = ((PersistenceEvents.ActiveUserChangeEvent) event).patient;
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(activePatient);
+                        ((DailyIntakeFragment) getViewPagerFragment(HomePages.MEDICINES)).onUserUpdate(activePatient);
                         ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).onUserUpdate(activePatient);
                         updateTitle(mViewPager.getCurrentItem());
                         toolbarLayout.setContentScrimColor(activePatient.getColor());
@@ -319,6 +330,7 @@ public class HomePagerActivity extends CalendulaActivity implements
                         Patient p = ((PersistenceEvents.UserUpdateEvent) event).patient;
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(p);
                         ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).onUserUpdate(p);
+                        ((DailyIntakeFragment) getViewPagerFragment(HomePages.MEDICINES)).onUserUpdate(p);
                         drawerMgr.onPatientUpdated(p);
                         if (DB.patients().isActive(p, HomePagerActivity.this)) {
                             activePatient = p;
@@ -331,10 +343,9 @@ public class HomePagerActivity extends CalendulaActivity implements
                         drawerMgr.onPatientCreated(created);
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(created);
                         ((FoodGroupFragment) getViewPagerFragment(HomePages.ROUTINES)).onUserUpdate(created);
+                        ((DailyIntakeFragment) getViewPagerFragment(HomePages.MEDICINES)).onUserUpdate(created);
                     } else if (event instanceof HomeProfileMgr.BackgroundUpdatedEvent) {
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).notifyDataChange();
-                    } else if (event instanceof PersistenceEvents.IntakeAddedEvent) {
-                        ((DailyIntakeFragment) getViewPagerFragment(HomePages.MEDICINES)).updateIntake();
                     } else if (event instanceof ConfirmActivity.ConfirmStateChangeEvent) {
                         pendingRefresh = ((ConfirmActivity.ConfirmStateChangeEvent) event).position;
 //                        ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).refreshPosition(pendingRefresh);

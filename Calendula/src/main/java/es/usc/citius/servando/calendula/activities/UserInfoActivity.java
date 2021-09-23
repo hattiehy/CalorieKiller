@@ -40,6 +40,7 @@ import es.usc.citius.servando.calendula.drugdb.model.persistence.Prescription;
 import es.usc.citius.servando.calendula.events.PersistenceEvents;
 import es.usc.citius.servando.calendula.fragments.HomeFragment;
 import es.usc.citius.servando.calendula.fragments.MedicineCreateOrEditFragment;
+import es.usc.citius.servando.calendula.persistence.HealthData;
 import es.usc.citius.servando.calendula.persistence.Medicine;
 import es.usc.citius.servando.calendula.persistence.Patient;
 import es.usc.citius.servando.calendula.persistence.PatientAlert;
@@ -50,7 +51,7 @@ import es.usc.citius.servando.calendula.util.LogUtil;
 import es.usc.citius.servando.calendula.util.Snack;
 import es.usc.citius.servando.calendula.util.alerts.AlertManager;
 
-public class UserInfoActivity extends CalendulaActivity implements HomeFragment.OnUserEditListener{
+public class UserInfoActivity extends CalendulaActivity implements HomeFragment.OnHealthDataEditListener{
 
 
     public static final String EXTRA_SEARCH_TEXT = "MedicinesActivity.extras.SEARCH_TEXT";
@@ -116,9 +117,6 @@ public class UserInfoActivity extends CalendulaActivity implements HomeFragment.
         processIntent();
 
         TextView title = ((TextView) findViewById(R.id.textView2));
-//        if (mMedicineId != -1) {
-//            title.setText(getString(R.string.edit_medicine));
-//        }
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -189,9 +187,15 @@ public class UserInfoActivity extends CalendulaActivity implements HomeFragment.
     }
 
 
+//    @Override
+//    public void onUserCreated(Patient p) {
+//        Patient patient = p;
+//        Toast.makeText(this, "Health number has been saved", Toast.LENGTH_SHORT).show();
+//        finish();
+//    }
+
     @Override
-    public void onUserCreated(Patient p) {
-        Patient patient = p;
+    public void OnHealthDataEditListener(HealthData h) {
         Toast.makeText(this, "Health number has been saved", Toast.LENGTH_SHORT).show();
         finish();
     }

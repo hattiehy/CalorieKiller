@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -29,13 +30,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import es.usc.citius.servando.calendula.CalendulaApp;
 import es.usc.citius.servando.calendula.R;
 import es.usc.citius.servando.calendula.adapters.ItemClickAdapter;
+import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.entity.ClickEntity;
 import es.usc.citius.servando.calendula.events.PersistenceEvents;
 import es.usc.citius.servando.calendula.food.FoodRecognitionException;
@@ -45,6 +50,8 @@ import es.usc.citius.servando.calendula.food.FoodTask;
 import es.usc.citius.servando.calendula.foodrecognizerexample.ImageUtil;
 import es.usc.citius.servando.calendula.foodrecognizerexample.JSONUtil;
 import es.usc.citius.servando.calendula.fragments.DailyIntakeFragment;
+import es.usc.citius.servando.calendula.persistence.DailyIntake;
+import es.usc.citius.servando.calendula.persistence.Patient;
 
 public class SelectPicActivity extends AppCompatActivity {
 
@@ -55,13 +62,15 @@ public class SelectPicActivity extends AppCompatActivity {
     private ItemClickAdapter adapter;
     private double quantityNum = 0;
     private double servingQuantity = 0;
-    private double kjPerkg = 0;
     private int itemPosition = 0;
-    public static int kjofAllFoods=0;
+    private int kjofAllFoods=0;
+    private double carbsAll = 0;
+    private double fatAll = 0;
+    private double proteinAll = 0;
+    private Patient user;
 
     private static final int PHOTO_PHOTOALBUM = 0;
     private static String MY_TOKEN = null;
-    private static final String OUTPUT_INTAKE = "intake";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,8 @@ public class SelectPicActivity extends AppCompatActivity {
         ivPic = findViewById(R.id.pic);
         mRecyclerView = findViewById(R.id.list);
         MY_TOKEN = getString(R.string.caloriemama_token);
+
+        user = DB.patients().getActive(this);
 
         btSelectPic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +101,8 @@ public class SelectPicActivity extends AppCompatActivity {
         btDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CalendulaApp.eventBus().post(new PersistenceEvents.IntakeAddedEvent(kjofAllFoods));
+//                CalendulaApp.eventBus().post(new PersistenceEvents.IntakeAddedEvent(kjofAllFoods));
+                saveDailyIntake();
                 Toast.makeText(SelectPicActivity.this, "Intake has been saved", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -123,9 +135,44 @@ public class SelectPicActivity extends AppCompatActivity {
 
     }
 
-    public void returnIntake() {
+    public boolean isSameDay(DailyIntake dailyIntake){
+        Date curDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String date = formatter.format(curDate);
+        if (dailyIntake == null) {
+            return false;
+        } else return dailyIntake.getDate().equals(date);
+    }
 
-        finish();
+    public void saveDailyIntake() {
+        DailyIntake dailyIntake = DB.dailyIntake().findByPatient(user);
+        if (isSameDay(dailyIntake)) {
+            int intake = dailyIntake.getIntake() + kjofAllFoods;
+            double carbs = dailyIntake.getCarbs() + carbsAll;
+            double fat = dailyIntake.getFat() + fatAll;
+            double protein = dailyIntake.getProtein() + proteinAll;
+            dailyIntake.setIntake(intake);
+            dailyIntake.setCarbs(carbs);
+            dailyIntake.setFat(fat);
+            dailyIntake.setProtein(protein);
+
+            DB.dailyIntake().saveAndFireEvent(dailyIntake);
+        } else {
+            DailyIntake dailyIntakeNew = new DailyIntake();
+
+            Date curDate = new Date(System.currentTimeMillis());
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String date = formatter.format(curDate);
+
+            dailyIntakeNew.setIntake(kjofAllFoods);
+            dailyIntakeNew.setCarbs(carbsAll);
+            dailyIntakeNew.setFat(fatAll);
+            dailyIntakeNew.setProtein(proteinAll);
+            dailyIntakeNew.setDate(date);
+            dailyIntakeNew.setPatient(user);
+
+            DB.dailyIntake().saveAndFireEvent(dailyIntakeNew);
+        }
     }
 
 
@@ -144,9 +191,14 @@ public class SelectPicActivity extends AppCompatActivity {
                 }
                 quantityNum = Double.parseDouble(etQuantity.getText().toString());
                 popupLayout.dismiss();
-                int totalKj = calculateCalorie();
-                updateItemInfo(totalKj);
-                kjofAllFoods += totalKj;
+                double qua = servingQuantity * quantityNum;
+                Map<String, Object> nutritionMap = calculateCalorie(qua);
+                int calorie = (Integer) nutritionMap.get("calorie");
+                updateItemInfo(calorie);
+                kjofAllFoods += calorie;
+                carbsAll += (double)nutritionMap.get("carbs");
+                fatAll += (double)nutritionMap.get("fat");
+                proteinAll += (double) nutritionMap.get("protein");
             }
         });
         popupLayout.setUseRadius(true);
@@ -161,11 +213,24 @@ public class SelectPicActivity extends AppCompatActivity {
         adapter.notifyItemChanged(itemPosition);
     }
 
-    public int calculateCalorie() {
-        double qua = servingQuantity * quantityNum;
-        int calorie = (int) (qua * kjPerkg);
-        return calorie;
+    public Map<String, Object> calculateCalorie(double qua) {
+        String calorieString = (String) mFoodData.get(itemPosition).get("calorie");
+        String carbsString = (String) mFoodData.get(itemPosition).get("calorie");
+        String fatString = (String) mFoodData.get(itemPosition).get("calorie");
+        String proteinString = (String) mFoodData.get(itemPosition).get("calorie");
+        int kjPerkg = Double.valueOf(Double.valueOf(calorieString) * 4.184).intValue();
+        int cal = Double.valueOf(kjPerkg * qua).intValue();
+        double carbs = Double.valueOf(carbsString) * qua * 1000;
+        double fat = Double.valueOf(fatString) * qua * 1000;
+        double protein = Double.valueOf(proteinString) * qua * 1000;
+        Map<String, Object> nutritionMap = new HashMap<>();
+        nutritionMap.put("calorie", cal);
+        nutritionMap.put("carbs", carbs);
+        nutritionMap.put("fat", fat);
+        nutritionMap.put("protein", protein);
+        return nutritionMap;
     }
+
 
     public void setmRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -179,8 +244,6 @@ public class SelectPicActivity extends AppCompatActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 //                Toast.makeText(SelectPicActivity.this, "onItemClick" + position, Toast.LENGTH_SHORT).show();
                 itemPosition = position;
-                String s = (String) mFoodData.get(position).get("calorie");
-                kjPerkg = Double.valueOf(Double.valueOf(s) * 4.184).intValue();
                 try {
                     List<String> servingList = setServingList(position);
                     selectServing(servingList);
