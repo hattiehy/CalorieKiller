@@ -58,12 +58,15 @@ import org.greenrobot.eventbus.Subscribe;
 import org.joda.time.DateTime;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.usc.citius.servando.calendula.activities.BMIWeightActivity;
 import es.usc.citius.servando.calendula.activities.CalendarActivity;
 import es.usc.citius.servando.calendula.activities.ConfirmActivity;
+import es.usc.citius.servando.calendula.activities.DailyIntakeActivity;
 import es.usc.citius.servando.calendula.activities.DietActivity;
 import es.usc.citius.servando.calendula.activities.LeftDrawerMgr;
 import es.usc.citius.servando.calendula.activities.MaterialIntroActivity;
@@ -79,11 +82,14 @@ import es.usc.citius.servando.calendula.events.StockRunningOutEvent;
 import es.usc.citius.servando.calendula.fragments.DailyIntakeFragment;
 import es.usc.citius.servando.calendula.fragments.FoodGroupFragment;
 import es.usc.citius.servando.calendula.fragments.HealthDataFragment;
+import es.usc.citius.servando.calendula.fragments.HealthReportFragment;
 import es.usc.citius.servando.calendula.fragments.HomeProfileMgr;
 import es.usc.citius.servando.calendula.fragments.MedicineCreateOrEditFragment;
 import es.usc.citius.servando.calendula.fragments.MedicinesListFragment;
 import es.usc.citius.servando.calendula.fragments.RoutinesListFragment;
 import es.usc.citius.servando.calendula.fragments.ScheduleListFragment;
+import es.usc.citius.servando.calendula.persistence.DailyIntake;
+import es.usc.citius.servando.calendula.persistence.HealthData;
 import es.usc.citius.servando.calendula.persistence.Medicine;
 import es.usc.citius.servando.calendula.persistence.Patient;
 import es.usc.citius.servando.calendula.persistence.Routine;
@@ -103,7 +109,8 @@ import es.usc.citius.servando.calendula.util.view.ExpandableFAB;
 public class HomePagerActivity extends CalendulaActivity implements
         RoutinesListFragment.OnRoutineSelectedListener,
         MedicinesListFragment.OnMedicineSelectedListener,
-        ScheduleListFragment.OnScheduleSelectedListener {
+        ScheduleListFragment.OnScheduleSelectedListener,
+        HealthReportFragment.OnButtonSelectedListener {
 
     public static final int REQ_CODE_EXTERNAL_STORAGE = 10;
     private static final String TAG = "HomePagerActivity";
@@ -254,6 +261,20 @@ public class HomePagerActivity extends CalendulaActivity implements
     @Override
     public void onRoutineSelected(Routine r) {
         Intent i = new Intent(this, DietActivity.class);
+        //i.putExtra(CalendulaApp.INTENT_EXTRA_ROUTINE_ID, r.getId());
+        launchActivity(i);
+    }
+
+    @Override
+    public void onWeightAndBMISelected() {
+        Intent i = new Intent(this, BMIWeightActivity.class);
+        //i.putExtra(CalendulaApp.INTENT_EXTRA_ROUTINE_ID, r.getId());
+        launchActivity(i);
+    }
+
+    @Override
+    public void onDailyIntakeSelected() {
+        Intent i = new Intent(this, DailyIntakeActivity.class);
         //i.putExtra(CalendulaApp.INTENT_EXTRA_ROUTINE_ID, r.getId());
         launchActivity(i);
     }
@@ -667,6 +688,8 @@ public class HomePagerActivity extends CalendulaActivity implements
         startActivity(i);
         this.overridePendingTransition(0, 0);
     }
+
+
 
     /*
     public void askForWEEPermissionsIfNeeded() {

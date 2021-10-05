@@ -139,10 +139,10 @@ public class LeftDrawerMgr implements Drawer.OnDrawerItemClickListener, AccountH
                         .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_food_apple, R.color.black).alpha(110))
                         .withIdentifier(SCHEDULES));
         if (ModuleManager.isEnabled(AllergiesModule.ID)) {
-            b.addDrawerItems(new PrimaryDrawerItem()
-                    .withName(R.string.home_menu_allergies)
-                    .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_run, R.color.black).alpha(110))
-                    .withIdentifier(ALLERGIES));
+//            b.addDrawerItems(new PrimaryDrawerItem()
+//                    .withName(R.string.home_menu_allergies)
+//                    .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_run, R.color.black).alpha(110))
+//                    .withIdentifier(ALLERGIES));
         }
 
         b.addDrawerItems(
