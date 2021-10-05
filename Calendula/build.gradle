@@ -87,14 +87,15 @@ android {
         exclude 'LICENSE.txt'
     }
 
-    signingConfigs {
-        release {
-            keyAlias keystoreProperties != null ? keystoreProperties['keyAlias'] : null
-            keyPassword keystoreProperties != null ? keystoreProperties['keyPassword'] : null
-            storeFile keystoreProperties != null ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties != null ? keystoreProperties['storePassword'] : null
-        }
-    }
+//    signingConfigs {
+//        release {
+//            keyAlias keystoreProperties != null ? keystoreProperties['keyAlias'] : null
+//            keyPassword keystoreProperties != null ? keystoreProperties['keyPassword'] : null
+//            storeFile keystoreProperties != null ? file(keystoreProperties['storeFile']) : null
+//            storePassword keystoreProperties != null ? keystoreProperties['storePassword'] : null
+//        }
+//    }
+
 
     testOptions {
         unitTests {
@@ -107,31 +108,31 @@ android {
         abortOnError false
         checkReleaseBuilds false
     }
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt')
-            proguardFiles getCustomProguardFiles()
-            testProguardFiles getDefaultProguardFile('proguard-android.txt')
-            testProguardFiles getCustomProguardFiles()
-            signingConfig signingConfigs.release
-        }
-        debug {
-            debuggable true
-            minifyEnabled false
-            testCoverageEnabled true
-        }
-        beta {
-            minifyEnabled false
-            versionNameSuffix "-build" + getDate()
-        }
-        alpha {
-            minifyEnabled false
-            applicationIdSuffix ".alpha"
-            signingConfig signingConfigs.release
-            versionNameSuffix "-" + getDate()
-        }
-    }
+//    buildTypes {
+//        release {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt')
+//            proguardFiles getCustomProguardFiles()
+//            testProguardFiles getDefaultProguardFile('proguard-android.txt')
+//            testProguardFiles getCustomProguardFiles()
+//            signingConfig signingConfigs.release
+//        }
+//        debug {
+//            debuggable true
+//            minifyEnabled false
+//            testCoverageEnabled true
+//        }
+//        beta {
+//            minifyEnabled false
+//            versionNameSuffix "-build" + getDate()
+//        }
+//        alpha {
+//            minifyEnabled false
+//            applicationIdSuffix ".alpha"
+//            signingConfig signingConfigs.release
+//            versionNameSuffix "-" + getDate()
+//        }
+//    }
 
     flavorDimensions "buildType"
 

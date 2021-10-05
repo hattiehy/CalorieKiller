@@ -25,6 +25,7 @@ import com.j256.ormlite.misc.TransactionManager;
 import java.util.concurrent.Callable;
 
 import es.usc.citius.servando.calendula.drugdb.model.database.DrugDBModule;
+import es.usc.citius.servando.calendula.persistence.DailyIntake;
 import es.usc.citius.servando.calendula.util.LogUtil;
 
 
@@ -45,6 +46,10 @@ public class DB {
 
     // Medicines DAO
     private static MedicineDao Medicines;
+    // HealthData DAO
+    private static HealthDataDao HealthData;
+    // DailyIntake DAO
+    private static DailyIntakeDao DailyIntake;
     // Routines DAO
     private static RoutineDao Routines;
     // Schedules DAO
@@ -79,6 +84,8 @@ public class DB {
             db.getReadableDatabase().enableWriteAheadLogging();
 
             Medicines = new MedicineDao(db);
+            HealthData = new HealthDataDao(db);
+            DailyIntake = new DailyIntakeDao(db);
             Routines = new RoutineDao(db);
             Schedules = new ScheduleDao(db);
             ScheduleItems = new ScheduleItemDao(db);
@@ -119,6 +126,14 @@ public class DB {
 
     public static MedicineDao medicines() {
         return Medicines;
+    }
+
+    public static HealthDataDao healthData() {
+        return HealthData;
+    }
+
+    public static DailyIntakeDao dailyIntake() {
+        return DailyIntake;
     }
 
     public static RoutineDao routines() {

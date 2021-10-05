@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,8 +29,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -39,6 +43,7 @@ import butterknife.BindView;
 import es.usc.citius.servando.calendula.R;
 import es.usc.citius.servando.calendula.activities.ScheduleCreationActivity;
 import es.usc.citius.servando.calendula.database.DB;
+import es.usc.citius.servando.calendula.persistence.HealthData;
 import es.usc.citius.servando.calendula.persistence.Medicine;
 import es.usc.citius.servando.calendula.persistence.Patient;
 import es.usc.citius.servando.calendula.util.LogUtil;
@@ -54,9 +59,8 @@ public class HomeFragment extends Fragment {
     TextView etHeight;
     private String gender;
     private RadioGroup rgGender;
-    OnUserEditListener mUserEditCallback;
+    OnHealthDataEditListener mHealthDataEditCallback;
     AssetManager assetManager;
-
 
     public static final String BMI_FILE = "BMI_Percentiles_%s.csv";
     public static final String INTAKE_FILE = "Daily_Intake_%s.csv";
@@ -198,16 +202,22 @@ public class HomeFragment extends Fragment {
         List<List<String>> intakeList = readCSV(intakeFiles);
         int intake = searchIntakeByAge(age, intakeList);
 
-        mPatient.setAge(age);
-        mPatient.setHeight(height);
-        mPatient.setWeight(weight);
-        mPatient.setGender(gender);
-        mPatient.setBmi(Double.toString(BMI));
-        mPatient.setCondition(condition);
-        mPatient.setRecomIntake(intake);
+        Date curDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String date = formatter.format(curDate);
 
-        DB.patients().saveAndFireEvent(mPatient);
-        mUserEditCallback.onUserCreated(mPatient);
+        HealthData healthData = new HealthData();
+        healthData.setAge(age);
+        healthData.setHeight(height);
+        healthData.setWeight(weight);
+        healthData.setGender(gender);
+        healthData.setBmi(Double.toString(BMI));
+        healthData.setCondition(condition);
+        healthData.setRecomIntake(intake);
+        healthData.setDate(date);
+        healthData.setPatient(mPatient);
+        DB.healthData().saveAndFireEvent(healthData);
+        mHealthDataEditCallback.OnHealthDataEditListener(healthData);
     }
 
     public double calculateBMI(double height, double weight) {
@@ -224,18 +234,18 @@ public class HomeFragment extends Fragment {
 
         // If the container activity has implemented
         // the callback interface, set it as listener
-        if (activity instanceof HomeFragment.OnUserEditListener) {
-            mUserEditCallback = (HomeFragment.OnUserEditListener) activity;
+        if (activity instanceof HomeFragment.OnHealthDataEditListener) {
+            mHealthDataEditCallback = (HomeFragment.OnHealthDataEditListener) activity;
         }
 //        if (activity instanceof ScheduleCreationActivity) {
 //            this.showConfirmButton = false;
 //        }
     }
 
-    public interface OnUserEditListener {
+    public interface OnHealthDataEditListener {
 //        void onUserEdited(Patient p);
 
-        void onUserCreated(Patient p);
+        void OnHealthDataEditListener(HealthData h);
     }
 
 }

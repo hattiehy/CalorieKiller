@@ -37,6 +37,7 @@ import es.usc.citius.servando.calendula.adapters.ExpandableItemAdapter;
 import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.entity.Level0Item;
 import es.usc.citius.servando.calendula.entity.Level1Item;
+import es.usc.citius.servando.calendula.persistence.HealthData;
 import es.usc.citius.servando.calendula.persistence.Patient;
 import es.usc.citius.servando.calendula.util.IconUtils;
 import es.usc.citius.servando.calendula.util.LogUtil;
@@ -49,6 +50,7 @@ public class FoodGroupFragment extends Fragment {
     private ArrayList<MultiItemEntity> list;
     AssetManager assetManager;
     Patient user;
+    HealthData record;
     View emptyView;
     IIcon emptyViewIcon = IconUtils.randomNiceIcon();
 
@@ -78,6 +80,7 @@ public class FoodGroupFragment extends Fragment {
         emptyView = view.findViewById(R.id.empty_view_placeholder);
         setupEmptyView();
         user = DB.patients().getActive(getContext());
+        getNewestData();
         assetManager = getResources().getAssets();
         notifyDataChange();
         return view;
@@ -120,7 +123,7 @@ public class FoodGroupFragment extends Fragment {
     }
 
     public List<String> getFileName() {
-        String gender = user.getGender();
+        String gender = record.getGender();
         List<String> fileNameList = new ArrayList<>();
         fileNameList.add(String.format(DAIRY_FILE, gender));
         fileNameList.add(String.format(FRUITS_FILE, gender));
@@ -132,7 +135,7 @@ public class FoodGroupFragment extends Fragment {
     }
 
     private List<String> searchNutriByAge(List<List<String>> nutriList){
-        int age = user.getAge();
+        int age = record.getAge();
         List<String> nutriInfo = new ArrayList<>();
         for (List<String> list : nutriList) {
             List<String> ageRage = Arrays.asList(list.get(0).split(" - "));
@@ -213,6 +216,7 @@ public class FoodGroupFragment extends Fragment {
     }
 
     public void notifyDataChange() {
+        getNewestData();
         try {
 //            rvAdapter.notifyDataSetChanged();
             // show empty list view if there are no items
@@ -228,10 +232,19 @@ public class FoodGroupFragment extends Fragment {
     }
 
     public boolean isEmpty() {
-        if (user.getGender() == null) {
+        if (record == null) {
             return true;
         }
         return false;
+    }
+
+    public void getNewestData(){
+        List<HealthData> healthDataList = DB.healthData().findAllForActivePatient(getContext());
+        if (healthDataList.isEmpty()) {
+            record = null;
+        } else {
+            record = healthDataList.get(healthDataList.size() - 1 );
+        }
     }
 
     public void onUserUpdate(Patient patient) {

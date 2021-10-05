@@ -30,6 +30,12 @@
             android:name=".activities.SelectPicActivity"
             android:exported="true" />
         <activity
+            android:name=".activities.DailyIntakeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.BMIWeightActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.CalorieCalculActivity"
             android:exported="true" />
         <activity

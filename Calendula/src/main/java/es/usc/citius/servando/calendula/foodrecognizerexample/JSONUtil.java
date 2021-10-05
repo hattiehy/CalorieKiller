@@ -51,6 +51,9 @@ public class JSONUtil {
         Map<String, Object>  item =  new HashMap<>();
         item.put("group_name", groupName);
         item.put("calorie", nutrition.getString("calories"));
+        item.put("totalCarbs", nutrition.getString("totalCarbs"));
+        item.put("totalFat", nutrition.getString("totalFat"));
+        item.put("protein", nutrition.getString("protein"));
         item.put("food_name", cal.getString("name"));
         item.put("servingSizes", servingSizes);
         item.put("hasServingWeight", serving.has("servingWeight"));

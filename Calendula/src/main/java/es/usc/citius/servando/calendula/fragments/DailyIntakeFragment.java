@@ -22,18 +22,22 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.usc.citius.servando.calendula.R;
 import es.usc.citius.servando.calendula.activities.SelectPicActivity;
 import es.usc.citius.servando.calendula.database.DB;
+import es.usc.citius.servando.calendula.database.DailyIntakeDao;
+import es.usc.citius.servando.calendula.persistence.DailyIntake;
+import es.usc.citius.servando.calendula.persistence.HealthData;
 import es.usc.citius.servando.calendula.persistence.Patient;
+import es.usc.citius.servando.calendula.util.LogUtil;
 
 
 public class DailyIntakeFragment extends Fragment {
 
     private PieChart pcDailyIntake;
     Patient mPatient;
-    int currentIntake = 0;
 
     public DailyIntakeFragment() {
         // Required empty public constructor
@@ -51,14 +55,19 @@ public class DailyIntakeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_daily_intake, container, false);
         pcDailyIntake = view.findViewById(R.id.pc_daily_intake);
         mPatient = DB.patients().getActive(getContext());
-        currentIntake = SelectPicActivity.kjofAllFoods;
-        setUpPieChart(currentIntake);
+        DailyIntake intake = DB.dailyIntake().findByPatient(mPatient);
+        setUpPieChart(intake);
         return view;
     }
 
-    public void updateIntake() {
-        currentIntake += SelectPicActivity.kjofAllFoods;
-        setUpPieChart(currentIntake);
+    public void notifyDataChange() {
+        setUpPieChart(DB.dailyIntake().findByPatient(mPatient));
+    }
+
+
+    public void onUserUpdate(Patient patient) {
+        mPatient = patient;
+        notifyDataChange();
     }
 
     private SpannableString generateCenterSpannableText(int remaining) {
@@ -76,7 +85,7 @@ public class DailyIntakeFragment extends Fragment {
     }
 
 
-    private void setUpPieChart(int currentIntake){
+    private void setUpPieChart(DailyIntake dailyIntake){
         pcDailyIntake.setUsePercentValues(false);
         pcDailyIntake.getDescription().setEnabled(false);
         pcDailyIntake.setExtraOffsets(5, 10, 5, 5);
@@ -114,11 +123,39 @@ public class DailyIntakeFragment extends Fragment {
         l.setYEntrySpace(0f);
         l.setYOffset(0f);
 
-        int recomIntake = mPatient.getRecomIntake();
+        HealthData healthData = getNewestHealthData();
+        int remaining;
+        int currentIntake = getCurrentIntake(dailyIntake);
+        int recomIntake;
+        if (healthData == null) {
+            recomIntake = 0;
+        } else {
+            recomIntake = healthData.getRecomIntake();
+        }
         setUpChartDate(recomIntake, currentIntake);
-        int remaining = recomIntake - currentIntake;
-
+        remaining = recomIntake - currentIntake;
         pcDailyIntake.setCenterText(generateCenterSpannableText(remaining));
+    }
+
+    public HealthData getNewestHealthData(){
+        List<HealthData> healthDataList = DB.healthData().findAllForActivePatient(getContext());
+        HealthData healthData;
+        if (healthDataList.isEmpty()) {
+            healthData = null;
+        } else {
+            healthData = healthDataList.get(healthDataList.size() - 1 );
+        }
+        return healthData;
+    }
+
+    public int getCurrentIntake(DailyIntake dailyIntake){
+        int currentIntake;
+        if (dailyIntake == null) {
+            currentIntake = 0;
+        } else {
+            currentIntake = dailyIntake.getIntake();
+        }
+        return currentIntake;
     }
 
     private void setUpChartDate(int recomIntake, int currentIntake){
