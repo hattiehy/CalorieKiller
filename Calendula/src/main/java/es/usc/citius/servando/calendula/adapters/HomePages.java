@@ -24,8 +24,10 @@ import com.mikepenz.iconics.typeface.IIcon;
 
 import es.usc.citius.servando.calendula.R;
 import es.usc.citius.servando.calendula.fragments.DailyAgendaFragment;
+import es.usc.citius.servando.calendula.fragments.DailyIntakeFragment;
 import es.usc.citius.servando.calendula.fragments.FoodGroupFragment;
 import es.usc.citius.servando.calendula.fragments.HealthDataFragment;
+import es.usc.citius.servando.calendula.fragments.HealthReportFragment;
 import es.usc.citius.servando.calendula.fragments.MedicinesListFragment;
 import es.usc.citius.servando.calendula.fragments.RoutinesListFragment;
 import es.usc.citius.servando.calendula.fragments.ScheduleListFragment;
@@ -33,9 +35,9 @@ import es.usc.citius.servando.calendula.fragments.ScheduleListFragment;
 public enum HomePages {
     // attention: order is important!!!
     HOME(HealthDataFragment.class.getName(), R.string.app_name, GoogleMaterial.Icon.gmd_home),
-    MEDICINES(MedicinesListFragment.class.getName(), R.string.title_activity_medicines, CommunityMaterial.Icon.cmd_shape_plus),
+    MEDICINES(DailyIntakeFragment.class.getName(), R.string.title_activity_medicines, CommunityMaterial.Icon.cmd_shape_plus),
     ROUTINES(FoodGroupFragment.class.getName(), R.string.title_activity_routines, GoogleMaterial.Icon.gmd_local_pizza),
-    SCHEDULES(ScheduleListFragment.class.getName(), R.string.title_activity_schedules, CommunityMaterial.Icon.cmd_food_apple);
+    SCHEDULES(HealthReportFragment.class.getName(), R.string.title_activity_schedules, CommunityMaterial.Icon.cmd_food_apple);
 
     public String className;
     public int title;

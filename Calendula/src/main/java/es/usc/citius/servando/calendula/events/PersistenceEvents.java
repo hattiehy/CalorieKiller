@@ -18,6 +18,7 @@
 
 package es.usc.citius.servando.calendula.events;
 
+import es.usc.citius.servando.calendula.persistence.HealthData;
 import es.usc.citius.servando.calendula.persistence.Medicine;
 import es.usc.citius.servando.calendula.persistence.Patient;
 import es.usc.citius.servando.calendula.persistence.PatientAlert;
@@ -28,6 +29,8 @@ public class PersistenceEvents {
 
     public static ModelCreateOrUpdateEvent ROUTINE_EVENT = new ModelCreateOrUpdateEvent(Routine.class);
     public static ModelCreateOrUpdateEvent MEDICINE_EVENT = new ModelCreateOrUpdateEvent(Medicine.class);
+    public static ModelCreateOrUpdateEvent HEALTHDATA_EVENT = new ModelCreateOrUpdateEvent(HealthData.class);
+    public static ModelCreateOrUpdateEvent DAILYINTAKE_EVENT = new ModelCreateOrUpdateEvent(HealthData.class);
     public static ModelCreateOrUpdateEvent SCHEDULE_EVENT = new ModelCreateOrUpdateEvent(Schedule.class);
     public static ModelCreateOrUpdateEvent ALERT_EVENT = new ModelCreateOrUpdateEvent(PatientAlert.class);
 
@@ -48,6 +51,24 @@ public class PersistenceEvents {
         }
     }
 
+    public static class HModelCreateOrUpdateEvent {
+        public Class<?> clazz;
+        public Object model;
+
+        public HModelCreateOrUpdateEvent(Class<?> clazz) {
+            this.clazz = clazz;
+        }
+    }
+
+    public static class DModelCreateOrUpdateEvent {
+        public Class<?> clazz;
+        public Object model;
+
+        public DModelCreateOrUpdateEvent(Class<?> clazz) {
+            this.clazz = clazz;
+        }
+    }
+
     public static class IntakeConfirmedEvent {
         public Long id;
 
@@ -64,6 +85,15 @@ public class PersistenceEvents {
         public Long id;
 
         public MedicineAddedEvent(Long id) {
+            this.id = id;
+        }
+    }
+
+    public static class HealthDataAddedEvent {
+
+        public Long id;
+
+        public HealthDataAddedEvent(Long id) {
             this.id = id;
         }
     }

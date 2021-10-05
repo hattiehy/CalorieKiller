@@ -53,6 +53,7 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+
 def getDate() {
     def date = new Date()
     def formattedDate = date.format('yyyy.MM.dd')
@@ -88,12 +89,13 @@ android {
 
 //    signingConfigs {
 //        release {
-//            storeFile file(keystoreProperties['storeFile'])
-//            storePassword keystoreProperties['storePassword']
-//            keyAlias keystoreProperties['keyAlias']
-//            keyPassword keystoreProperties['keyPassword']
+//            keyAlias keystoreProperties != null ? keystoreProperties['keyAlias'] : null
+//            keyPassword keystoreProperties != null ? keystoreProperties['keyPassword'] : null
+//            storeFile keystoreProperties != null ? file(keystoreProperties['storeFile']) : null
+//            storePassword keystoreProperties != null ? keystoreProperties['storePassword'] : null
 //        }
 //    }
+
 
     testOptions {
         unitTests {
@@ -322,6 +324,9 @@ dependencies {
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
 
+    // MPAndroid
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    implementation 'com.github.CodingEnding:PopupLayout:v1.0'
 }
 

@@ -66,16 +66,16 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textView2">
+        android:layout_below="@id/textView2"
+        android:layout_marginTop="0dp">
 
         <fragment
             android:id="@+id/routine_fragment"
             android:name="es.usc.citius.servando.calendula.fragments.RoutineCreateOrEditFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout="@layout/fragment_create_or_edit_routine"/>
+            tools:layout="@layout/fragment_create_or_edit_routine" />
     </ScrollView>
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_button"

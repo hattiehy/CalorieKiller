@@ -17,11 +17,11 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/top"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
+    android:id="@+id/top"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="visible">
 
     <ImageView
         android:id="@+id/bg"
@@ -40,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:alpha="0.8"
-        android:src="@drawable/alldone" />
+        android:src="@drawable/alldone"/>
 
     <TextView
         android:id="@+id/textView3"
@@ -57,7 +57,7 @@
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
         android:paddingTop="15dp"
-        android:text="There is no user's health data. Add your number and know health now."
+        android:text="There is no recommend intake. Please add health data first."
         android:textAllCaps="false"
         android:textColor="@color/agenda_item_title"
         android:textIsSelectable="false"

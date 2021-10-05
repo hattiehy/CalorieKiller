@@ -48,7 +48,9 @@ import es.usc.citius.servando.calendula.drugdb.model.persistence.PrescriptionAct
 import es.usc.citius.servando.calendula.drugdb.model.persistence.PrescriptionExcipient;
 import es.usc.citius.servando.calendula.drugdb.model.persistence.PresentationForm;
 import es.usc.citius.servando.calendula.persistence.AllergyGroup;
+import es.usc.citius.servando.calendula.persistence.DailyIntake;
 import es.usc.citius.servando.calendula.persistence.DailyScheduleItem;
+import es.usc.citius.servando.calendula.persistence.HealthData;
 import es.usc.citius.servando.calendula.persistence.HtmlCacheEntry;
 import es.usc.citius.servando.calendula.persistence.Medicine;
 import es.usc.citius.servando.calendula.persistence.Patient;
@@ -76,6 +78,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public Class<?>[] persistedClasses = new Class<?>[]{
             Routine.class,
             Medicine.class,
+            HealthData.class,
+            DailyIntake.class,
             Schedule.class,
             ScheduleItem.class,
             DailyScheduleItem.class,
@@ -103,6 +107,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     };
     // the DAO object we use to access the Medicines table
     private Dao<Medicine, Long> medicinesDao = null;
+    // the DAO object we use to access the HealthDate table
+    private Dao<HealthData, Long> healthDataDao = null;
+    // the DAO object we use to access the DailyIntake table
+    private Dao<DailyIntake, Long> dailyIntakeDao = null;
     // the DAO object we use to access the Routines table
     private Dao<Routine, Long> routinesDao = null;
     // the DAO object we use to access the Schedules table
@@ -228,6 +236,28 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             medicinesDao = getDao(Medicine.class);
         }
         return medicinesDao;
+    }
+
+    /**
+     * Returns the Database Access Object (DAO) for our HealthData class. It will create it or just give the cached
+     * value.
+     */
+    public Dao<HealthData, Long> getHealthDataDao() throws SQLException {
+        if (healthDataDao == null) {
+            healthDataDao = getDao(HealthData.class);
+        }
+        return healthDataDao;
+    }
+
+    /**
+     * Returns the Database Access Object (DAO) for our DailyIntake class. It will create it or just give the cached
+     * value.
+     */
+    public Dao<DailyIntake, Long> getDailyIntakeDao() throws SQLException {
+        if (dailyIntakeDao == null) {
+            dailyIntakeDao = getDao(DailyIntake.class);
+        }
+        return dailyIntakeDao;
     }
 
     /**

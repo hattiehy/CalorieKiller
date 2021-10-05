@@ -60,6 +60,7 @@ import es.usc.citius.servando.calendula.R;
 import es.usc.citius.servando.calendula.activities.ConfirmActivity;
 import es.usc.citius.servando.calendula.database.DB;
 import es.usc.citius.servando.calendula.persistence.DailyScheduleItem;
+import es.usc.citius.servando.calendula.persistence.HealthData;
 import es.usc.citius.servando.calendula.persistence.Medicine;
 import es.usc.citius.servando.calendula.persistence.Patient;
 import es.usc.citius.servando.calendula.persistence.Routine;
@@ -81,11 +82,11 @@ public class HealthDataFragment extends Fragment {
     private static final String TAG = "HealthDataFragment";
     View emptyView;
 
-    LinearLayoutManager llm;
-
     View healthDataView;
 
     Patient user;
+
+    HealthData record;
 
 //    DailyAgendaRecyclerListener rvListener;
 
@@ -105,11 +106,11 @@ public class HealthDataFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_health_data, container, false);
         healthDataView = rootView.findViewById(R.id.healthDataView);
         emptyView = rootView.findViewById(R.id.empty_view_placeholder);
-        CalendulaApp.eventBus().register(this);
+//        CalendulaApp.eventBus().register(this);
         //setupRecyclerView();
 
         user = DB.patients().getActive(getContext());
-
+        getNewestData();
         setupNormalView(rootView);
 
         setupEmptyView();
@@ -152,12 +153,12 @@ public class HealthDataFragment extends Fragment {
         }
     }
 
-
     public boolean isExpanded() {
         return false;
     }
 
     public void notifyDataChange() {
+        getNewestData();
         try {
             LogUtil.d(TAG, "HealthDataView NotifyDataChange");
 //            rvAdapter.notifyDataSetChanged();
@@ -175,26 +176,25 @@ public class HealthDataFragment extends Fragment {
     }
 
     public boolean isEmpty() {
-        if (user.getWeight() == 0.0 || user.getBmi() == null || user.getCondition() == null) {
+        if (record == null) {
             return true;
         }
         return false;
     }
 
+    public void getNewestData(){
+        List<HealthData> healthDataList = DB.healthData().findAllForActivePatient(getContext());
+        if (healthDataList.isEmpty()) {
+            record = null;
+        } else {
+            record = healthDataList.get(healthDataList.size() - 1 );
+        }
+    }
+
+
     public void onUserUpdate(Patient patient) {
         user = patient;
         notifyDataChange();
-    }
-
-    // Method called from the event bus
-    @Subscribe
-    public void handleBackgroundUpdatedEvent(final HomeProfileMgr.BackgroundUpdatedEvent event) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onBackgroundChange(HomeProfileMgr.colorForCurrent(getActivity()));
-            }
-        }, 500);
     }
 
     private void setupNormalView(View view) {
@@ -202,9 +202,12 @@ public class HealthDataFragment extends Fragment {
         TextView tvBMI = view.findViewById(R.id.tvBMI);
         TextView tvCondition = view.findViewById(R.id.tvCondition);
 
-        tvWeight.setText("Current Weight: " + Double.toString(user.getWeight()));
-        tvBMI.setText("BMI: " + user.getBmi());
-        tvCondition.setText("Body Condition: " + user.getCondition());
+        if (record == null) {
+            return;
+        }
+        tvWeight.setText("Current Weight: " + Double.toString(record.getWeight()));
+        tvBMI.setText("BMI: " + record.getBmi());
+        tvCondition.setText("Body Condition: " + record.getCondition());
     }
 
 
@@ -218,41 +221,6 @@ public class HealthDataFragment extends Fragment {
         ((ImageView) emptyView.findViewById(R.id.imageView_ok)).setImageDrawable(icon);
     }
 
-    private void showConfirmActivity(View view, DailyAgendaItemStub item, int position) {
-
-        Intent i = new Intent(getContext(), ConfirmActivity.class);
-        i.putExtra(CalendulaApp.INTENT_EXTRA_POSITION, position);
-        i.putExtra(CalendulaApp.INTENT_EXTRA_DATE, item.date.toString("dd/MM/YYYY"));
-
-        if (item.isRoutine) {
-            i.putExtra(CalendulaApp.INTENT_EXTRA_ROUTINE_ID, item.id);
-        } else {
-            i.putExtra(CalendulaApp.INTENT_EXTRA_SCHEDULE_ID, item.id);
-            i.putExtra(CalendulaApp.INTENT_EXTRA_SCHEDULE_TIME, item.time.toString(AlarmIntentParams.TIME_FORMAT));
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            View v1 = view.findViewById(R.id.patient_avatar);
-            View v2 = view.findViewById(R.id.linearLayout);
-            View v3 = view.findViewById(R.id.routines_list_item_name);
-
-            if (v1 != null && v2 != null && v3 != null) {
-                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        getActivity(),
-                        new Pair<>(v1, "avatar_transition"),
-                        new Pair<>(v2, "time"),
-                        new Pair<>(v3, "title")
-                );
-                ActivityCompat.startActivity(getActivity(), i, activityOptions.toBundle());
-            } else {
-                startActivity(i);
-            }
-        } else {
-            startActivity(i);
-        }
-    }
-
     private void onBackgroundChange(int color) {
         Drawable icon = new IconicsDrawable(getContext())
                 .icon(emptyViewIcon)
@@ -260,30 +228,6 @@ public class HealthDataFragment extends Fragment {
                 .sizeDp(90)
                 .paddingDp(0);
         ((ImageView) emptyView.findViewById(R.id.imageView_ok)).setImageDrawable(icon);
-    }
-
-    private static class DailyAgendaItemStubComparator implements Comparator<DailyAgendaItemStub> {
-
-        static final DailyAgendaItemStubComparator instance = new DailyAgendaItemStubComparator();
-
-        private DailyAgendaItemStubComparator() {
-        }
-
-        @Override
-        public int compare(DailyAgendaItemStub a, DailyAgendaItemStub b) {
-
-            DateTime aT = a.date.toDateTime(a.time);
-            DateTime bT = b.date.toDateTime(b.time);
-
-            if (aT.compareTo(bT) == 0 && a.isSpacer) {
-                return -1;
-            } else if (aT.compareTo(bT) == 0 && b.isSpacer) {
-                return 1;
-            } else if (aT.compareTo(bT) == 0) {
-                return a.hasEvents ? -1 : 1;
-            }
-            return aT.compareTo(bT);
-        }
     }
 
 }
