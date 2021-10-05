@@ -23,7 +23,7 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.support.multidex.MultiDexApplication;
 
-import com.squareup.leakcanary.LeakCanary;
+//import com.squareup.leakcanary.LeakCanary;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -127,13 +127,13 @@ public class CalendulaApp extends MultiDexApplication {
                 new StethoHelper().init(this);
             }
 
-            if (LeakCanary.isInAnalyzerProcess(CalendulaApp.this)) {
-                // This process is dedicated to LeakCanary for heap analysis.
-                return;
-            }
-
-            //initialize LeakCanary
-            LeakCanary.install(CalendulaApp.this);
+//            if (LeakCanary.isInAnalyzerProcess(CalendulaApp.this)) {
+//                // This process is dedicated to LeakCanary for heap analysis.
+//                return;
+//            }
+//
+//            //initialize LeakCanary
+//            LeakCanary.install(CalendulaApp.this);
         }
 
         final Context applicationContext = getApplicationContext();

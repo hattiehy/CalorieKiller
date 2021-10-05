@@ -212,6 +212,7 @@
         <item>12</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="caloriemama_token" translatable="false">9d8656d18ea60b695a18d3674c05a656</string>
 
 </resources>

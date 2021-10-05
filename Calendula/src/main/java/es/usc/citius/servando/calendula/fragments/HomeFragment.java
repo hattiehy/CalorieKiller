@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment {
 
 
     public static final String BMI_FILE = "BMI_Percentiles_%s.csv";
+    public static final String INTAKE_FILE = "Daily_Intake_%s.csv";
 
     public HomeFragment() {
         // Required empty public constructor
@@ -103,12 +104,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public String getFileName() {
-        return String.format(BMI_FILE, gender);
+    public String getFileName(String filename) {
+        return String.format(filename, gender);
     }
 
     private List<List<String>> readCSV(String fileName) {
-        List<List<String>> BMIList=new ArrayList<>();
+        List<List<String>> contentList=new ArrayList<>();
         InputStream inputStream;
         BufferedReader bufferedReader;
         String line = null;
@@ -116,15 +117,15 @@ public class HomeFragment extends Fragment {
             inputStream = assetManager.open(fileName);
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             while ((line = bufferedReader.readLine()) != null) {
-                if ((line.equals("Age,P5,P85,P95")))
+                if ((line.equals("Age,P5,P85,P95") || line.equals("Age_LB,Age_UB,Energy_LB,Energy_UB")))
                     continue;
                 String[] content = line.split(",");
-                BMIList.add(Arrays.asList(content));
+                contentList.add(Arrays.asList(content));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return BMIList;
+        return contentList;
     }
 
     public List<Double> searchPercentilesByAge(int age, List<List<String>> BMIList) {
@@ -135,6 +136,18 @@ public class HomeFragment extends Fragment {
             percentiles.add(i);
         }
         return percentiles;
+    }
+
+    public int searchIntakeByAge(int age, List<List<String>> intakeList) {
+        int intake = 0;
+        for(List<String> l : intakeList) {
+            int ageLB = Integer.parseInt(l.get(0));
+            int ageUB = Integer.parseInt(l.get(1));
+            if (ageLB <= age && age < ageUB) {
+                intake = (Integer.parseInt(l.get(2)) + Integer.parseInt(l.get(3)))/2;
+            }
+        }
+        return intake;
     }
 
     public String judgeCondition(double BMI, List<Double> percentiles) {
@@ -176,10 +189,14 @@ public class HomeFragment extends Fragment {
         double weight = Double.parseDouble(strWeight);
         double BMI = calculateBMI(height, weight);
 
-        String filename = getFileName();
-        List<List<String>> BMIList = readCSV(filename);
+        String BMIfiles = getFileName(BMI_FILE);
+        List<List<String>> BMIList = readCSV(BMIfiles);
         List<Double> percentiles = searchPercentilesByAge(age, BMIList);
         String condition = judgeCondition(BMI, percentiles);
+
+        String intakeFiles = getFileName(INTAKE_FILE);
+        List<List<String>> intakeList = readCSV(intakeFiles);
+        int intake = searchIntakeByAge(age, intakeList);
 
         mPatient.setAge(age);
         mPatient.setHeight(height);
@@ -187,6 +204,7 @@ public class HomeFragment extends Fragment {
         mPatient.setGender(gender);
         mPatient.setBmi(Double.toString(BMI));
         mPatient.setCondition(condition);
+        mPatient.setRecomIntake(intake);
 
         DB.patients().saveAndFireEvent(mPatient);
         mUserEditCallback.onUserCreated(mPatient);

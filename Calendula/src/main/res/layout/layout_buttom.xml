@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:background="@color/white">
+
+    <!--<TimePicker-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/routine_time_picker"-->
+    <!--android:layout_below="@+id/textView2"-->
+    <!--android:layout_alignLeft="@+id/textView2"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:layout_marginRight="20dp" />-->
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical"
+        android:text="Number of servings"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/dark_grey_text"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/et_serving_num"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="24dp"
+        android:inputType="numberDecimal"
+        android:imeOptions="actionDone"
+        android:textColor="@color/dark_grey_home"
+        android:textSize="22dp" />
+
+    <Button
+        android:id="@+id/done_button"
+        style="@style/next_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_below="@id/et_serving_num"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/done"
+        tools:visibility="visible" />
+
+</RelativeLayout>
