@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +32,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -141,38 +145,52 @@ public class SelectPicActivity extends AppCompatActivity {
         String date = formatter.format(curDate);
         if (dailyIntake == null) {
             return false;
-        } else return dailyIntake.getDate().equals(date);
+        } else
+            return dailyIntake.getDate().equals(date);
+    }
+
+    public void newRecord(DailyIntake dailyIntake){
+        Date curDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String date = formatter.format(curDate);
+
+        dailyIntake.setIntake(kjofAllFoods);
+        dailyIntake.setCarbs(carbsAll);
+        dailyIntake.setFat(fatAll);
+        dailyIntake.setProtein(proteinAll);
+        dailyIntake.setDate(date);
+        dailyIntake.setPatient(user);
+
+        DB.dailyIntake().saveAndFireEvent(dailyIntake);
     }
 
     public void saveDailyIntake() {
-        DailyIntake dailyIntake = DB.dailyIntake().findByPatient(user);
-        if (isSameDay(dailyIntake)) {
-            int intake = dailyIntake.getIntake() + kjofAllFoods;
-            double carbs = dailyIntake.getCarbs() + carbsAll;
-            double fat = dailyIntake.getFat() + fatAll;
-            double protein = dailyIntake.getProtein() + proteinAll;
-            dailyIntake.setIntake(intake);
-            dailyIntake.setCarbs(carbs);
-            dailyIntake.setFat(fat);
-            dailyIntake.setProtein(protein);
-
-            DB.dailyIntake().saveAndFireEvent(dailyIntake);
-        } else {
-            DailyIntake dailyIntakeNew = new DailyIntake();
-
-            Date curDate = new Date(System.currentTimeMillis());
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            String date = formatter.format(curDate);
-
-            dailyIntakeNew.setIntake(kjofAllFoods);
-            dailyIntakeNew.setCarbs(carbsAll);
-            dailyIntakeNew.setFat(fatAll);
-            dailyIntakeNew.setProtein(proteinAll);
-            dailyIntakeNew.setDate(date);
-            dailyIntakeNew.setPatient(user);
-
-            DB.dailyIntake().saveAndFireEvent(dailyIntakeNew);
+        List<DailyIntake> dailyIntakes = DB.dailyIntake().findAll(user);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            dailyIntakes.sort(Comparator.comparing(dailyIntake -> LocalDate.parse(dailyIntake.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), Comparator.naturalOrder()));
         }
+        if (dailyIntakes.size() == 0) {
+            DailyIntake dailyIntake = new DailyIntake();
+            newRecord(dailyIntake);
+        } else {
+            DailyIntake oldRecord = dailyIntakes.get(dailyIntakes.size() - 1);
+            if (isSameDay(oldRecord)) {
+                int intake = oldRecord.getIntake() + kjofAllFoods;
+                double carbs = oldRecord.getCarbs() + carbsAll;
+                double fat = oldRecord.getFat() + fatAll;
+                double protein = oldRecord.getProtein() + proteinAll;
+                oldRecord.setIntake(intake);
+                oldRecord.setCarbs(carbs);
+                oldRecord.setFat(fat);
+                oldRecord.setProtein(protein);
+
+                DB.dailyIntake().saveAndFireEvent(oldRecord);
+            } else {
+                DailyIntake dailyIntakeNew = new DailyIntake();
+                newRecord(dailyIntakeNew);
+            }
+        }
+
     }
 
 
@@ -215,9 +233,9 @@ public class SelectPicActivity extends AppCompatActivity {
 
     public Map<String, Object> calculateCalorie(double qua) {
         String calorieString = (String) mFoodData.get(itemPosition).get("calorie");
-        String carbsString = (String) mFoodData.get(itemPosition).get("calorie");
-        String fatString = (String) mFoodData.get(itemPosition).get("calorie");
-        String proteinString = (String) mFoodData.get(itemPosition).get("calorie");
+        String carbsString = (String) mFoodData.get(itemPosition).get("totalCarbs");
+        String fatString = (String) mFoodData.get(itemPosition).get("totalFat");
+        String proteinString = (String) mFoodData.get(itemPosition).get("protein");
         int kjPerkg = Double.valueOf(Double.valueOf(calorieString) * 4.184).intValue();
         int cal = Double.valueOf(kjPerkg * qua).intValue();
         double carbs = Double.valueOf(carbsString) * qua * 1000;
