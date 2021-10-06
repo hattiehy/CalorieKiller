@@ -74,9 +74,9 @@ public class DailyIntakeFragment extends Fragment {
         String text;
         int startIndex = Integer.toString(remaining).length();
         if (0<= remaining) {
-            text = remaining + "\nKILOJOULE REMAINING";
+            text = remaining + "\nKILOJOULES REMAINING";
         } else {
-            text = Math.abs(remaining) + "\nKILOJOULE OVER";
+            text = Math.abs(remaining) + "\nKILOJOULES OVER";
         }
         SpannableString s = new SpannableString(text);
         s.setSpan(new RelativeSizeSpan(3.5f), 0, startIndex, 0);
@@ -93,9 +93,9 @@ public class DailyIntakeFragment extends Fragment {
         pcDailyIntake.setDragDecelerationFrictionCoef(0.95f);
 
         pcDailyIntake.setDrawHoleEnabled(true);
-        pcDailyIntake.setHoleColor(Color.WHITE);
+        pcDailyIntake.setHoleColor(Color.parseColor("#F3F3F9"));
 
-        pcDailyIntake.setTransparentCircleColor(Color.WHITE);
+        pcDailyIntake.setTransparentCircleColor(Color.parseColor("#F3F3F9"));
         pcDailyIntake.setTransparentCircleAlpha(110);
 
         pcDailyIntake.setHoleRadius(58f);
@@ -161,14 +161,14 @@ public class DailyIntakeFragment extends Fragment {
     private void setUpChartDate(int recomIntake, int currentIntake){
         ArrayList<PieEntry> entries = new ArrayList<>();
         if (recomIntake > currentIntake) {
-            entries.add(new PieEntry(currentIntake, "Current intake"));
+            entries.add(new PieEntry(currentIntake, "Today's Intake"));
             entries.add(new PieEntry(recomIntake - currentIntake, "Remaining"));
         } else {
-            entries.add(new PieEntry(currentIntake, "Current intake"));
+            entries.add(new PieEntry(currentIntake, "Today's Intake"));
 //            entries.add(new PieEntry(recomIntake, "Remaining"));
         }
 
-        PieDataSet dataSet = new PieDataSet(entries, "Daily intake  Unit:kj");
+        PieDataSet dataSet = new PieDataSet(entries, "Daily Intake (kj)");
 
         dataSet.setDrawIcons(false);
 
@@ -197,7 +197,11 @@ public class DailyIntakeFragment extends Fragment {
 
         colors.add(ColorTemplate.getHoloBlue());
 
-        dataSet.setColors(colors);
+        ArrayList<Integer> colors1 = new ArrayList<>();
+        colors1.add(Color.parseColor("#8DF3A5"));
+        colors1.add(Color.parseColor("#F3DA8D"));
+
+        dataSet.setColors(colors1);
         //dataSet.setSelectionShift(0f);
 
         PieData data = new PieData(dataSet);
