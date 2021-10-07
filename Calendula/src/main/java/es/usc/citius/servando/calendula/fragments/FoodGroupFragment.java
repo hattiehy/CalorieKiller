@@ -183,34 +183,34 @@ public class FoodGroupFragment extends Fragment {
         List<List<String>> vegeList = readCSV(nameList.get(4));
         vege = searchNutriByAge(vegeList);
 
-        Level0Item lv1 = new Level0Item("Diary Nutri Info", "subtitle of ");
-        lv1.addSubItem(new Level1Item("Dailt Portions: " + diary.get(0), "(no animation)"));
-        lv1.addSubItem(new Level1Item("Energy per Portion:  " + diary.get(1), "(no animation)"));
-        lv1.addSubItem(new Level1Item("Total Daily Energy: " + diary.get(2), "(no animation)"));
+        Level0Item lv1 = new Level0Item("Dairy Nutritional Recommendation", "subtitle of ");
+        lv1.addSubItem(new Level1Item("Daily Portions \n" + diary.get(0), "(no animation)"));
+        lv1.addSubItem(new Level1Item("Energy per Portion \n" + diary.get(1) + " kj", "(no animation)"));
+        lv1.addSubItem(new Level1Item("Total Daily Energy \n" + diary.get(2) + " kj", "(no animation)"));
         res.add(lv1);
 
-        Level0Item lv2 = new Level0Item("Fruits Nutri Info", "subtitle of ");
-        lv2.addSubItem(new Level1Item("Dailt Portions: " + fruit.get(0), "(no animation)"));
-        lv2.addSubItem(new Level1Item("Energy per Portion:  " + fruit.get(1), "(no animation)"));
-        lv2.addSubItem(new Level1Item("Total Daily Energy: " + fruit.get(2), "(no animation)"));
+        Level0Item lv2 = new Level0Item("Fruit Nutritional Recommendation", "subtitle of ");
+        lv2.addSubItem(new Level1Item("Daily Portions \n" + fruit.get(0), "(no animation)"));
+        lv2.addSubItem(new Level1Item("Energy per Portion \n" + fruit.get(1) + " kj", "(no animation)"));
+        lv2.addSubItem(new Level1Item("Total Daily Energy \n" + fruit.get(2) + " kj", "(no animation)"));
         res.add(lv2);
 
-        Level0Item lv3 = new Level0Item("Grains Nutri Info", "subtitle of ");
-        lv3.addSubItem(new Level1Item("Dailt Portions: " + grains.get(0), "(no animation)"));
-        lv3.addSubItem(new Level1Item("Energy per Portion:  " + grains.get(1), "(no animation)"));
-        lv3.addSubItem(new Level1Item("Total Daily Energy: " + grains.get(2), "(no animation)"));
+        Level0Item lv3 = new Level0Item("Grains Nutritional Recommendation", "subtitle of ");
+        lv3.addSubItem(new Level1Item("Daily Portions \n" + grains.get(0), "(no animation)"));
+        lv3.addSubItem(new Level1Item("Energy per Portion \n" + grains.get(1) + " kj", "(no animation)"));
+        lv3.addSubItem(new Level1Item("Total Daily Energy \n" + grains.get(2) + " kj", "(no animation)"));
         res.add(lv3);
 
-        Level0Item lv4 = new Level0Item("Lean Meat Nutri Info", "subtitle of ");
-        lv4.addSubItem(new Level1Item("Dailt Portions: " + meat.get(0), "(no animation)"));
-        lv4.addSubItem(new Level1Item("Energy per Portion:  " + meat.get(1), "(no animation)"));
-        lv4.addSubItem(new Level1Item("Total Daily Energy: " + meat.get(2), "(no animation)"));
+        Level0Item lv4 = new Level0Item("Lean Meat Nutritional Recommendation", "subtitle of ");
+        lv4.addSubItem(new Level1Item("Daily Portions \n" + meat.get(0), "(no animation)"));
+        lv4.addSubItem(new Level1Item("Energy per Portion \n" + meat.get(1) + " kj", "(no animation)"));
+        lv4.addSubItem(new Level1Item("Total Daily Energy \n" + meat.get(2) + " kj", "(no animation)"));
         res.add(lv4);
 
-        Level0Item lv5 = new Level0Item("Vegetables Legumes Nutri Info", "subtitle of ");
-        lv5.addSubItem(new Level1Item("Dailt Portions: " + vege.get(0), "(no animation)"));
-        lv5.addSubItem(new Level1Item("Energy per Portion:  " + vege.get(1), "(no animation)"));
-        lv5.addSubItem(new Level1Item("Total Daily Energy: " + vege.get(2), "(no animation)"));
+        Level0Item lv5 = new Level0Item("Vegetables & Legumes Nutritional Recommendation", "subtitle of ");
+        lv5.addSubItem(new Level1Item("Daily Portions \n " + vege.get(0), "(no animation)"));
+        lv5.addSubItem(new Level1Item("Energy per Portion \n" + vege.get(1) + " kj", "(no animation)"));
+        lv5.addSubItem(new Level1Item("Total Daily Energy \n" + vege.get(2) + " kj", "(no animation)"));
         res.add(lv5);
         return res;
     }

@@ -198,6 +198,7 @@ public class HealthDataFragment extends Fragment {
     }
 
     private void setupNormalView(View view) {
+        TextView tvName = view.findViewById(R.id.tvName);
         TextView tvWeight = view.findViewById(R.id.tvWeight);
         TextView tvBMI = view.findViewById(R.id.tvBMI);
         TextView tvCondition = view.findViewById(R.id.tvCondition);
@@ -205,8 +206,22 @@ public class HealthDataFragment extends Fragment {
         if (record == null) {
             return;
         }
-        tvWeight.setText("Current Weight: " + Double.toString(record.getWeight()));
-        tvBMI.setText("BMI: " + record.getBmi());
+
+        // Get user name
+        String name = record.getPatient().getName();
+
+        // If a name ends with "s" add the name with "'"
+        if (name.substring(name.length() - 1).equalsIgnoreCase("s")) {
+            tvName.setText(record.getPatient().getName() + "' Health Record");
+        }
+
+        // Else if the name ends with any other character
+        else {
+            tvName.setText(record.getPatient().getName() + "'s Health Record");
+        }
+
+        tvWeight.setText("Current Weight: " + Double.toString(Math.round(100 * record.getWeight()) / 100) + " kg");
+        tvBMI.setText("Current BMI: " + record.getBmi());
         tvCondition.setText("Body Condition: " + record.getCondition());
     }
 

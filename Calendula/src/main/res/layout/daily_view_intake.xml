@@ -17,9 +17,10 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,10 +31,10 @@
             android:id="@+id/bottom"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_below="@+id/routine_list_item_container"
-            android:layout_marginBottom="5dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"
             android:visibility="visible">
 
             <LinearLayout
@@ -41,15 +42,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
-                <include layout="@layout/daily_view_intake_med"/>
+                <include layout="@layout/daily_view_intake_med" />
 
-                <include layout="@layout/daily_view_intake_med"/>
+                <include layout="@layout/daily_view_intake_med" />
 
-                <include layout="@layout/daily_view_intake_med"/>
+                <include layout="@layout/daily_view_intake_med" />
 
             </LinearLayout>
 
@@ -58,9 +59,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/med_item_list"
-                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/agenda_item_take_all_now_bg"
                 android:gravity="right"
                 android:visibility="visible">
@@ -72,10 +73,10 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="0dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_done_black_48dp"/>
+                    android:layout_marginBottom="0dp"
+                    android:src="@drawable/ic_done_black_48dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,15 +88,15 @@
                     android:text="@string/text_take_medicines_now"
                     android:textColor="#fff"
                     android:textSize="15dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
                     android:background="#ececec"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
 
             </RelativeLayout>
@@ -107,12 +108,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignBottom="@+id/imageView2"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="false"
             android:layout_alignParentTop="true"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="1px"
             android:background="#aaffffff"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/routine_list_item_container"
@@ -131,13 +132,13 @@
                 android:layout_centerVertical="true"
                 android:alpha="0.8"
                 android:background="@null"
-                android:paddingBottom="3dp"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:paddingTop="8dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="3dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/arrow_down"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
             <TextView
@@ -151,12 +152,12 @@
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="bottom"
-                tools:text="Breakfast"
                 android:textAllCaps="false"
                 android:textColor="@color/agenda_item_title"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:transitionName="title"/>
+                android:transitionName="title"
+                tools:text="Breakfast" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -175,7 +176,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_alarm_black_48dp"/>
+                    android:src="@drawable/ic_alarm_black_48dp" />
 
                 <TextView
                     android:id="@+id/routines_list_item_hour"
@@ -184,9 +185,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:gravity="bottom"
-                    tools:text="08:"
                     android:textColor="#111"
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    tools:text="08:" />
 
                 <TextView
                     android:id="@+id/routines_list_item_minute"
@@ -195,9 +196,9 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/routines_list_item_hour"
                     android:gravity="bottom"
-                    tools:text="00"
                     android:textColor="#111"
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    tools:text="00" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -206,10 +207,10 @@
                     android:layout_gravity="left"
                     android:layout_toRightOf="@+id/routines_list_item_minute"
                     android:gravity="bottom"
-                    tools:text=" h"
                     android:textColor="#111"
                     android:textSize="20dp"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    tools:text=" h" />
 
             </LinearLayout>
 
@@ -218,7 +219,7 @@
                 android:layout_height="1px"
                 android:layout_alignParentBottom="true"
                 android:background="#ececec"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
         </RelativeLayout>
@@ -226,22 +227,22 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="1px"
-            android:layout_alignParentBottom="true"
             android:layout_below="@+id/bottom"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
             android:background="#ececec"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
 
         <ImageView
             android:id="@+id/patient_indicator_band"
             android:layout_width="10dp"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="1px"/>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="1px" />
 
 
         <ImageView
@@ -249,16 +250,16 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
             android:background="@null"
-            android:paddingBottom="5dp"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
             android:scaleType="fitCenter"
             android:transitionName="avatar_transition"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
     </RelativeLayout>
 </LinearLayout>

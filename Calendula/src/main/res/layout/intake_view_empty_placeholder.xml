@@ -21,7 +21,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:visibility="visible">
+    android:visibility="visible"
+    android:background="#F3F3F9">
 
     <ImageView
         android:id="@+id/bg"
@@ -57,7 +58,7 @@
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
         android:paddingTop="15dp"
-        android:text="There is no recommend intake. Please add health data first."
+        android:text="To determine your recommended daily energy intake, please enter your measurements on the home screen"
         android:textAllCaps="false"
         android:textColor="@color/agenda_item_title"
         android:textIsSelectable="false"

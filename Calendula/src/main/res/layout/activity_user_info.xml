@@ -19,7 +19,7 @@
         android:layout_height="56dp"
         android:background="@color/dark_grey_home"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <ImageView
         android:id="@+id/tabs_shadow"
@@ -41,7 +41,7 @@
         android:gravity="top"
         android:paddingLeft="72dp"
         android:paddingTop="10dp"
-        android:text="Enter your number"
+        android:text="Your Measurements"
         android:textColor="#fff"
         android:textSize="24sp"/>
 

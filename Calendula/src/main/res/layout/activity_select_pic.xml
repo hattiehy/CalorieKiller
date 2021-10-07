@@ -10,28 +10,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/top"
-        android:background="@color/bg"
+        android:background="#F3F3F9"
         android:paddingBottom="50dp">
 
         <ImageView
             android:id="@+id/pic"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
-            android:src="@drawable/image_icon"/>
+            android:layout_marginTop="90dp"
+            android:src="@drawable/food_collage"
+            />
 
         <Button
             android:id="@+id/bt_select_pic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
             android:layout_below="@+id/pic"
             android:text="Select photo from album"
             android:textColor="#222"
-            android:textSize="15sp"/>
+            android:textSize="17sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
@@ -39,18 +43,22 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/bt_select_pic"
             android:layout_above="@+id/bt_confirm"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            />
 
         <Button
             android:id="@+id/bt_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:text="@string/done"
             android:textColor="#222"
-            android:textSize="15sp" />
+            android:textSize="17sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            />
 
     </RelativeLayout>
 

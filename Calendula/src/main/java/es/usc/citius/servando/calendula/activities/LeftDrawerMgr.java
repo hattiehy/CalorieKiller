@@ -128,15 +128,15 @@ public class LeftDrawerMgr implements Drawer.OnDrawerItemClickListener, AccountH
                 new DividerDrawerItem(),
                 new PrimaryDrawerItem()
                         .withName(R.string.title_activity_medicines)
-                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_shape_plus, R.color.black).alpha(110))
+                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_calendar_plus, R.color.black).alpha(110))
                         .withIdentifier(MEDICINES),
                 new PrimaryDrawerItem()
                         .withName(R.string.title_activity_routines)
-                        .withIcon(IconUtils.icon(homeActivity, GoogleMaterial.Icon.gmd_local_pizza, R.color.black).alpha(110))
+                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_food_apple, R.color.black).alpha(110))
                         .withIdentifier(ROUTINES),
                 new PrimaryDrawerItem()
                         .withName(R.string.title_activity_schedules)
-                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_food_apple, R.color.black).alpha(110))
+                        .withIcon(IconUtils.icon(homeActivity, CommunityMaterial.Icon.cmd_chart_bar, R.color.black).alpha(110))
                         .withIdentifier(SCHEDULES));
         if (ModuleManager.isEnabled(AllergiesModule.ID)) {
 //            b.addDrawerItems(new PrimaryDrawerItem()

@@ -14,7 +14,8 @@
         android:layout_height="65dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:src="@mipmap/head_image" />
+        android:src="@mipmap/head_image"
+        />
 
     <TextView
         android:id="@+id/title"
@@ -41,4 +42,6 @@
         android:layout_gravity="right|center"
         android:layout_weight="3"
         android:src="@mipmap/arrow_r" />
+
+
 </LinearLayout>

@@ -4,19 +4,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:gravity="center">
+    android:layout_marginTop="30dp"
+    android:background="#F3F3F9"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/line_chart" />
 
     <Button
         android:id="@+id/btn_BMI_weight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TRACK BMI and Weight" />
+        android:text="Track your BMI and Weight"
+        android:layout_marginBottom="10dp"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bar_chart_black"
+        android:layout_marginBottom="10dp"
+        />
 
     <Button
         android:id="@+id/btn_daily_intake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="track daily intake" />
+        android:text="Track your Daily Energy Intake"
+        />
 
 </LinearLayout>
