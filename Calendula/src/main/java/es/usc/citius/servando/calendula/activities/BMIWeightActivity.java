@@ -1,8 +1,11 @@
 package es.usc.citius.servando.calendula.activities;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -12,8 +15,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -30,6 +36,7 @@ public class BMIWeightActivity extends AppCompatActivity {
     Patient mPatient;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +51,7 @@ public class BMIWeightActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setChart() {
         lcBMIWeight.setDrawBorders(true);
 
@@ -68,24 +76,26 @@ public class BMIWeightActivity extends AppCompatActivity {
         //X-Axis
         ArrayList<String> xLabel = new ArrayList<>();
 
-        BMIValues.add(new Entry(1, (float) 22.6));
+        Long end = LocalDate.now().toEpochDay();
+
+        BMIValues.add(new Entry(end-28, (float) 22.6));
         xLabel.add("12/06/2021");
-        BMIValues.add(new Entry(26, (float) 23.1));
+        BMIValues.add(new Entry(end-21, (float) 23.1));
         xLabel.add("08/07/2021");
-        BMIValues.add(new Entry(48, (float) 22.8));
+        BMIValues.add(new Entry(end-14, (float) 22.8));
         xLabel.add("30/07/2021");
-        BMIValues.add(new Entry(64, (float) 21.9));
+        BMIValues.add(new Entry(end-7, (float) 21.9));
         xLabel.add("15/08/2021");
-        BMIValues.add(new Entry(103, (float) 21.3));
+        BMIValues.add(new Entry(end, (float) 21.3));
         xLabel.add("23/09/2021");
 
 
 
-        weightValues.add(new Entry(1, (float) 68));
-        weightValues.add(new Entry(26, (float) 72));
-        weightValues.add(new Entry(48, (float) 68.9));
-        weightValues.add(new Entry(64, (float) 65));
-        weightValues.add(new Entry(103, (float) 64));
+        weightValues.add(new Entry(end-28, (float) 68));
+        weightValues.add(new Entry(end-21, (float) 72));
+        weightValues.add(new Entry(end-14, (float) 68.9));
+        weightValues.add(new Entry(end-7, (float) 65));
+        weightValues.add(new Entry(end, (float) 64));
 
 
 
@@ -161,18 +171,25 @@ public class BMIWeightActivity extends AppCompatActivity {
         data.setValueTextColor(Color.DKGRAY);
         data.setValueTextSize(9f);
 
+        ValueFormatter xAxisFormatter = new ValueFormatter() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public String getFormattedValue(float value) {
+                LocalDate date = LocalDate.ofEpochDay(Float.valueOf(value).longValue());
+                return date.format(DateTimeFormatter.ofPattern("dd/MM"));
+            }
+        };
+
         XAxis xAxis = lcBMIWeight.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabel));
+        xAxis.setValueFormatter(xAxisFormatter);
         xAxis.setTextColor(Color.parseColor("#333333"));
         xAxis.setTextSize(11f);
 //        xAxis.setAxisMinimum(0f);
         xAxis.setLabelRotationAngle(-60);
-        xAxis.setDrawAxisLine(true);
-        xAxis.setDrawGridLines(false);
-        xAxis.setDrawLabels(true);
         xAxis.setLabelCount(7);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f); // only intervals of 1 day
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setGranularity(1f);
 
         // set data
         lcBMIWeight.setData(data);

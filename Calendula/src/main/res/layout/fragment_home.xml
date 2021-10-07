@@ -32,7 +32,6 @@
         android:background="#fff"
         android:paddingBottom="60dp">
 
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -42,19 +41,22 @@
             android:layout_marginLeft="72dp"
             android:layout_marginTop="40dp"
             android:gravity="center_vertical"
-            android:text="Age"
+            android:text="Date of birth"
             android:textColor="@color/dark_grey_text"
             android:textSize="20sp" />
 
+
         <EditText
-            android:id="@+id/user_edit_age"
+            android:id="@+id/user_birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView"
+            android:cursorVisible="false"
+            android:focusable="false"
             android:layout_marginLeft="72dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="32dp"
-            android:hint="Please enter your age"
+            android:hint="dd/mm/yyyy"
             android:inputType="number"
             android:paddingTop="10dp"
             android:paddingBottom="15dp"
@@ -65,8 +67,8 @@
             android:id="@+id/search_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignTop="@+id/user_edit_age"
-            android:layout_alignRight="@+id/user_edit_age"
+            android:layout_alignTop="@+id/user_birthday"
+            android:layout_alignRight="@+id/user_birthday"
             android:layout_marginRight="10dp"
             android:src="@drawable/ic_search_black_48dp"
             android:visibility="gone" />
@@ -76,7 +78,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="26dp"
-            android:layout_below="@+id/user_edit_age"
+            android:layout_below="@+id/user_birthday"
             android:layout_marginLeft="72dp"
             android:layout_marginTop="15dp"
             android:gravity="center_vertical"

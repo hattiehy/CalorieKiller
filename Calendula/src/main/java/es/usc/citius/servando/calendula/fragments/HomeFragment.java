@@ -1,7 +1,9 @@
 package es.usc.citius.servando.calendula.fragments;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -18,7 +20,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+
+import com.codetroopers.betterpickers.datepicker.DatePicker;
+import com.ycuwq.datepicker.date.DatePickerDialogFragment;
+
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.Years;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -30,6 +38,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -55,6 +66,8 @@ public class HomeFragment extends Fragment {
     Long patientId;
 
     TextView etAge;
+    int age;
+    String dob;
     TextView etWeight;
     TextView etHeight;
     private String gender;
@@ -80,7 +93,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        etAge = view.findViewById(R.id.user_edit_age);
+        etAge = view.findViewById(R.id.user_birthday);
         etWeight = view.findViewById(R.id.user_edit_weight);
         etHeight = view.findViewById(R.id.user_edit_height);
         rgGender = view.findViewById(R.id.user_gender);
@@ -90,17 +103,49 @@ public class HomeFragment extends Fragment {
 
         assetManager = getResources().getAssets();
 
+        if(!isNewUser()){
+            HealthData healthData = DB.healthData().findByPatient(mPatient);
+            etAge.setHint(healthData.getDob());
+            if ("Female".equals(healthData.getGender())) {
+                rgGender.check(R.id.radio_female);
+            } else {
+                rgGender.check(R.id.radio_male);
+            }
+
+        }
+
+        etAge.setOnClickListener(v -> {
+            com.ycuwq.datepicker.date.DatePickerDialogFragment datePickerDialogFragment = new com.ycuwq.datepicker.date.DatePickerDialogFragment();
+            datePickerDialogFragment.setOnDateChooseListener(new DatePickerDialogFragment.OnDateChooseListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onDateChoose(int year, int month, int day) {
+                    etAge.setHint(day + "-" + month + "-" + year);
+                    dob = day + "-" + month + "-" + year;
+                    LocalDate dob = LocalDate.of(year, month, day);
+                    age = Long.valueOf(ChronoUnit.YEARS.between(dob, LocalDate.now())).intValue();
+//                    Toast.makeText(getContext(), year + "-" + month + "-" + day, Toast.LENGTH_SHORT).show();
+                }
+            });
+            FragmentManager fm = getActivity().getFragmentManager();
+            datePickerDialogFragment.show(fm, "DatePickerDialogFragment");
+        });
+
         genderPicker();
-
-
         return view;
     }
 
-    private boolean isValid(String strAge, String strWeight, String strHeight) {
+    public boolean isNewUser(){
+        List<HealthData> healthDataList = DB.healthData().findAll(mPatient);
+        return healthDataList.size() == 0;
+    }
+
+
+    private boolean isValid(String strWeight, String strHeight) {
         if (strWeight == null || strHeight == null || gender == null) {
             Toast.makeText(getContext(), "Please enter all numbers" , Toast.LENGTH_SHORT).show();
             return false;
-        } else if (Double.parseDouble(strAge) <= 0 || Double.parseDouble(strHeight) <= 0 || Double.parseDouble(strWeight) <= 0) {
+        } else if (Double.parseDouble(strHeight) <= 0 || Double.parseDouble(strWeight) <= 0) {
             Toast.makeText(getContext(), "Please enter valid numbers" , Toast.LENGTH_SHORT).show();
             return false;
         } else {
@@ -178,17 +223,15 @@ public class HomeFragment extends Fragment {
     }
 
     public void onEdit() {
-        String strAge = etAge.getText().toString().trim();
         String strHeight = etHeight.getText().toString().trim();
         String strWeight = etWeight.getText().toString().trim();
         if (gender == null) {
             Toast.makeText(getContext(), "Please enter all numbers" , Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!isValid(strAge, strHeight, strWeight)) {
+        if(!isValid(strHeight, strWeight)) {
             return;
         }
-        int age = Integer.parseInt(strAge);
         double height = Double.parseDouble(strHeight);
         double weight = Double.parseDouble(strWeight);
         double BMI = calculateBMI(height, weight);
@@ -208,6 +251,7 @@ public class HomeFragment extends Fragment {
 
         HealthData healthData = new HealthData();
         healthData.setAge(age);
+        healthData.setDob(dob);
         healthData.setHeight(height);
         healthData.setWeight(weight);
         healthData.setGender(gender);

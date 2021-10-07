@@ -2,6 +2,7 @@ package es.usc.citius.servando.calendula.fragments;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
@@ -21,7 +22,10 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import es.usc.citius.servando.calendula.R;
@@ -55,7 +59,16 @@ public class DailyIntakeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_daily_intake, container, false);
         pcDailyIntake = view.findViewById(R.id.pc_daily_intake);
         mPatient = DB.patients().getActive(getContext());
-        DailyIntake intake = DB.dailyIntake().findByPatient(mPatient);
+        List<DailyIntake> intakeList = DB.dailyIntake().findAll(mPatient);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            intakeList.sort(Comparator.comparing(dailyIntake -> LocalDate.parse(dailyIntake.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), Comparator.naturalOrder()));
+        }
+        DailyIntake intake;
+        if (intakeList.size() == 0) {
+            intake = null;
+        } else {
+            intake = intakeList.get(intakeList.size() - 1);
+        }
         setUpPieChart(intake);
         return view;
     }
