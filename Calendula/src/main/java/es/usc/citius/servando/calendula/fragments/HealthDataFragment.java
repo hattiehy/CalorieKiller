@@ -220,9 +220,9 @@ public class HealthDataFragment extends Fragment {
             tvName.setText(record.getPatient().getName() + "'s Health Record");
         }
 
-        tvWeight.setText("Current Weight - " + Double.toString(Math.round(100 * record.getWeight()) / 100) + " kg");
-        tvBMI.setText("Current BMI - " + record.getBmi());
-        tvCondition.setText("Body Condition - " + record.getCondition());
+        tvWeight.setText("Current Weight: " + Double.toString(Math.round(100 * record.getWeight()) / 100) + " kg");
+        tvBMI.setText("Current BMI: " + record.getBmi());
+        tvCondition.setText("Body Condition: " + record.getCondition());
     }
 
 
