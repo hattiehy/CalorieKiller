@@ -161,10 +161,10 @@ public class DailyIntakeFragment extends Fragment {
     private void setUpChartDate(int recomIntake, int currentIntake){
         ArrayList<PieEntry> entries = new ArrayList<>();
         if (recomIntake > currentIntake) {
-            entries.add(new PieEntry(currentIntake, "Today's Intake"));
-            entries.add(new PieEntry(recomIntake - currentIntake, "Remaining"));
+            entries.add(new PieEntry(currentIntake, "Energy so far"));
+            entries.add(new PieEntry(recomIntake - currentIntake, "Energy Remaining"));
         } else {
-            entries.add(new PieEntry(currentIntake, "Today's Intake"));
+            entries.add(new PieEntry(currentIntake, "Energy so far"));
 //            entries.add(new PieEntry(recomIntake, "Remaining"));
         }
 

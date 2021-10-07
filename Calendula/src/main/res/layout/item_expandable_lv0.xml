@@ -14,7 +14,8 @@
         android:layout_height="65dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:src="@mipmap/head_image" />
+        android:src="@mipmap/head_image"
+        android:layout_below="@+id/intro_nutri"/>
 
     <TextView
         android:id="@+id/title"
