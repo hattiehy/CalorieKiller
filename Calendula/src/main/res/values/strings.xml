@@ -18,7 +18,7 @@
 
 <resources>
 
-    <string name="app_name" translatable="false">Calorie Killer</string>
+    <string name="app_name" translatable="false">Calorie Killers</string>
 
     <!-- Med schedules -->
 
@@ -211,8 +211,15 @@
         <item>10</item>
         <item>12</item>
     </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="caloriemama_token" translatable="false">9d8656d18ea60b695a18d3674c05a656</string>
+
+    // Lachlan's strings
+    <string name="Counter_Title" translatable="false">Daily Energy Intake</string>
+    <string name="Nutri_Title" translatable="false">Nutrition Advice</string>
+    <string name="BMI_Title" translatable="false">Health Statistics</string>
+    <string name="plural_s" translatable="false">"'"</string>
 
 </resources>
