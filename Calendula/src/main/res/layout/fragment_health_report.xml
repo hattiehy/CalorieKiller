@@ -10,13 +10,15 @@
         android:id="@+id/btn_BMI_weight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TRACK BMI and Weight" />
+        android:text="Track your BMI and Weight"
+        android:textColor="@android:color/black"
+        />
 
     <Button
         android:id="@+id/btn_daily_intake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="track daily intake" />
+        android:text="Track your Daily Energy Intake" />
 
 </LinearLayout>

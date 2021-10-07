@@ -14,10 +14,13 @@
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:layout_weight="1"
+        android:text="test text"
+
         />
 
 </LinearLayout>
