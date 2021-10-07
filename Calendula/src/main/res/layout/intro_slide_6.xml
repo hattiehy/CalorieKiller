@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:alpha="0.9"
         android:padding="20dp"
-        android:text="@string/intro_multipat_text"
+        android:text="Calorie Killers helps you track the health data of the whole family by allowing you add and update multiple users."
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#fff"/>
