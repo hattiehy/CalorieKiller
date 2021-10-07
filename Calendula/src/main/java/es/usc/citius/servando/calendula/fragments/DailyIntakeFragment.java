@@ -98,8 +98,8 @@ public class DailyIntakeFragment extends Fragment {
         pcDailyIntake.setTransparentCircleColor(Color.parseColor("#F3F3F9"));
         pcDailyIntake.setTransparentCircleAlpha(110);
 
-        pcDailyIntake.setHoleRadius(55f);
-        pcDailyIntake.setTransparentCircleRadius(62f);
+        pcDailyIntake.setHoleRadius(58f);
+        pcDailyIntake.setTransparentCircleRadius(61f);
 
         pcDailyIntake.setDrawCenterText(true);
 

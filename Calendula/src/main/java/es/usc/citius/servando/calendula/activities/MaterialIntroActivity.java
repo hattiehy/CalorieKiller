@@ -44,7 +44,7 @@ public class MaterialIntroActivity extends IntroActivity {
                 .build());
 
         addSlide(new SimpleSlide.Builder()
-                .layout(R.layout.intro_slide_3)
+                .layout(R.layout.intro_slide_6)
                 .background(R.color.intro_slide_3_light)
                 .backgroundDark(R.color.intro_slide_3_dark)
                 .build());
@@ -68,7 +68,7 @@ public class MaterialIntroActivity extends IntroActivity {
 //                .build());
 
         addSlide(new SimpleSlide.Builder()
-                .layout(R.layout.intro_slide_6)
+                .layout(R.layout.intro_slide_3)
                 .background(R.color.intro_slide_6_light)
                 .backgroundDark(R.color.intro_slide_6_dark)
                 .build());
