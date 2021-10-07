@@ -4,18 +4,26 @@
     android:layout_height="wrap_content"
     android:background="@color/bg"
     android:layout_margin="20dp">
+
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="30dp"
-        android:text="Please select your serving"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="15dp"
-        android:textSize="18sp"/>
+        android:text="Please select your serving size"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="30dp"
+        android:gravity="center"
+        android:background="@drawable/back"
+        />
 
     <ListView
         android:id="@+id/listview_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView" />
+        android:layout_below="@+id/textView"
+        />
+
 </RelativeLayout>
