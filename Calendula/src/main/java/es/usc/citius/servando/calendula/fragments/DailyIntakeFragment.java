@@ -135,7 +135,9 @@ public class DailyIntakeFragment extends Fragment {
         Date curDate = new Date(System.currentTimeMillis());
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String date = formatter.format(curDate);
-        if(dailyIntake.getDate().equals(date)){
+        if (dailyIntake == null) {
+            currentIntake = 0;
+        } else if (date.equals(dailyIntake.getDate())) {
             currentIntake = dailyIntake.getIntake();
         } else{
             currentIntake = 0;
