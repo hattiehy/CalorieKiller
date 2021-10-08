@@ -90,10 +90,13 @@ public class FabMenuMgr implements View.OnClickListener {
                 fabMenu.show();
                 break;
             case ROUTINES:
+                fabMenu.hide();
+                break;
             case MEDICINES:
-            case SCHEDULES:
-                fabMenu.collapse();
                 fabMenu.show();
+                break;
+            case SCHEDULES:
+                fabMenu.hide();
                 break;
         }
     }
@@ -177,10 +180,10 @@ public class FabMenuMgr implements View.OnClickListener {
                 launchActivity(SelectPicActivity.class);
                 break;
             case SCHEDULES:
-                if (!PreferenceUtils.getBoolean(PreferenceKeys.SCHEDULES_HELP_SHOWN, false)) {
-                    activity.launchActivityDelayed(SchedulesHelpActivity.class, 600);
-                }
-                fabMenu.toggle();
+//                if (!PreferenceUtils.getBoolean(PreferenceKeys.SCHEDULES_HELP_SHOWN, false)) {
+//                    activity.launchActivityDelayed(SchedulesHelpActivity.class, 600);
+//                }
+//                fabMenu.toggle();
                 break;
         }
     }
