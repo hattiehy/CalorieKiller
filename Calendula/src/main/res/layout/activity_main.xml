@@ -87,7 +87,8 @@
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="@string/app_name" />
+                        android:text="@string/app_name"
+                        />
 
                 </android.support.v7.widget.Toolbar>
 
@@ -102,7 +103,8 @@
                     app:tabIndicatorColor="#ffffff"
                     app:tabSelectedTextColor="#ffffff"
                     app:tabTextAppearance="@style/AppTabLayoutTextAppearance"
-                    app:tabTextColor="#77ffffff" />
+                    app:tabTextColor="#77ffffff"
+                    />
 
 
 
@@ -142,7 +144,8 @@
             android:layout_marginRight="@dimen/fab_horizontal_margin"
             android:src="@drawable/ic_action_add"
             app:backgroundTint="@color/fab_default_color"
-            app:elevation="@dimen/fab_elevation" />
+            app:elevation="@dimen/fab_elevation"
+            />
 
         <LinearLayout
             android:id="@+id/fab_action_routines"
@@ -165,7 +168,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="6dp"
-                android:text="@string/schedule_type_routines_title" />
+                android:text="@string/schedule_type_routines_title"
+                />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_action_routines_button"
@@ -173,7 +177,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_alarm_white_48dp"
                 app:backgroundTint="@color/android_blue"
-                app:elevation="@dimen/fab_sub_elevation" />
+                app:elevation="@dimen/fab_sub_elevation"
+                />
         </LinearLayout>
 
 
@@ -198,7 +203,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="6dp"
-                android:text="@string/schedule_type_hourly_title" />
+                android:text="@string/schedule_type_hourly_title"
+                />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_action_interval_button"
@@ -206,7 +212,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_history_white_48dp"
                 app:backgroundTint="@color/android_blue"
-                app:elevation="@dimen/fab_sub_elevation" />
+                app:elevation="@dimen/fab_sub_elevation"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -230,7 +237,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="6dp"
-                android:text="@string/schedule_type_period_title" />
+                android:text="@string/schedule_type_period_title"
+                />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_action_period_button"
@@ -238,7 +246,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_autorenew_white_48dp"
                 app:backgroundTint="@color/android_blue"
-                app:elevation="@dimen/fab_sub_elevation" />
+                app:elevation="@dimen/fab_sub_elevation"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -262,7 +271,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="6dp"
-                android:text="@string/schedule_type_from_qr" />
+                android:text="@string/schedule_type_from_qr"
+                />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_action_qr_button"
@@ -270,7 +280,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_qrcode_white_48dp"
                 app:backgroundTint="@color/android_blue"
-                app:elevation="@dimen/fab_sub_elevation" />
+                app:elevation="@dimen/fab_sub_elevation"
+                />
         </LinearLayout>
 
 
