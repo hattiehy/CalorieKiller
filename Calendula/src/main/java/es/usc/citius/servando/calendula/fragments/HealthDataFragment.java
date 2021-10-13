@@ -135,7 +135,6 @@ public class HealthDataFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         notifyDataChange();
-
     }
 
     public void showOrHideEmptyView(boolean show) {
@@ -147,10 +146,8 @@ public class HealthDataFragment extends Fragment {
             emptyView.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-
                 }
             });
-
         }
     }
 

@@ -37,4 +37,8 @@
         <item>12</item>
     </integer-array>
 
+    <integer name="colour_mix_ratio">
+        4
+    </integer>
+
 </resources>

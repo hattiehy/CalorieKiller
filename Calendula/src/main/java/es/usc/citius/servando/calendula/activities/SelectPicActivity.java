@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -111,6 +113,16 @@ public class SelectPicActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // Get user color
+        int col = user.getColor();
+
+        // Lighten the color
+        int licol = ColorUtils.blendARGB(col, Color.WHITE, 0.6f);
+
+        // Set button color to same as the lightened color
+        btSelectPic.setBackgroundColor(licol);
+        btDone.setBackgroundColor(licol);
     }
 
     public void selectServing(final List<String> list) {
