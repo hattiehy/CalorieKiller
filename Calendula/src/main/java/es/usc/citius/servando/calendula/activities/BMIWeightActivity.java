@@ -34,6 +34,7 @@ public class BMIWeightActivity extends AppCompatActivity {
 
     private LineChart lcBMIWeight;
     Patient mPatient;
+    List<HealthData> healthDataList;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -42,11 +43,63 @@ public class BMIWeightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bmiweight);
         lcBMIWeight = findViewById(R.id.lc_BMI_weight);
+
         mPatient = DB.patients().getActive(this);
+        healthDataList = DB.healthData().findAll(mPatient);
+        healthDataList.sort(Comparator.comparing(h -> LocalDate.parse(h.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")), Comparator.naturalOrder()));
+
         setChart();
     }
 
-    public void getNewestData(){
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public ArrayList<Entry> getBMIData(){
+        ArrayList<Entry> BMIValues = new ArrayList<>();
+
+//        Long end = LocalDate.now().toEpochDay();
+//
+//        BMIValues.add(new Entry(end-28, (float) 22.6));
+//        xLabel.add("12/06/2021");
+//        BMIValues.add(new Entry(end-21, (float) 23.1));
+//        xLabel.add("08/07/2021");
+//        BMIValues.add(new Entry(end-14, (float) 22.8));
+//        xLabel.add("30/07/2021");
+//        BMIValues.add(new Entry(end-7, (float) 21.9));
+//        xLabel.add("15/08/2021");
+//        BMIValues.add(new Entry(end, (float) 21.3));
+//        xLabel.add("23/09/2021");
+
+        if (healthDataList.size() == 0){
+            return BMIValues;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            for (HealthData healthData: healthDataList) {
+                LocalDate date = LocalDate.parse(healthData.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                BMIValues.add(new Entry(date.toEpochDay(),Float.parseFloat(healthData.getBmi())));
+            }
+        }
+        return BMIValues;
+    }
+
+    public ArrayList<Entry> getWeightData(){
+        ArrayList<Entry> weightValues = new ArrayList<>();
+//        weightValues.add(new Entry(end-28, (float) 68));
+//        weightValues.add(new Entry(end-21, (float) 72));
+//        weightValues.add(new Entry(end-14, (float) 68.9));
+//        weightValues.add(new Entry(end-7, (float) 65));
+//        weightValues.add(new Entry(end, (float) 64));
+
+        if (healthDataList.size() == 0){
+            return weightValues;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            for (HealthData healthData: healthDataList) {
+                LocalDate date = LocalDate.parse(healthData.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                weightValues.add(new Entry(date.toEpochDay(),(float)healthData.getWeight()));
+            }
+        }
+        return weightValues;
 
     }
 
@@ -70,34 +123,6 @@ public class BMIWeightActivity extends AppCompatActivity {
         lcBMIWeight.setDragEnabled(true);
         lcBMIWeight.setScaleEnabled(true);
         lcBMIWeight.invalidate();
-
-        ArrayList<Entry> BMIValues = new ArrayList<>();
-        ArrayList<Entry> weightValues = new ArrayList<>();
-        //X-Axis
-        ArrayList<String> xLabel = new ArrayList<>();
-
-        Long end = LocalDate.now().toEpochDay();
-
-        BMIValues.add(new Entry(end-28, (float) 22.6));
-        xLabel.add("12/06/2021");
-        BMIValues.add(new Entry(end-21, (float) 23.1));
-        xLabel.add("08/07/2021");
-        BMIValues.add(new Entry(end-14, (float) 22.8));
-        xLabel.add("30/07/2021");
-        BMIValues.add(new Entry(end-7, (float) 21.9));
-        xLabel.add("15/08/2021");
-        BMIValues.add(new Entry(end, (float) 21.3));
-        xLabel.add("23/09/2021");
-
-
-
-        weightValues.add(new Entry(end-28, (float) 68));
-        weightValues.add(new Entry(end-21, (float) 72));
-        weightValues.add(new Entry(end-14, (float) 68.9));
-        weightValues.add(new Entry(end-7, (float) 65));
-        weightValues.add(new Entry(end, (float) 64));
-
-
 
 
 //        PainRecordViewModel model = new ViewModelProvider(requireActivity()).get(PainRecordViewModel.class);
@@ -143,8 +168,8 @@ public class BMIWeightActivity extends AppCompatActivity {
 //        }
 
         LineDataSet set1, set2;
-        set1 = new LineDataSet(BMIValues, "BMI");
-        set2 = new LineDataSet(weightValues, "Weight: kg");
+        set1 = new LineDataSet(getBMIData(), "BMI");
+        set2 = new LineDataSet(getWeightData(), "Weight: kg");
 
         // create a data object with the data sets
         LineData data = new LineData(set1, set2);

@@ -242,11 +242,11 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 6; i++) {
             entries.add(new BarEntry(i, (float) (Math.random() * 2000) + 6000));
         }
 
-        BarDataSet d = new BarDataSet(entries, "kilocalories: kj");
+        BarDataSet d = new BarDataSet(entries, "kilocalories: Example data");
         d.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d.setBarShadowColor(Color.rgb(203, 203, 203));
 
@@ -262,11 +262,11 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 6; i++) {
             entries.add(new BarEntry(i, (float) (Math.random() * 100) + 200));
         }
 
-        BarDataSet d = new BarDataSet(entries, "Carbs: g");
+        BarDataSet d = new BarDataSet(entries, "Carbs: Example data");
         d.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d.setBarShadowColor(Color.rgb(203, 203, 203));
 
@@ -282,11 +282,11 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 6; i++) {
             entries.add(new BarEntry(i, (float) (Math.random() * 20) + 35));
         }
 
-        BarDataSet d = new BarDataSet(entries, "Fat: g");
+        BarDataSet d = new BarDataSet(entries, "Fat: Example data");
         d.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d.setBarShadowColor(Color.rgb(203, 203, 203));
 
@@ -302,11 +302,11 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 6; i++) {
             entries.add(new BarEntry(i, (float) (Math.random() * 30) + 60));
         }
 
-        BarDataSet d = new BarDataSet(entries, "Protein: g");
+        BarDataSet d = new BarDataSet(entries, "Protein: Example data");
         d.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d.setBarShadowColor(Color.rgb(203, 203, 203));
 
