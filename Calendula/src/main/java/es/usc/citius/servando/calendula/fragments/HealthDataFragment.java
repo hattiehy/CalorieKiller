@@ -21,6 +21,7 @@ package es.usc.citius.servando.calendula.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -220,9 +221,21 @@ public class HealthDataFragment extends Fragment {
             tvName.setText(record.getPatient().getName() + "'s Health Record");
         }
 
-        tvWeight.setText("Current Weight: " + Double.toString(Math.round(100 * record.getWeight()) / 100) + " kg");
-        tvBMI.setText("Current BMI: " + record.getBmi());
-        tvCondition.setText("Body Condition: " + record.getCondition());
+        tvWeight.setText(Double.toString(Math.round(100 * record.getWeight()) / 100) + " kg");
+        tvBMI.setText(record.getBmi());
+        tvCondition.setText(record.getCondition());
+
+        // If the health condition is of a healthy weight
+        String hwstr = "Healthy Weight";
+        if (record.getCondition().equals(hwstr)) {
+            // Set color of text to green
+            tvCondition.setTextColor(Color.parseColor("#02C418"));
+        }
+
+        else {
+            // Else set it to red
+            tvCondition.setTextColor(Color.parseColor("#C40202"));
+        }
     }
 
 
