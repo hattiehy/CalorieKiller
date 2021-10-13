@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:layout_marginBottom="1dp"
-    android:paddingLeft="10dp"
-    >
+    android:paddingLeft="10dp">
 
 <!--    <ImageView-->
 <!--        android:layout_width="102dp"-->
@@ -16,23 +16,35 @@
 <!--        android:paddingRight="20dp"-->
 <!--        android:src="@mipmap/head_img_1" />-->
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="168dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="@color/agenda_item_title"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/sub_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
-        android:visibility="gone"
-        android:gravity="center"
-        />
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/agenda_item_title"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/back"
+            />
+
+        <TextView
+            android:id="@+id/sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:visibility="gone"
+            android:gravity="center"
+            />
+
+    </TableRow>
 <!--    <ImageView-->
 <!--        android:id="@+id/iv"-->
 <!--        android:layout_width="wrap_content"-->
@@ -40,4 +52,4 @@
 <!--        android:layout_gravity="right|center"-->
 <!--        android:layout_weight="3"-->
 <!--        android:src="@mipmap/arrow_r"/>-->
-</LinearLayout>
+</TableLayout>
