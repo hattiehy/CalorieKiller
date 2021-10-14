@@ -102,7 +102,7 @@ public class DailyIntakeFragment extends Fragment {
             text = "Please enter your measurements on the home page to receive daily intake recommendations";
 
             SpannableString s = new SpannableString(text);
-            s.setSpan(new RelativeSizeSpan(1.5f), 0, s.length(), 0);
+            s.setSpan(new RelativeSizeSpan(1.9f), 0, s.length(), 0);
             s.setSpan(new StyleSpan(Typeface.BOLD), 0, s.length(), 0);
             s.setSpan(new ForegroundColorSpan(Color.parseColor("#66000000")), 0, s.length(), 0);
 
@@ -185,6 +185,12 @@ public class DailyIntakeFragment extends Fragment {
         }
         setUpChartDate(recomIntake, currentIntake);
         remaining = recomIntake - currentIntake;
+
+        if (getNewestHealthData() == null) {
+            pcDailyIntake.setHoleRadius(70f);
+            pcDailyIntake.setTransparentCircleRadius(1500f);
+        }
+
         pcDailyIntake.setCenterText(generateCenterSpannableText(remaining));
     }
 
