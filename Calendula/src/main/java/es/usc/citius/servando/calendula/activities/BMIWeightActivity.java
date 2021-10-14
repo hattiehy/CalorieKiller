@@ -113,14 +113,14 @@ public class BMIWeightActivity extends AppCompatActivity {
 
         LineDataSet set1, set2;
         set1 = new LineDataSet(getBMIData(), "BMI");
-        set2 = new LineDataSet(getWeightData(), "Weight: kg");
+        set2 = new LineDataSet(getWeightData(), "Weight (kg)");
 
 
         // create a data object with the data sets
         LineData data = new LineData(set1, set2);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
         set1.setColor(ColorTemplate.getHoloBlue());
-        set1.setCircleColor(Color.DKGRAY);
+        set1.setCircleColor(ColorTemplate.getHoloBlue());
         set1.setLineWidth(2f);
         set1.setCircleRadius(3f);
         set1.setFillAlpha(65);
@@ -130,7 +130,7 @@ public class BMIWeightActivity extends AppCompatActivity {
 
         set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
         set2.setColor(Color.RED);
-        set2.setCircleColor(Color.DKGRAY);
+        set2.setCircleColor(Color.RED);
         set2.setLineWidth(2f);
         set2.setCircleRadius(3f);
         set2.setFillAlpha(65);
@@ -185,14 +185,14 @@ public class BMIWeightActivity extends AppCompatActivity {
             llXAxis.setTextSize(10f);
 //            llXAxis.setTypeface(tfRegular);
 
-            LimitLine ll1 = new LimitLine(25f, "Upper Health BMI Limit");
+            LimitLine ll1 = new LimitLine(25f, "Overweight Border");
             ll1.setLineWidth(2f);
             ll1.enableDashedLine(10f, 10f, 0f);
             ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
             ll1.setTextSize(10f);
 //            ll1.setTypeface(tfRegular);
 
-            LimitLine ll2 = new LimitLine(18f, "Lower Health BMI Limit");
+            LimitLine ll2 = new LimitLine(18f, "Underweight Border");
             ll2.setLineWidth(2f);
             ll2.enableDashedLine(10f, 10f, 0f);
             ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);

@@ -32,6 +32,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.components.Description;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -191,19 +192,19 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         }
 
-        BarDataSet d1 = new BarDataSet(calories, "Daily kilocalories records: kj");
+        BarDataSet d1 = new BarDataSet(calories, "Total Daily Energy (kj)");
         d1.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d1.setBarShadowColor(Color.rgb(203, 203, 203));
 
-        BarDataSet d2 = new BarDataSet(carbs, "Daily carbs records: g");
+        BarDataSet d2 = new BarDataSet(carbs, "Total Daily Carbohydrates (g)");
         d2.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d2.setBarShadowColor(Color.rgb(203, 203, 203));
 
-        BarDataSet d3 = new BarDataSet(fats, "Daily fat records: g");
+        BarDataSet d3 = new BarDataSet(fats, "Total Daily Fats (g)");
         d3.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d3.setBarShadowColor(Color.rgb(203, 203, 203));
 
-        BarDataSet d4 = new BarDataSet(proteins, "Daily protein records: g");
+        BarDataSet d4 = new BarDataSet(proteins, "Total Daily Protein (g)");
         d4.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d4.setBarShadowColor(Color.rgb(203, 203, 203));
 

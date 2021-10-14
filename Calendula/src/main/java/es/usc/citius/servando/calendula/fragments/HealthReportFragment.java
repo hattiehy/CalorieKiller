@@ -132,15 +132,11 @@ public class HealthReportFragment extends Fragment {
 
     }
 
+    // Method called from the event bus
+    @SuppressWarnings("unused")
     @Subscribe
-    public void handleEvent(final Object event) {
-        if (event instanceof PersistenceEvents.ActiveUserChangeEvent) {
-            notifyDataChange();
-        }
-
-        else if (event instanceof PersistenceEvents.UserUpdateEvent) {
-            notifyDataChange();
-        }
+    public void handleActiveUserChange(final PersistenceEvents.ActiveUserChangeEvent event) {
+        notifyDataChange();
     }
 
 

@@ -11,10 +11,10 @@
 <string name="drawer_help_option">"Tour"</string>
 <string name="drawer_settings_option">"Settings"</string>
 <string name="drawer_about_option">"About"</string>
-<string name="title_activity_routines">"Food Info"</string>
+<string name="title_activity_routines">"Nutrition Advice"</string>
 <string name="title_edit_routine_activity">"Edit routine"</string>
 <string name="title_create_routine_activity">"Create routine"</string>
-<string name="title_activity_medicines">"Calorie Calculator"</string>
+<string name="title_activity_medicines">"Daily Intake"</string>
 <string name="title_edit_schedule_activity">"Edit schedule"</string>
 <string name="title_create_schedule_activity">"Create schedule"</string>
 <string name="routine_name">"Routine name"</string>
@@ -25,7 +25,7 @@
 <string name="medicine_presentation">"Presentation"</string>
 <string name="create_medicine_button_text">"Create medicine"</string>
 <string name="no_stock_info_msg">"No stock info"</string>
-<string name="title_activity_schedules">"Diet Record"</string>
+<string name="title_activity_schedules">"Health Statistics"</string>
 <string name="delay">"Delay"</string>
 <string name="done">"Done"</string>
 <string name="cancel">"Cancel"</string>
@@ -351,7 +351,7 @@ Please, take a look at what we have for you!"</string>
 <string name="intro_routines_text">"Enter your health data in the home page. We'll help you determine your health status"</string>
 <string name="intro_meds_title">"Food group info"</string>
 <string name="intro_meds_text">"Depending on your health status, we will recommend a suitable daily diet composition for you."</string>
-<string name="intro_schedules_title">"Calorie Calculator"</string>
+<string name="intro_schedules_title">"Daily Intake"</string>
 <string name="intro_schedules_text">"Upload your diet photos. We'll help you keep track of your dietary calories"</string>
 <string name="intro_reminders_title">"Daily Report"</string>
 <string name="intro_reminders_text">"In the report, you can track your body data and diet records to see your progress more visually"</string>
