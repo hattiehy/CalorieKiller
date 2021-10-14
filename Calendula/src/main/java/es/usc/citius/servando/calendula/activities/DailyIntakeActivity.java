@@ -22,6 +22,7 @@ import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -135,7 +136,7 @@ public class DailyIntakeActivity extends AppCompatActivity {
 //            xAxis.setTypeface(tfLight);
             xAxis.setDrawGridLines(false);
             xAxis.setGranularity(1f); // only intervals of 1 day
-            xAxis.setLabelCount(7);
+            xAxis.setLabelCount(12);
             xAxis.setValueFormatter(xAxisFormatter);
 
             YAxis leftAxis = holder.chart.getAxisLeft();
@@ -155,6 +156,11 @@ public class DailyIntakeActivity extends AppCompatActivity {
             // do not forget to refresh the chart
 //            holder.chart.invalidate();
             holder.chart.animateY(700);
+
+            Legend l = holder.chart.getLegend();
+            l.setTextSize(15f);
+            l.setTextColor(Color.BLACK);
+            l.setForm(Legend.LegendForm.CIRCLE);
 
             return convertView;
         }
@@ -185,19 +191,19 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         }
 
-        BarDataSet d1 = new BarDataSet(calories, "kilocalories: kj");
+        BarDataSet d1 = new BarDataSet(calories, "Daily kilocalories records: kj");
         d1.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d1.setBarShadowColor(Color.rgb(203, 203, 203));
 
-        BarDataSet d2 = new BarDataSet(carbs, "Carbs: g");
+        BarDataSet d2 = new BarDataSet(carbs, "Daily carbs records: g");
         d2.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d2.setBarShadowColor(Color.rgb(203, 203, 203));
 
-        BarDataSet d3 = new BarDataSet(fats, "Fat: g");
+        BarDataSet d3 = new BarDataSet(fats, "Daily fat records: g");
         d3.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d3.setBarShadowColor(Color.rgb(203, 203, 203));
 
-        BarDataSet d4 = new BarDataSet(proteins, "Protein: g");
+        BarDataSet d4 = new BarDataSet(proteins, "Daily protein records: g");
         d4.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d4.setBarShadowColor(Color.rgb(203, 203, 203));
 
@@ -236,11 +242,11 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 6; i++) {
             entries.add(new BarEntry(i, (float) (Math.random() * 2000) + 6000));
         }
 
-        BarDataSet d = new BarDataSet(entries, "kilocalories: kj");
+        BarDataSet d = new BarDataSet(entries, "kilocalories: Example data");
         d.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d.setBarShadowColor(Color.rgb(203, 203, 203));
 
@@ -256,11 +262,11 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 6; i++) {
             entries.add(new BarEntry(i, (float) (Math.random() * 100) + 200));
         }
 
-        BarDataSet d = new BarDataSet(entries, "Carbs: g");
+        BarDataSet d = new BarDataSet(entries, "Carbs: Example data");
         d.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d.setBarShadowColor(Color.rgb(203, 203, 203));
 
@@ -276,11 +282,11 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 6; i++) {
             entries.add(new BarEntry(i, (float) (Math.random() * 20) + 35));
         }
 
-        BarDataSet d = new BarDataSet(entries, "Fat: g");
+        BarDataSet d = new BarDataSet(entries, "Fat: Example data");
         d.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d.setBarShadowColor(Color.rgb(203, 203, 203));
 
@@ -296,11 +302,11 @@ public class DailyIntakeActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 6; i++) {
             entries.add(new BarEntry(i, (float) (Math.random() * 30) + 60));
         }
 
-        BarDataSet d = new BarDataSet(entries, "Protein: g");
+        BarDataSet d = new BarDataSet(entries, "Protein: Example data");
         d.setColors(ColorTemplate.VORDIPLOM_COLORS);
         d.setBarShadowColor(Color.rgb(203, 203, 203));
 

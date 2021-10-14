@@ -17,6 +17,7 @@ import es.usc.citius.servando.calendula.util.PreferenceUtils;
 public class HealthData {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_AGE = "Age";
+    public static final String COLUMN_DOB = "Dob";
     public static final String COLUMN_HEIGHT = "Height";
     public static final String COLUMN_WEIGHT = "Weight";
     public static final String COLUMN_GENDER = "Gender";
@@ -31,6 +32,9 @@ public class HealthData {
 
     @DatabaseField(columnName = COLUMN_AGE)
     private int age;
+
+    @DatabaseField(columnName = COLUMN_DOB)
+    private String dob;
 
     @DatabaseField(columnName = COLUMN_HEIGHT)
     private double height;
@@ -65,6 +69,14 @@ public class HealthData {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public double getHeight() {
@@ -143,9 +155,10 @@ public class HealthData {
         DB.healthData().save(this);
     }
 
-    public HealthData(Long id, int age, double height, double weight, String gender, String bmi, String condition, String date, int recomIntake, Patient patient) {
+    public HealthData(Long id, int age, String dob, double height, double weight, String gender, String bmi, String condition, String date, int recomIntake, Patient patient) {
         this.id = id;
         this.age = age;
+        this.dob = dob;
         this.height = height;
         this.weight = weight;
         this.gender = gender;

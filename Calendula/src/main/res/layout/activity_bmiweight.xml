@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_centerHorizontal="true"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-    android:paddingBottom="50dp"
-    android:paddingTop="150dp"
-    tools:context=".fragments.DailyIntakeFragment">
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BMI and weight records"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lc_BMI_weight"
-        android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_width="365dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" />
 
-</FrameLayout>
+
+
+</LinearLayout>

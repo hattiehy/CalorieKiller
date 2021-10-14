@@ -2,6 +2,7 @@ package es.usc.citius.servando.calendula.fragments;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
@@ -21,7 +22,12 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import es.usc.citius.servando.calendula.R;
@@ -55,13 +61,12 @@ public class DailyIntakeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_daily_intake, container, false);
         pcDailyIntake = view.findViewById(R.id.pc_daily_intake);
         mPatient = DB.patients().getActive(getContext());
-        DailyIntake intake = DB.dailyIntake().findByPatient(mPatient);
-        setUpPieChart(intake);
+        setUpPieChart();
         return view;
     }
 
     public void notifyDataChange() {
-        setUpPieChart(DB.dailyIntake().findByPatient(mPatient));
+        setUpPieChart();
     }
 
 
@@ -85,7 +90,7 @@ public class DailyIntakeFragment extends Fragment {
     }
 
 
-    private void setUpPieChart(DailyIntake dailyIntake){
+    private void setUpPieChart(){
         pcDailyIntake.setUsePercentValues(false);
         pcDailyIntake.getDescription().setEnabled(false);
         pcDailyIntake.setExtraOffsets(5, 10, 5, 5);
@@ -125,7 +130,18 @@ public class DailyIntakeFragment extends Fragment {
 
         HealthData healthData = getNewestHealthData();
         int remaining;
-        int currentIntake = getCurrentIntake(dailyIntake);
+        DailyIntake dailyIntake = getCurrentIntake();
+        int currentIntake;
+        Date curDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String date = formatter.format(curDate);
+        if (dailyIntake == null) {
+            currentIntake = 0;
+        } else if (date.equals(dailyIntake.getDate())) {
+            currentIntake = dailyIntake.getIntake();
+        } else{
+            currentIntake = 0;
+        }
         int recomIntake;
         if (healthData == null) {
             recomIntake = 0;
@@ -138,7 +154,10 @@ public class DailyIntakeFragment extends Fragment {
     }
 
     public HealthData getNewestHealthData(){
-        List<HealthData> healthDataList = DB.healthData().findAllForActivePatient(getContext());
+        List<HealthData> healthDataList = DB.healthData().findAll(mPatient);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            healthDataList.sort(Comparator.comparing(healthData -> LocalDate.parse(healthData.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), Comparator.naturalOrder()));
+        }
         HealthData healthData;
         if (healthDataList.isEmpty()) {
             healthData = null;
@@ -148,14 +167,18 @@ public class DailyIntakeFragment extends Fragment {
         return healthData;
     }
 
-    public int getCurrentIntake(DailyIntake dailyIntake){
-        int currentIntake;
-        if (dailyIntake == null) {
-            currentIntake = 0;
-        } else {
-            currentIntake = dailyIntake.getIntake();
+    public DailyIntake getCurrentIntake(){
+        List<DailyIntake> intakeList = DB.dailyIntake().findAll(mPatient);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            intakeList.sort(Comparator.comparing(dailyIntake -> LocalDate.parse(dailyIntake.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), Comparator.naturalOrder()));
         }
-        return currentIntake;
+        DailyIntake intake;
+        if (intakeList.size() == 0) {
+            intake = null;
+        } else {
+            intake = intakeList.get(intakeList.size() - 1);
+        }
+        return intake;
     }
 
     private void setUpChartDate(int recomIntake, int currentIntake){
