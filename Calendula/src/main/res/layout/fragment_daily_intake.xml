@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3F3F9"
-    tools:context=".fragments.DailyIntakeFragment">
+    android:addStatesFromChildren="false"
+    android:background="#F3F3F9">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pc_daily_intake"
+    <FrameLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#F3F3F9"
+        tools:context=".fragments.DailyIntakeFragment">
 
-</FrameLayout>
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pc_daily_intake"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/intake_empty_view_placeholder"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#eeffffff"
+            android:visibility="gone">
+
+            <include layout="@layout/intake_view_empty_placeholder"/>
+        </FrameLayout>
+
+    </FrameLayout>
+
+</RelativeLayout>

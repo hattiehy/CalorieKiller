@@ -112,6 +112,7 @@ public class HealthDataFragment extends Fragment {
 
         user = DB.patients().getActive(getContext());
         getNewestData();
+
         setupNormalView(rootView);
 
         setupEmptyView();
@@ -188,7 +189,6 @@ public class HealthDataFragment extends Fragment {
             record = healthDataList.get(healthDataList.size() - 1 );
         }
     }
-
 
     public void onUserUpdate(Patient patient) {
         user = patient;

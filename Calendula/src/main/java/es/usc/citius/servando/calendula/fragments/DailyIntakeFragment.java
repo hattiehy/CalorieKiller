@@ -1,16 +1,21 @@
 package es.usc.citius.servando.calendula.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -21,6 +26,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
+import com.mikepenz.iconics.IconicsDrawable;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -30,6 +36,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import es.usc.citius.servando.calendula.CalendulaApp;
 import es.usc.citius.servando.calendula.R;
 import es.usc.citius.servando.calendula.activities.SelectPicActivity;
 import es.usc.citius.servando.calendula.database.DB;
@@ -52,17 +59,30 @@ public class DailyIntakeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily_intake, container, false);
         pcDailyIntake = view.findViewById(R.id.pc_daily_intake);
         mPatient = DB.patients().getActive(getContext());
+
+        getNewestHealthData();
         setUpPieChart();
+
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        CalendulaApp.eventBus().unregister(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        notifyDataChange();
     }
 
     public void notifyDataChange() {
@@ -76,17 +96,32 @@ public class DailyIntakeFragment extends Fragment {
     }
 
     private SpannableString generateCenterSpannableText(int remaining) {
-        String text;
-        int startIndex = Integer.toString(remaining).length();
-        if (0<= remaining) {
-            text = remaining + "\nKilojoules Remaining";
-        } else {
-            text = Math.abs(remaining) + "\nKilojoules Over";
+        if (getNewestHealthData() == null) {
+            String text;
+
+            text = "Please enter your measurements on the home page to receive daily intake recommendations";
+
+            SpannableString s = new SpannableString(text);
+            s.setSpan(new RelativeSizeSpan(1.5f), 0, s.length(), 0);
+            s.setSpan(new StyleSpan(Typeface.BOLD), 0, s.length(), 0);
+            s.setSpan(new ForegroundColorSpan(Color.parseColor("#66000000")), 0, s.length(), 0);
+
+            return s;
         }
-        SpannableString s = new SpannableString(text);
-        s.setSpan(new RelativeSizeSpan(3.5f), 0, startIndex, 0);
-        s.setSpan(new StyleSpan(Typeface.NORMAL), startIndex+1, s.length(), 0);
-        return s;
+
+        else {
+            String text;
+            int startIndex = Integer.toString(remaining).length();
+            if (0<= remaining) {
+                text = remaining + "\nKilojoules Remaining";
+            } else {
+                text = Math.abs(remaining) + "\nKilojoules Over";
+            }
+            SpannableString s = new SpannableString(text);
+            s.setSpan(new RelativeSizeSpan(3.5f), 0, startIndex, 0);
+            s.setSpan(new StyleSpan(Typeface.NORMAL), startIndex+1, s.length(), 0);
+            return s;
+        }
     }
 
 
