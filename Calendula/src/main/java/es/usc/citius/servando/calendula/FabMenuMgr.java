@@ -89,12 +89,15 @@ public class FabMenuMgr implements View.OnClickListener {
             case HOME:
                 fabMenu.show();
                 break;
+                // Food group info
             case ROUTINES:
                 fabMenu.hide();
                 break;
+                // Calorie counter
             case MEDICINES:
-                fabMenu.show();
+                fabMenu.hide();
                 break;
+                // BMI and daily intake graphs
             case SCHEDULES:
                 fabMenu.hide();
                 break;
