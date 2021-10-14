@@ -87,8 +87,8 @@ public class HealthReportFragment extends Fragment {
         });
 
         // Set color of buttons to be a lightened version of the user color
-        btnBMIAndWeight.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
-        btnDailyIntake.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
+        btnBMIAndWeight.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.2f));
+        btnDailyIntake.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.2f));
 
         return rootView;
     }
@@ -127,8 +127,8 @@ public class HealthReportFragment extends Fragment {
         Button DIbut = view.findViewById(R.id.btn_daily_intake);
 
         // Set color of buttons to the same as the lightened color
-        BMIbut.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
-        DIbut.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
+        BMIbut.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.2f));
+        DIbut.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.2f));
 
     }
 

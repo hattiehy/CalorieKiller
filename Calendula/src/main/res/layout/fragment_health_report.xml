@@ -20,6 +20,8 @@
         android:layout_height="wrap_content"
         android:text="Track your BMI and Weight"
         android:layout_marginBottom="10dp"
+        android:textColor="#F3F3F9"
+        android:textSize="17sp"
         />
 
     <ImageView
@@ -34,6 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Track your Daily Energy Intake"
+        android:textColor="#F3F3F9"
+        android:textSize="17sp"
         />
 
 </LinearLayout>

@@ -30,9 +30,8 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:fontFamily="sans-serif"
             android:text="Select photo from album"
-            android:textColor="#222"
+            android:textColor="#F3F3F9"
             android:textSize="17sp"
             android:textStyle="bold"
             />
@@ -54,9 +53,8 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:text="@string/done"
-            android:textColor="#222"
+            android:textColor="#F3F3F9"
             android:textSize="17sp"
-            android:fontFamily="sans-serif"
             android:textStyle="bold"
             />
 
