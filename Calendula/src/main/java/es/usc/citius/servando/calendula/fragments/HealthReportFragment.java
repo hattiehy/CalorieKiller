@@ -86,15 +86,9 @@ public class HealthReportFragment extends Fragment {
             }
         });
 
-        // Get user color
-        int col = user.getColor();
-
-        // Lighten the color
-        int licol = ColorUtils.blendARGB(col, Color.WHITE, 0.6f);
-
-        // Set color of buttons to the same as the lightened color
-        btnBMIAndWeight.setBackgroundColor(licol);
-        btnDailyIntake.setBackgroundColor(licol);
+        // Set color of buttons to be a lightened version of the user color
+        btnBMIAndWeight.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
+        btnDailyIntake.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
 
         return rootView;
     }
@@ -132,24 +126,23 @@ public class HealthReportFragment extends Fragment {
         Button BMIbut = view.findViewById(R.id.btn_BMI_weight);
         Button DIbut = view.findViewById(R.id.btn_daily_intake);
 
-        // Get user color
-        int col = user.getColor();
-
-        // Lighten the color
-        int licol = ColorUtils.blendARGB(col, Color.WHITE, 0.6f);
-
         // Set color of buttons to the same as the lightened color
-        BMIbut.setBackgroundColor(licol);
-        DIbut.setBackgroundColor(licol);
+        BMIbut.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
+        DIbut.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
 
     }
 
-    // Method called from the event bus
-    @SuppressWarnings("unused")
     @Subscribe
-    public void handleActiveUserChange(final PersistenceEvents.ActiveUserChangeEvent event) {
-        notifyDataChange();
+    public void handleEvent(final Object event) {
+        if (event instanceof PersistenceEvents.ActiveUserChangeEvent) {
+            notifyDataChange();
+        }
+
+        else if (event instanceof PersistenceEvents.UserUpdateEvent) {
+            notifyDataChange();
+        }
     }
+
 
     // Container Activity must implement this interface
     public interface OnButtonSelectedListener {

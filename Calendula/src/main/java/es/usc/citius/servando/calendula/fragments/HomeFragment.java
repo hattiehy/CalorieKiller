@@ -103,6 +103,8 @@ public class HomeFragment extends Fragment {
 
         assetManager = getResources().getAssets();
 
+        View button = view.findViewById(R.id.add_button);
+
         if(!isNewUser()){
             HealthData healthData = DB.healthData().findByPatient(mPatient);
             etAge.setHint(healthData.getDob());

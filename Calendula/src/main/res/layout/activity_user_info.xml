@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView2"
-        tools:context=".RoutinesActivity"/>
+        tools:context=".RoutinesActivity"
+        />
 
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
@@ -19,7 +20,8 @@
         android:layout_height="56dp"
         android:background="@color/dark_grey_home"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        />
 
     <ImageView
         android:id="@+id/tabs_shadow"
@@ -28,7 +30,8 @@
         android:layout_below="@+id/textView2"
         android:alpha="0.7"
         android:scaleType="fitXY"
-        android:src="@drawable/daily_view_list_item_tab_shadow_top"/>
+        android:src="@drawable/daily_view_list_item_tab_shadow_top"
+        />
 
     <TextView
         android:id="@+id/textView2"
@@ -43,7 +46,8 @@
         android:paddingTop="10dp"
         android:text="Your Measurements"
         android:textColor="#fff"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        />
 
 
     <android.support.design.widget.FloatingActionButton
@@ -57,20 +61,8 @@
         android:layout_marginTop="@dimen/fab_separator_top_margin"
         android:src="@drawable/ic_done_black_48dp"
         app:backgroundTint="@color/fab_default_color"
-        app:elevation="@dimen/fab_elevation"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp"
-        android:gravity="bottom"
-        android:paddingLeft="72dp"
-        android:text="Health Data"
-        android:textColor="#fff"
-        android:textSize="14sp"/>
+        app:elevation="@dimen/fab_elevation"
+        />
 
 
 </RelativeLayout>

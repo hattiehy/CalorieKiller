@@ -114,15 +114,9 @@ public class SelectPicActivity extends AppCompatActivity {
             }
         });
 
-        // Get user color
-        int col = user.getColor();
-
-        // Lighten the color
-        int licol = ColorUtils.blendARGB(col, Color.WHITE, 0.6f);
-
-        // Set button color to same as the lightened color
-        btSelectPic.setBackgroundColor(licol);
-        btDone.setBackgroundColor(licol);
+        // Set color of buttons to be a lightened version of the user color
+        btSelectPic.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
+        btDone.setBackgroundColor(ColorUtils.blendARGB(user.getColor(), Color.WHITE, 0.5f));
     }
 
     public void selectServing(final List<String> list) {

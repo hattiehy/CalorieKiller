@@ -20,7 +20,9 @@ package es.usc.citius.servando.calendula;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.graphics.ColorUtils;
 import android.view.View;
 
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -136,7 +138,7 @@ public class FabMenuMgr implements View.OnClickListener {
 
     public void onPatientUpdate(Patient p) {
         for (FloatingActionButton fabMenuButton : fabMenuButtons) {
-            fabMenuButton.setBackgroundTintList(ColorStateList.valueOf(p.getColor()));
+            fabMenuButton.setBackgroundTintList(ColorStateList.valueOf(ColorUtils.blendARGB(p.getColor(), Color.WHITE, 0.5f)));
         }
     }
 

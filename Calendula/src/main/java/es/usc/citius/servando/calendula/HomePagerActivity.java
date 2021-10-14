@@ -23,6 +23,7 @@ import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
@@ -347,6 +349,7 @@ public class HomePagerActivity extends CalendulaActivity implements
                         updateTitle(mViewPager.getCurrentItem());
                         toolbarLayout.setContentScrimColor(activePatient.getColor());
                         fabMgr.onPatientUpdate(activePatient);
+                        fab.setBackgroundTintList(ColorStateList.valueOf(ColorUtils.blendARGB(activePatient.getColor(), Color.WHITE, 0.2f)));
                     } else if (event instanceof PersistenceEvents.UserUpdateEvent) {
                         Patient p = ((PersistenceEvents.UserUpdateEvent) event).patient;
                         ((HealthDataFragment) getViewPagerFragment(HomePages.HOME)).onUserUpdate(p);
@@ -358,6 +361,7 @@ public class HomePagerActivity extends CalendulaActivity implements
                             updateTitle(mViewPager.getCurrentItem());
                             toolbarLayout.setContentScrimColor(activePatient.getColor());
                             fabMgr.onPatientUpdate(activePatient);
+                            fab.setBackgroundTintList(ColorStateList.valueOf(ColorUtils.blendARGB(activePatient.getColor(), Color.WHITE, 0.2f)));
                         }
                     } else if (event instanceof PersistenceEvents.UserCreateEvent) {
                         Patient created = ((PersistenceEvents.UserCreateEvent) event).patient;
@@ -443,6 +447,7 @@ public class HomePagerActivity extends CalendulaActivity implements
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fab = findViewById(R.id.add_button);
         ButterKnife.bind(this);
 
         setupToolbar(null, Color.TRANSPARENT);
@@ -474,6 +479,7 @@ public class HomePagerActivity extends CalendulaActivity implements
 
         fabMgr.onPatientUpdate(activePatient);
 
+        fab.setBackgroundTintList(ColorStateList.valueOf(ColorUtils.blendARGB(activePatient.getColor(), Color.WHITE, 0.2f)));
 
         // Setup the tabLayout
         setupTabLayout();
@@ -659,7 +665,6 @@ public class HomePagerActivity extends CalendulaActivity implements
                 public void onAnimationUpdate(ValueAnimator animator) {
                     toolbarLayout.setContentScrimColor((int) animator.getAnimatedValue());
                 }
-
             });
             colorAnimation.start();
         } else {
