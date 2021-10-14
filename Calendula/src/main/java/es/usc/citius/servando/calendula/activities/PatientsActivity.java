@@ -96,11 +96,6 @@ public class PatientsActivity extends CalendulaActivity implements GridView.OnIt
         this.adapter.notifyDataSetChanged();
     }
 
-    @Subscribe
-    public void handleActiveUserUpdate(final PersistenceEvents.UserUpdateEvent event) {
-        this.adapter.notifyDataSetChanged();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
