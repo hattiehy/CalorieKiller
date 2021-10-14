@@ -189,8 +189,8 @@ Please carefully read the leaflet or ask your pharmacist before you get behind t
 <string name="hours">"hours"</string>
 <string name="schedule_help_no_type_selected">"Please, select a schedule type to keep on creating the schedule"</string>
 <string name="schedule_type_routines_title">"Routine schedule"</string>
-<string name="schedule_type_hourly_title">"Dosing interval"</string>
-<string name="schedule_type_period_title">"Period + rest"</string>
+<string name="schedule_type_hourly_title">"Add a Meal"</string>
+<string name="schedule_type_period_title">"Update your Measurements"</string>
 <string name="schedule_type_common_periods">"Common cycles"</string>
 <string name="schedule_type_routines_description">"Ex: Every 3 days, at breakfast, lunch and dinner"</string>
 <string name="schedule_type_hourly_description">"Ex: Each 8 hours"</string>

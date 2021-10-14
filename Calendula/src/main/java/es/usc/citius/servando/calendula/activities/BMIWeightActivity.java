@@ -9,13 +9,17 @@ import androidx.annotation.RequiresApi;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.time.LocalDate;
@@ -55,19 +59,6 @@ public class BMIWeightActivity extends AppCompatActivity {
     public ArrayList<Entry> getBMIData(){
         ArrayList<Entry> BMIValues = new ArrayList<>();
 
-//        Long end = LocalDate.now().toEpochDay();
-//
-//        BMIValues.add(new Entry(end-28, (float) 22.6));
-//        xLabel.add("12/06/2021");
-//        BMIValues.add(new Entry(end-21, (float) 23.1));
-//        xLabel.add("08/07/2021");
-//        BMIValues.add(new Entry(end-14, (float) 22.8));
-//        xLabel.add("30/07/2021");
-//        BMIValues.add(new Entry(end-7, (float) 21.9));
-//        xLabel.add("15/08/2021");
-//        BMIValues.add(new Entry(end, (float) 21.3));
-//        xLabel.add("23/09/2021");
-
         if (healthDataList.size() == 0){
             return BMIValues;
         }
@@ -83,11 +74,6 @@ public class BMIWeightActivity extends AppCompatActivity {
 
     public ArrayList<Entry> getWeightData(){
         ArrayList<Entry> weightValues = new ArrayList<>();
-//        weightValues.add(new Entry(end-28, (float) 68));
-//        weightValues.add(new Entry(end-21, (float) 72));
-//        weightValues.add(new Entry(end-14, (float) 68.9));
-//        weightValues.add(new Entry(end-7, (float) 65));
-//        weightValues.add(new Entry(end, (float) 64));
 
         if (healthDataList.size() == 0){
             return weightValues;
@@ -125,51 +111,10 @@ public class BMIWeightActivity extends AppCompatActivity {
         lcBMIWeight.invalidate();
 
 
-//        PainRecordViewModel model = new ViewModelProvider(requireActivity()).get(PainRecordViewModel.class);
-//        try {
-//            List<PainRecord> allRecords = model.getAllRecs().get();
-//            allRecords.sort(Comparator.comparing(record -> LocalDate.parse(record.recordDate, DateTimeFormatter.ofPattern("dd-MM-yyyy")), Comparator.naturalOrder()));
-//            LocalDate start = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("dd-MM-yyyy")).minusDays(1);
-//            LocalDate end = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("dd-MM-yyyy")).plusDays(1);
-//
-//            for (PainRecord record : allRecords) {
-//                LocalDate date = LocalDate.parse(record.recordDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-//                if (date.isAfter(start) && date.isBefore(end)) {
-//                    float x = date.toEpochDay() - start.toEpochDay();
-//                    painValues.add(new Entry(x, record.painLevel));
-//                    painNums.add(Integer.valueOf(record.painLevel).doubleValue());
-//                    xLabel.add(record.recordDate);
-//                }
-//            }
-//
-//            for (PainRecord record : allRecords) {
-//                LocalDate date = LocalDate.parse(record.recordDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-//                if (date.isAfter(start) && date.isBefore(end)) {
-//                    float x = date.toEpochDay() - start.toEpochDay();
-//                    if (weather.equals("temperature")) {
-//                        weatherValues.add(new Entry(x, (float) record.temperature));
-//                        weathers.add(record.temperature);
-//                    } else if (weather.equals("humidity")) {
-//                        weatherValues.add(new Entry(x, (float) record.humidity));
-//                        weathers.add(record.humidity);
-//                    } else {
-//                        weatherValues.add(new Entry(x, (float) record.pressure));
-//                        weathers.add(record.pressure);
-//                    }
-//                }
-//            }
-//
-//
-//        } catch (
-//                ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         LineDataSet set1, set2;
         set1 = new LineDataSet(getBMIData(), "BMI");
         set2 = new LineDataSet(getWeightData(), "Weight: kg");
+
 
         // create a data object with the data sets
         LineData data = new LineData(set1, set2);
@@ -216,8 +161,72 @@ public class BMIWeightActivity extends AppCompatActivity {
         xAxis.setGranularity(1f); // only intervals of 1 day
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
+
+        YAxis yAxis;
+        {   // // Y-Axis Style // //
+            yAxis = lcBMIWeight.getAxisLeft();
+
+            // disable dual axis (only use LEFT axis)
+            lcBMIWeight.getAxisRight().setEnabled(false);
+
+            // horizontal grid lines
+            yAxis.enableGridDashedLine(10f, 10f, 0f);
+
+            // axis range
+//            yAxis.setAxisMaximum(100f);
+            yAxis.setAxisMinimum(0f);
+        }
+
+        {   // // Create Limit Lines // //
+            LimitLine llXAxis = new LimitLine(5f, "Index 10");
+            llXAxis.setLineWidth(2f);
+            llXAxis.enableDashedLine(10f, 10f, 0f);
+            llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+            llXAxis.setTextSize(10f);
+//            llXAxis.setTypeface(tfRegular);
+
+            LimitLine ll1 = new LimitLine(25f, "Upper Health BMI Limit");
+            ll1.setLineWidth(2f);
+            ll1.enableDashedLine(10f, 10f, 0f);
+            ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+            ll1.setTextSize(10f);
+//            ll1.setTypeface(tfRegular);
+
+            LimitLine ll2 = new LimitLine(18f, "Lower Health BMI Limit");
+            ll2.setLineWidth(2f);
+            ll2.enableDashedLine(10f, 10f, 0f);
+            ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+            ll2.setTextSize(10f);
+//            ll2.setTypeface(tfRegular);
+
+            // draw limit lines behind data instead of on top
+            yAxis.setDrawLimitLinesBehindData(true);
+            xAxis.setDrawLimitLinesBehindData(true);
+
+            // add limit lines
+            yAxis.addLimitLine(ll1);
+            yAxis.addLimitLine(ll2);
+            //xAxis.addLimitLine(llXAxis);
+        }
+
         // set data
         lcBMIWeight.setData(data);
         lcBMIWeight.invalidate();
+    }
+
+    public void getHealthBMIData(){
+        ArrayList<Entry> values1 = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            float val = (float) (Math.random() * 3) + 18;
+            values1.add(new Entry(i, val));
+        }
+
+        ArrayList<Entry> values2 = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            float val = (float) (Math.random() * 3) + 20;
+            values2.add(new Entry(i, val));
+        }
     }
 }

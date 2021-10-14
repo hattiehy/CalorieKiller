@@ -111,14 +111,16 @@ public class FabMenuMgr implements View.OnClickListener {
                 break;
 
             // schedules
-            case R.id.fab_action_routines_button:
-                startSchedulesActivity(ScheduleTypeFragment.TYPE_ROUTINES);
+//            case R.id.fab_action_routines_button:
+//                startSchedulesActivity(ScheduleTypeFragment.TYPE_ROUTINES);
+//                break;
+            case R.id.fab_action_intake_button:
+//                startSchedulesActivity(ScheduleTypeFragment.TYPE_HOURLY);
+                launchActivity(SelectPicActivity.class);
                 break;
-            case R.id.fab_action_interval_button:
-                startSchedulesActivity(ScheduleTypeFragment.TYPE_HOURLY);
-                break;
-            case R.id.fab_action_period_button:
-                startSchedulesActivity(ScheduleTypeFragment.TYPE_PERIOD);
+            case R.id.fab_action_healthdata_button:
+//                startSchedulesActivity(ScheduleTypeFragment.TYPE_PERIOD);
+                launchActivity(UserInfoActivity.class);
                 break;
             case R.id.fab_action_qr_button:
                 startScanActivity();
@@ -139,29 +141,29 @@ public class FabMenuMgr implements View.OnClickListener {
         fabMenuSubViews = new ArrayList<>();
         fabMenuButtons = new ArrayList<>();
 
-        final View fabActionIntervalView = activity.findViewById(R.id.fab_action_interval);
-        final View fabActionRoutinesView = activity.findViewById(R.id.fab_action_routines);
-        final View fabActionPeriodView = activity.findViewById(R.id.fab_action_period);
+        final View fabActionIntervalView = activity.findViewById(R.id.fab_action_intake);
+//        final View fabActionRoutinesView = activity.findViewById(R.id.fab_action_routines);
+        final View fabActionPeriodView = activity.findViewById(R.id.fab_action_healthdata);
 
         fabMenuSubViews.add(fabActionPeriodView);
         fabMenuSubViews.add(fabActionIntervalView);
-        fabMenuSubViews.add(fabActionRoutinesView);
+//        fabMenuSubViews.add(fabActionRoutinesView);
 
-        final FloatingActionButton fabActionInterval = (FloatingActionButton) activity.findViewById(R.id.fab_action_interval_button);
-        final FloatingActionButton fabActionRoutines = (FloatingActionButton) activity.findViewById(R.id.fab_action_routines_button);
-        final FloatingActionButton fabActionPeriod = (FloatingActionButton) activity.findViewById(R.id.fab_action_period_button);
+        final FloatingActionButton fabActionInterval = (FloatingActionButton) activity.findViewById(R.id.fab_action_intake_button);
+//        final FloatingActionButton fabActionRoutines = (FloatingActionButton) activity.findViewById(R.id.fab_action_routines_button);
+        final FloatingActionButton fabActionPeriod = (FloatingActionButton) activity.findViewById(R.id.fab_action_healthdata_button);
 
         fabActionInterval.setOnClickListener(this);
-        fabActionRoutines.setOnClickListener(this);
+//        fabActionRoutines.setOnClickListener(this);
         fabActionPeriod.setOnClickListener(this);
 
         fabActionInterval.setBackgroundTintList(ColorStateList.valueOf(DB.patients().getActive(activity).getColor()));
-        fabActionRoutines.setBackgroundTintList(ColorStateList.valueOf(DB.patients().getActive(activity).getColor()));
+//        fabActionRoutines.setBackgroundTintList(ColorStateList.valueOf(DB.patients().getActive(activity).getColor()));
         fabActionPeriod.setBackgroundTintList(ColorStateList.valueOf(DB.patients().getActive(activity).getColor()));
 
         fabMenuButtons.add(fabActionPeriod);
         fabMenuButtons.add(fabActionInterval);
-        fabMenuButtons.add(fabActionRoutines);
+//        fabMenuButtons.add(fabActionRoutines);
 
 
         return fabMenuSubViews;
@@ -171,7 +173,11 @@ public class FabMenuMgr implements View.OnClickListener {
         HomePages page = HomePages.values()[currentPage];
         switch (page) {
             case HOME:
-                launchActivity(UserInfoActivity.class);
+//                launchActivity(UserInfoActivity.class);
+//                if (!PreferenceUtils.getBoolean(PreferenceKeys.SCHEDULES_HELP_SHOWN, false)) {
+//                    activity.launchActivityDelayed(SchedulesHelpActivity.class, 600);
+//                }
+                fabMenu.toggle();
                 return;
             case ROUTINES:
 //                launchActivity(DietActivity.class);

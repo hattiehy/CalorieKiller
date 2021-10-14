@@ -145,41 +145,41 @@
             app:elevation="@dimen/fab_elevation" />
 
 
+<!--        <LinearLayout-->
+<!--            android:id="@+id/fab_action_routines"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_alignParentEnd="false"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_gravity="bottom|end"-->
+<!--            android:layout_marginBottom="@dimen/fab_vertical_margin"-->
+<!--            android:layout_marginEnd="@dimen/fab_horizontal_margin"-->
+<!--            android:layout_marginRight="@dimen/fab_horizontal_margin"-->
+<!--            android:alpha="0"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:visibility="gone">-->
+
+<!--            <TextView-->
+<!--                style="@style/menu_labels_style"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginRight="6dp"-->
+<!--                android:text="@string/schedule_type_routines_title" />-->
+
+<!--            <android.support.design.widget.FloatingActionButton-->
+<!--                android:id="@+id/fab_action_routines_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_alarm_white_48dp"-->
+<!--                app:backgroundTint="@color/android_blue"-->
+<!--                app:elevation="@dimen/fab_sub_elevation" />-->
+<!--        </LinearLayout>-->
+
+
         <LinearLayout
-            android:id="@+id/fab_action_routines"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="@dimen/fab_vertical_margin"
-            android:layout_marginEnd="@dimen/fab_horizontal_margin"
-            android:layout_marginRight="@dimen/fab_horizontal_margin"
-            android:alpha="0"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/menu_labels_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="6dp"
-                android:text="@string/schedule_type_routines_title" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_action_routines_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_alarm_white_48dp"
-                app:backgroundTint="@color/android_blue"
-                app:elevation="@dimen/fab_sub_elevation" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/fab_action_interval"
+            android:id="@+id/fab_action_intake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -202,7 +202,7 @@
                 android:text="@string/schedule_type_hourly_title" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_action_interval_button"
+                android:id="@+id/fab_action_intake_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_history_white_48dp"
@@ -211,7 +211,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/fab_action_period"
+            android:id="@+id/fab_action_healthdata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -234,7 +234,7 @@
                 android:text="@string/schedule_type_period_title" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_action_period_button"
+                android:id="@+id/fab_action_healthdata_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_autorenew_white_48dp"
