@@ -108,11 +108,15 @@ public class HomeFragment extends Fragment {
         if(!isNewUser()){
             HealthData healthData = DB.healthData().findByPatient(mPatient);
             etAge.setHint(healthData.getDob());
+            age = healthData.getAge();
             if ("Female".equals(healthData.getGender())) {
                 rgGender.check(R.id.radio_female);
+                gender = "Female";
             } else {
                 rgGender.check(R.id.radio_male);
+                gender = "Male";
             }
+
 
         }
 

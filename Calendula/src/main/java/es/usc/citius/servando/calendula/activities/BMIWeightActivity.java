@@ -50,7 +50,7 @@ public class BMIWeightActivity extends AppCompatActivity {
 
         mPatient = DB.patients().getActive(this);
         healthDataList = DB.healthData().findAll(mPatient);
-        healthDataList.sort(Comparator.comparing(h -> LocalDate.parse(h.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")), Comparator.naturalOrder()));
+        healthDataList.sort(Comparator.comparing(h -> LocalDate.parse(h.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), Comparator.naturalOrder()));
 
         setChart();
     }

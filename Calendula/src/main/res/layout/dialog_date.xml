@@ -29,7 +29,7 @@
             android:padding="16dp"
             android:id="@+id/btn_decide"
             android:background="#f7f7f7"
-            android:text="Deside"
+            android:text="Decide"
             android:textColor="#33aaff"
             android:layout_weight="1"
             android:layout_width="0dp"
